@@ -7,87 +7,277 @@ const p = defineProps({ stats: Object, recentTickets: Array, recentChats: Array 
 <template>
 <Head title="لوحة تحكم الموظف" />
 <div class="ed">
-  <h1 class="ed-title">مرحباً 👋</h1>
-  <div class="ed-grid">
-    <div class="ed-card" style="border-right:4px solid #ef4444">
-      <div class="ed-card-ico">🎫</div>
-      <div class="ed-card-val" style="color:#ef4444">{{ stats.openTickets }}</div>
-      <div class="ed-card-lbl">تذاكر مفتوحة</div>
+  <!-- Welcome Banner -->
+  <div class="ed-banner">
+    <div class="ed-banner-text">مرحباً 👋</div>
+  </div>
+
+  <!-- Stats Row (Bank-style sunken panels) -->
+  <div class="ed-stats-row">
+    <div class="ed-stat-box">
+      <div class="ed-stat-icon">🎫</div>
+      <div class="ed-stat-num ed-red">{{ stats.openTickets }}</div>
+      <div class="ed-stat-label">تذاكر مفتوحة</div>
     </div>
-    <div class="ed-card" style="border-right:4px solid #d97706">
-      <div class="ed-card-ico">⏳</div>
-      <div class="ed-card-val" style="color:#d97706">{{ stats.inProgressTickets }}</div>
-      <div class="ed-card-lbl">قيد المعالجة</div>
+    <div class="ed-stat-box">
+      <div class="ed-stat-icon">⏳</div>
+      <div class="ed-stat-num ed-amber">{{ stats.inProgressTickets }}</div>
+      <div class="ed-stat-label">قيد المعالجة</div>
     </div>
-    <div class="ed-card" style="border-right:4px solid #2563eb">
-      <div class="ed-card-ico">💬</div>
-      <div class="ed-card-val" style="color:#2563eb">{{ stats.unreadChats }}</div>
-      <div class="ed-card-lbl">رسائل غير مقروءة</div>
+    <div class="ed-stat-box">
+      <div class="ed-stat-icon">💬</div>
+      <div class="ed-stat-num ed-blue">{{ stats.unreadChats }}</div>
+      <div class="ed-stat-label">رسائل غير مقروءة</div>
     </div>
-    <div class="ed-card" style="border-right:4px solid #059669">
-      <div class="ed-card-ico">💸</div>
-      <div class="ed-card-val" style="color:#059669">{{ stats.pendingRemittances }}</div>
-      <div class="ed-card-lbl">حوالات جاهزة</div>
+    <div class="ed-stat-box">
+      <div class="ed-stat-icon">💸</div>
+      <div class="ed-stat-num ed-green">{{ stats.pendingRemittances }}</div>
+      <div class="ed-stat-label">حوالات جاهزة</div>
     </div>
   </div>
 
-  <div class="ed-row">
-    <div class="ed-sec">
-      <div class="ed-sec-hdr"><h2>🎫 آخر التذاكر</h2><Link :href="route('employee.tickets')" class="ed-more">الكل ←</Link></div>
-      <div class="ed-list">
-        <Link v-for="t in recentTickets" :key="t.id" :href="route('employee.tickets.show', t.id)" class="ed-item">
-          <div class="ed-item-top"><span class="ed-item-name">{{ t.user_name || 'زائر' }}</span><span class="ed-status" :class="'ed-s-' + t.status">{{ {open:'مفتوحة',in_progress:'قيد المعالجة',resolved:'محلولة',closed:'مغلقة'}[t.status] || t.status }}</span></div>
-          <div class="ed-item-sub">{{ t.subject }}</div>
-          <div class="ed-item-date">{{ new Date(t.created_at).toLocaleDateString('ar') }}</div>
-        </Link>
-        <div v-if="!recentTickets?.length" class="ed-empty">لا توجد تذاكر</div>
+  <!-- Two-panel content area -->
+  <div class="ed-panels">
+    <!-- Recent Tickets Panel (GroupBox style) -->
+    <fieldset class="ed-fieldset">
+      <legend>🎫 آخر التذاكر</legend>
+      <div class="ed-fieldset-actions">
+        <Link :href="route('employee.tickets')" class="ed-btn">الكل ←</Link>
       </div>
-    </div>
-    <div class="ed-sec">
-      <div class="ed-sec-hdr"><h2>💬 آخر المحادثات</h2><Link :href="route('employee.chat')" class="ed-more">الكل ←</Link></div>
-      <div class="ed-list">
-        <Link v-for="c in recentChats" :key="c.id" :href="route('employee.chat') + '?user=' + c.id" class="ed-item">
-          <div class="ed-item-top">
-            <div class="ed-item-avatar" v-if="c.profile_photo"><img :src="c.profile_photo" /></div>
-            <div class="ed-item-avatar ed-item-init" v-else>{{ c.full_name?.charAt(0) }}</div>
-            <span class="ed-item-name">{{ c.full_name }}</span>
-            <span v-if="c.unread" class="ed-badge">{{ c.unread }}</span>
+      <table class="ed-table">
+        <thead>
+          <tr>
+            <th>الحالة</th>
+            <th>العميل</th>
+            <th>الموضوع</th>
+            <th>التاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="t in recentTickets" :key="t.id" class="ed-table-row" @click="$inertia.visit(route('employee.tickets.show', t.id))">
+            <td><span class="ed-st" :class="'ed-st-' + t.status">{{ {open:'مفتوحة',in_progress:'قيد المعالجة',resolved:'محلولة',closed:'مغلقة'}[t.status] || t.status }}</span></td>
+            <td class="ed-td-name">{{ t.user_name || 'زائر' }}</td>
+            <td class="ed-td-subj">{{ t.subject }}</td>
+            <td class="ed-td-date">{{ new Date(t.created_at).toLocaleDateString('ar') }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="!recentTickets?.length" class="ed-empty">لا توجد تذاكر حالياً</div>
+    </fieldset>
+
+    <!-- Recent Chats Panel (GroupBox style) -->
+    <fieldset class="ed-fieldset">
+      <legend>💬 آخر المحادثات</legend>
+      <div class="ed-fieldset-actions">
+        <Link :href="route('employee.chat')" class="ed-btn">الكل ←</Link>
+      </div>
+      <div class="ed-chat-list">
+        <Link v-for="c in recentChats" :key="c.id" :href="route('employee.chat') + '?user=' + c.id" class="ed-chat-item">
+          <div class="ed-chat-avatar">{{ c.full_name?.charAt(0) }}</div>
+          <div class="ed-chat-info">
+            <div class="ed-chat-name">{{ c.full_name }}</div>
+            <div class="ed-chat-email">{{ c.email }}</div>
           </div>
-          <div class="ed-item-sub">{{ c.email }}</div>
+          <span v-if="c.unread" class="ed-chat-badge">{{ c.unread }}</span>
         </Link>
-        <div v-if="!recentChats?.length" class="ed-empty">لا توجد محادثات</div>
       </div>
-    </div>
+      <div v-if="!recentChats?.length" class="ed-empty">لا توجد محادثات حالياً</div>
+    </fieldset>
   </div>
 </div>
 </template>
 <style scoped>
-.ed{direction:rtl;max-width:1200px;margin:0 auto}
-.ed-title{font-size:22px;font-weight:900;color:#0f172a;margin-bottom:20px}
-.ed-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.ed-card{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:18px;display:flex;align-items:center;gap:12px;transition:all .2s}
-.ed-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06)}
-.ed-card-ico{font-size:28px}
-.ed-card-val{font-size:28px;font-weight:900}
-.ed-card-lbl{font-size:11px;color:#64748b;font-weight:600}
-.ed-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.ed-sec{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:16px}
-.ed-sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #f1f5f9}
-.ed-sec-hdr h2{font-size:14px;font-weight:800;color:#1e293b;margin:0}
-.ed-more{font-size:12px;color:#2563eb;text-decoration:none;font-weight:600}
-.ed-list{display:flex;flex-direction:column;gap:8px}
-.ed-item{display:block;padding:10px;border-radius:10px;text-decoration:none;transition:background .15s;border:1px solid transparent}
-.ed-item:hover{background:#f8fafc;border-color:#e2e8f0}
-.ed-item-top{display:flex;align-items:center;gap:8px}
-.ed-item-name{font-size:13px;font-weight:700;color:#0f172a;flex:1}
-.ed-item-sub{font-size:11px;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ed-item-date{font-size:10px;color:#94a3b8;margin-top:2px}
-.ed-item-avatar{width:28px;height:28px;border-radius:8px;overflow:hidden;flex-shrink:0}
-.ed-item-avatar img{width:100%;height:100%;object-fit:cover}
-.ed-item-init{background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#0284c7}
-.ed-badge{background:#ef4444;color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px}
-.ed-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px}
-.ed-s-open{background:#fef2f2;color:#dc2626}.ed-s-in_progress{background:#fef3c7;color:#d97706}.ed-s-resolved{background:#ecfdf5;color:#059669}.ed-s-closed{background:#f1f5f9;color:#6b7280}
-.ed-empty{text-align:center;color:#cbd5e1;font-size:13px;padding:20px}
-@media(max-width:900px){.ed-grid{grid-template-columns:repeat(2,1fr)}.ed-row{grid-template-columns:1fr}}
+/* ═══════════════════════════════════
+   BANKING SYSTEM DASHBOARD DESIGN
+   ═══════════════════════════════════ */
+.ed {
+  direction: rtl;
+  padding: 8px;
+  font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+  font-size: 12px;
+}
+
+/* Welcome Banner */
+.ed-banner {
+  background: linear-gradient(180deg, #f0f4f8, #e0e8f0);
+  border: 2px groove #c0c0c0;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.ed-banner-text {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1a3a5c;
+}
+
+/* Stats Row */
+.ed-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.ed-stat-box {
+  background: linear-gradient(180deg, #fff, #f0f0f0);
+  border: 2px groove #c0c0c0;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.15s;
+}
+.ed-stat-box:hover {
+  background: linear-gradient(180deg, #fffff0, #f8f8e8);
+}
+.ed-stat-icon { font-size: 22px; }
+.ed-stat-num { font-size: 26px; font-weight: 900; }
+.ed-stat-label { font-size: 11px; color: #555; font-weight: 600; }
+.ed-red { color: #cc0000; }
+.ed-amber { color: #b45309; }
+.ed-blue { color: #1d4ed8; }
+.ed-green { color: #15803d; }
+
+/* Panels Layout */
+.ed-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* GroupBox / Fieldset */
+.ed-fieldset {
+  border: 2px groove #c0c0c0;
+  padding: 10px;
+  background: #f8f8f8;
+  position: relative;
+}
+.ed-fieldset legend {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1a3a5c;
+  padding: 0 8px;
+  background: #f8f8f8;
+}
+.ed-fieldset-actions {
+  position: absolute;
+  top: -2px;
+  left: 10px;
+}
+.ed-btn {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  background: linear-gradient(180deg, #f8f8f8, #e0e0e0);
+  border: 1px solid #999;
+  border-radius: 2px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #fff;
+}
+.ed-btn:hover {
+  background: linear-gradient(180deg, #fff, #e8e8e8);
+}
+
+/* Table */
+.ed-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.ed-table thead {
+  background: linear-gradient(180deg, #e0e4e8, #c8ccd0);
+}
+.ed-table th {
+  padding: 5px 8px;
+  border: 1px solid #a8acb0;
+  font-weight: 800;
+  color: #1a2a3a;
+  text-align: right;
+  font-size: 10px;
+}
+.ed-table td {
+  padding: 5px 8px;
+  border: 1px solid #d0d4d8;
+  background: #fff;
+}
+.ed-table-row {
+  cursor: pointer;
+}
+.ed-table-row:hover td {
+  background: #e8f0ff;
+}
+.ed-td-name { font-weight: 700; color: #1a2a3a; }
+.ed-td-subj { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #555; }
+.ed-td-date { font-size: 10px; color: #888; direction: ltr; text-align: center; }
+
+/* Status badges */
+.ed-st { font-size: 9px; font-weight: 800; padding: 1px 6px; border-radius: 2px; white-space: nowrap; }
+.ed-st-open { background: #fecdd3; color: #9f1239; }
+.ed-st-in_progress { background: #fef3c7; color: #92400e; }
+.ed-st-resolved { background: #d1fae5; color: #065f46; }
+.ed-st-closed { background: #e2e8f0; color: #475569; }
+
+/* Chat List */
+.ed-chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+.ed-chat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.1s;
+}
+.ed-chat-item:hover {
+  background: linear-gradient(180deg, #fff, #e8ecf0);
+  border-color: #8898a8;
+}
+.ed-chat-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #1a5c2a, #145020);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.ed-chat-info { flex: 1; min-width: 0; }
+.ed-chat-name { font-size: 12px; font-weight: 700; color: #1a2a3a; }
+.ed-chat-email { font-size: 10px; color: #888; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ed-chat-badge {
+  background: #cc0000;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  padding: 0 5px;
+  border-radius: 2px;
+  min-width: 14px;
+  text-align: center;
+  line-height: 16px;
+}
+
+.ed-empty {
+  text-align: center;
+  color: #999;
+  font-size: 11px;
+  padding: 20px;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .ed-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .ed-panels { grid-template-columns: 1fr; }
+}
 </style>

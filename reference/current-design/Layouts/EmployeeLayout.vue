@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, usePage, router } from '@inertiajs/vue3';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import AdminCallOverlay from '@/Components/AdminCallOverlay.vue';
 const page = usePage();
 const collapsed = ref(false);
 const u = computed(() => page.props.auth?.user);
@@ -237,6 +238,9 @@ const dateStr = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeri
       <slot />
     </main>
   </div>
+
+  <!-- Call Overlay -->
+  <AdminCallOverlay />
 
   <!-- ═══ STATUS BAR (Bottom) ═══ -->
   <div class="gov-statusbar">
