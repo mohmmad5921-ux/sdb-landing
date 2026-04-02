@@ -4,6 +4,7 @@ import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from '
 import SiteLayout from '@/Layouts/SiteLayout.vue';
 import WelcomeBusiness from '@/Pages/WelcomeBusiness.vue';
 import PhoneSimulator from '@/Components/PhoneSimulator.vue';
+import { getFlagClass } from '@/utils/flagUtils.js';
 defineOptions({ layout: SiteLayout });
 const lang = inject('lang', ref('ar'));
 const isAr = inject('isAr', computed(() => true));
@@ -26,7 +27,7 @@ async function submitEmail() {
 
 /* ── Transfer Widget ── */
 const sendAmt = ref('1,000');
-const twCur = ref({code:'DKK',flag:'🇩🇰',rate:6.87}); // default DKK, updated by auto-detect
+const twCur = ref({code:'DKK',flag:'dk',rate:6.87}); // default DKK, updated by auto-detect
 const exchangeRate = ref(14250); // SYP per unit of twCur
 const fee = 2.99;
 const numericAmt = computed(()=> parseFloat(sendAmt.value.replace(/,/g,''))||0);
@@ -43,28 +44,28 @@ function pickTwCur(c) { twCur.value = {code:c.code, flag:c.flag, rate:c.rate}; s
 
 /* ── Calculator ── */
 const currencies = ref([
-  {code:'SYP',name:'Syrian Pound',nameAr:'ليرة سورية',flag:'🇸🇾',rate:14250},
-  {code:'USD',name:'US Dollar',nameAr:'دولار أمريكي',flag:'🇺🇸',rate:1},
-  {code:'EUR',name:'Euro',nameAr:'يورو',flag:'🇪🇺',rate:0.92},
-  {code:'GBP',name:'British Pound',nameAr:'جنيه إسترليني',flag:'🇬🇧',rate:0.79},
-  {code:'DKK',name:'Danish Krone',nameAr:'كرونة دنماركية',flag:'🇩🇰',rate:6.87},
-  {code:'SEK',name:'Swedish Krona',nameAr:'كرونة سويدية',flag:'🇸🇪',rate:10.3},
-  {code:'NOK',name:'Norwegian Krone',nameAr:'كرونة نرويجية',flag:'🇳🇴',rate:10.6},
-  {code:'CHF',name:'Swiss Franc',nameAr:'فرنك سويسري',flag:'🇨🇭',rate:0.88},
-  {code:'TRY',name:'Turkish Lira',nameAr:'ليرة تركية',flag:'🇹🇷',rate:32.1},
-  {code:'AED',name:'UAE Dirham',nameAr:'درهم إماراتي',flag:'🇦🇪',rate:3.67},
-  {code:'SAR',name:'Saudi Riyal',nameAr:'ريال سعودي',flag:'🇸🇦',rate:3.75},
-  {code:'KWD',name:'Kuwaiti Dinar',nameAr:'دينار كويتي',flag:'🇰🇼',rate:0.31},
-  {code:'QAR',name:'Qatari Riyal',nameAr:'ريال قطري',flag:'🇶🇦',rate:3.64},
-  {code:'BHD',name:'Bahraini Dinar',nameAr:'دينار بحريني',flag:'🇧🇭',rate:0.38},
-  {code:'OMR',name:'Omani Rial',nameAr:'ريال عماني',flag:'🇴🇲',rate:0.39},
-  {code:'JOD',name:'Jordanian Dinar',nameAr:'دينار أردني',flag:'🇯🇴',rate:0.71},
-  {code:'EGP',name:'Egyptian Pound',nameAr:'جنيه مصري',flag:'🇪🇬',rate:50.8},
-  {code:'LBP',name:'Lebanese Pound',nameAr:'ليرة لبنانية',flag:'🇱🇧',rate:89500},
-  {code:'IQD',name:'Iraqi Dinar',nameAr:'دينار عراقي',flag:'🇮🇶',rate:1310},
-  {code:'CAD',name:'Canadian Dollar',nameAr:'دولار كندي',flag:'🇨🇦',rate:1.36},
-  {code:'AUD',name:'Australian Dollar',nameAr:'دولار أسترالي',flag:'🇦🇺',rate:1.52},
-  {code:'JPY',name:'Japanese Yen',nameAr:'ين ياباني',flag:'🇯🇵',rate:149},
+  {code:'SYP',name:'Syrian Pound',nameAr:'ليرة سورية',flag:'sy',rate:14250},
+  {code:'USD',name:'US Dollar',nameAr:'دولار أمريكي',flag:'us',rate:1},
+  {code:'EUR',name:'Euro',nameAr:'يورو',flag:'eu',rate:0.92},
+  {code:'GBP',name:'British Pound',nameAr:'جنيه إسترليني',flag:'gb',rate:0.79},
+  {code:'DKK',name:'Danish Krone',nameAr:'كرونة دنماركية',flag:'dk',rate:6.87},
+  {code:'SEK',name:'Swedish Krona',nameAr:'كرونة سويدية',flag:'se',rate:10.3},
+  {code:'NOK',name:'Norwegian Krone',nameAr:'كرونة نرويجية',flag:'no',rate:10.6},
+  {code:'CHF',name:'Swiss Franc',nameAr:'فرنك سويسري',flag:'ch',rate:0.88},
+  {code:'TRY',name:'Turkish Lira',nameAr:'ليرة تركية',flag:'tr',rate:32.1},
+  {code:'AED',name:'UAE Dirham',nameAr:'درهم إماراتي',flag:'ae',rate:3.67},
+  {code:'SAR',name:'Saudi Riyal',nameAr:'ريال سعودي',flag:'sa',rate:3.75},
+  {code:'KWD',name:'Kuwaiti Dinar',nameAr:'دينار كويتي',flag:'kw',rate:0.31},
+  {code:'QAR',name:'Qatari Riyal',nameAr:'ريال قطري',flag:'qa',rate:3.64},
+  {code:'BHD',name:'Bahraini Dinar',nameAr:'دينار بحريني',flag:'bh',rate:0.38},
+  {code:'OMR',name:'Omani Rial',nameAr:'ريال عماني',flag:'om',rate:0.39},
+  {code:'JOD',name:'Jordanian Dinar',nameAr:'دينار أردني',flag:'jo',rate:0.71},
+  {code:'EGP',name:'Egyptian Pound',nameAr:'جنيه مصري',flag:'eg',rate:50.8},
+  {code:'LBP',name:'Lebanese Pound',nameAr:'ليرة لبنانية',flag:'lb',rate:89500},
+  {code:'IQD',name:'Iraqi Dinar',nameAr:'دينار عراقي',flag:'iq',rate:1310},
+  {code:'CAD',name:'Canadian Dollar',nameAr:'دولار كندي',flag:'ca',rate:1.36},
+  {code:'AUD',name:'Australian Dollar',nameAr:'دولار أسترالي',flag:'au',rate:1.52},
+  {code:'JPY',name:'Japanese Yen',nameAr:'ين ياباني',flag:'jp',rate:149},
 ]);
 const calcAmt = ref('1000');const calcFrom = ref(1);const calcTo = ref(0);
 const showFromDD = ref(false);const showToDD = ref(false);
@@ -108,6 +109,30 @@ function detectUserCurrency() {
   } catch (e) { return null; }
 }
 
+/* ── Fetch & apply live rates ── */
+function applyRates(data) {
+  if (!data.rates) return;
+  const r = data.rates;
+  const usdPerEur = r.USD || 1.08;
+  currencies.value = currencies.value.map(c => {
+    if (r[c.code] !== undefined) {
+      return { ...c, rate: parseFloat((r[c.code] / usdPerEur).toFixed(4)) };
+    }
+    return c;
+  });
+  exchangeRate.value = Math.round((r.SYP || 13500) / usdPerEur);
+  // Also update twCur rate if it changed
+  const twIdx = currencies.value.findIndex(c => c.code === twCur.value.code);
+  if (twIdx !== -1) twCur.value = { ...twCur.value, rate: currencies.value[twIdx].rate };
+}
+async function fetchRates() {
+  try {
+    const res = await fetch('/api/public/rates');
+    const data = await res.json();
+    applyRates(data);
+  } catch (e) { /* fallback to hardcoded */ }
+}
+let rateInterval;
 onMounted(async () => {
   // Auto-detect user currency from timezone
   const detected = detectUserCurrency();
@@ -115,35 +140,18 @@ onMounted(async () => {
     const idx = currencies.value.findIndex(c => c.code === detected);
     if (idx !== -1) {
       const c = currencies.value[idx];
-      // Set transfer widget currency
       twCur.value = {code:c.code, flag:c.flag, rate:c.rate};
-      // Set calculator currency
       calcFrom.value = idx;
       if (detected === 'SYP') {
         calcTo.value = currencies.value.findIndex(c => c.code === 'EUR');
       } else {
-        calcTo.value = 0; // SYP is first
+        calcTo.value = 0;
       }
     }
   }
-
-  try {
-    const res = await fetch('/api/public/rates');
-    const data = await res.json();
-    if (data.rates) {
-      const r = data.rates;
-      const usdPerEur = r.USD || 1.08;
-      // Dynamically update all currencies (rates are vs EUR from API, convert to vs USD)
-      currencies.value = currencies.value.map(c => {
-        if (r[c.code] !== undefined) {
-          return { ...c, rate: parseFloat((r[c.code] / usdPerEur).toFixed(4)) };
-        }
-        return c;
-      });
-      // Update transfer widget rate (1 USD = X SYP)
-      exchangeRate.value = Math.round((r.SYP || 13500) / usdPerEur);
-    }
-  } catch (e) { /* fallback to hardcoded */ }
+  await fetchRates();
+  // Auto-refresh rates every 30 seconds
+  rateInterval = setInterval(fetchRates, 30000);
 });
 function pickFrom(i){calcFrom.value=i;showFromDD.value=false}
 function pickTo(i){calcTo.value=i;showToDD.value=false}
@@ -194,7 +202,7 @@ onMounted(()=>{
   parEls = [...document.querySelectorAll('[data-parallax]')];
   if (parEls.length) window.addEventListener('scroll', onScroll, { passive: true });
 });
-onUnmounted(() => { clearInterval(ti); obs?.disconnect(); window.removeEventListener('scroll', onScroll); });
+onUnmounted(() => { clearInterval(ti); clearInterval(rateInterval); obs?.disconnect(); window.removeEventListener('scroll', onScroll); });
 
 /* Re-observe animations when switching segments */
 watch(isBiz, () => {
@@ -211,39 +219,39 @@ watch(isBiz, () => {
 
 /* ── Business overrides ── */
 const bizAr = {
-  heroTag:'🏢 حلول مصرفية للشركات',
-  h1a:'ادر أعمالك',h1b:'بنظام مصرفي متكامل',
+  heroTag:'🏢 حلول مالية رقمية للشركات',
+  h1a:'ادر أعمالك',h1b:'بنظام مالي رقمي متكامل',
   heroP:'نت واليت متطور للشركات. تحويلات دولية، محافظ متعددة العملات، وتقارير مالية متقدمة.',
   howTitle:'ابدأ مع حساب الأعمال في 4 خطوات',howSub:'افتح حسابك التجاري وابدأ بإدارة أعمالك المالية.',
   steps:[{n:'01',t:'سجّل شركتك',d:'أدخل بيانات الشركة والسجل التجاري.'},{n:'02',t:'فعّل الحساب',d:'تحقق من الهوية واعتمد الحساب.'},{n:'03',t:'أضف المستخدمين',d:'أنشئ حسابات لفريقك مع صلاحيات مخصصة.'},{n:'04',t:'ابدأ التشغيل',d:'استخدم النت واليت وأدر تحويلاتك.'}],
-  featTitle:'أدوات مصرفية متكاملة للأعمال',featSub:'كل ما تحتاجه شركتك في منصة واحدة احترافية',
+  featTitle:'أدوات مالية رقمية متكاملة للأعمال',featSub:'كل ما تحتاجه شركتك في منصة واحدة احترافية',
   feats:[{ic:'🏢',t:'حسابات متعددة',d:'حسابات منفصلة لكل فرع أو قسم',cl:'feat-amber'},{ic:'📊',t:'تقارير مالية',d:'تقارير وتحليلات متقدمة في الوقت الحقيقي',cl:'feat-blue'},{ic:'💱',t:'صرف عملات',d:'تحويل فوري بين 30+ عملة',cl:'feat-green'},{ic:'🌐',t:'تحويلات SWIFT',d:'تحويلات دولية لـ 170+ دولة',cl:'feat-purple'},{ic:'👥',t:'إدارة الفريق',d:'صلاحيات مخصصة لكل مستخدم',cl:'feat-pink'},{ic:'🖥️',t:'نت واليت',d:'لوحة تحكم ويب متطورة للشركات',cl:'feat-orange'},{ic:'🔐',t:'موافقات متعددة',d:'نظام موافقات لتحويلات آمنة',cl:'feat-cyan'},{ic:'📋',t:'API للأعمال',d:'ربط مباشر مع أنظمة المحاسبة',cl:'feat-rose'}],
   appTag:'النت واليت',appTitle:'لوحة تحكم متطورة لأعمالك',appSub:'سجّل دخولك عبر الويب وأدر جميع معاملاتك المالية من أي مكان.',
   appFeats:[{ic:'📊',t:'تقارير متقدمة',d:'تقارير مالية وتحليلات شاملة'},{ic:'👥',t:'إدارة الصلاحيات',d:'صلاحيات مخصصة لكل مستخدم'},{ic:'💱',t:'محافظ متعددة',d:'عملات متعددة في حساب واحد'},{ic:'📋',t:'كشف حساب',d:'تصدير بيانات بصيغ متعددة'},{ic:'🔐',t:'موافقات مزدوجة',d:'نظام أمان للتحويلات الكبيرة'},{ic:'🔗',t:'API ربط',d:'تكامل مع أنظمتك المحاسبية'}],
   ctaTitle:'ابدأ مع حساب الأعمال',ctaSub:'سجّل شركتك الآن واحصل على نت واليت متكامل للأعمال.',ctaBtn:'افتح حساب أعمال ←',ctaBtn2:'تواصل مع فريق المبيعات',
   faqTag:'الأسئلة الشائعة',faqTitle:'أسئلة حسابات الأعمال',
-  faqs:[{q:'ما المتطلبات لفتح حساب أعمال؟',a:'السجل التجاري، إثبات هوية المسؤول، ونموذج فتح الحساب.'},{q:'كم يكلف حساب الأعمال؟',a:'الحساب الأساسي مجاني. الباقات المتقدمة تبدأ من €49/شهر.'},{q:'هل يمكن إضافة عدة مستخدمين؟',a:'نعم، مع صلاحيات مختلفة لكل مستخدم.'},{q:'هل يدعم API للربط مع أنظمتنا؟',a:'نعم، نوفر API RESTful كامل.'},{q:'ما هي العملات المدعومة؟',a:'ندعم 30+ عملة مع تحويل فوري.'}],
+  faqs:[{q:'ما المتطلبات لفتح حساب أعمال؟',a:'السجل التجاري، إثبات هوية المسؤول، ونموذج فتح الحساب.'},{q:'كم يكلف حساب الأعمال؟',a:'سيتم الإعلان عن تفاصيل الباقات والأسعار قريباً.'},{q:'هل يمكن إضافة عدة مستخدمين؟',a:'نعم، مع صلاحيات مختلفة لكل مستخدم.'},{q:'هل يدعم API للربط مع أنظمتنا؟',a:'نعم، نوفر API RESTful كامل.'},{q:'ما هي العملات المدعومة؟',a:'ندعم 30+ عملة مع تحويل فوري.'}],
 };
 const bizEn = {
-  heroTag:'🏢 Business Banking Solutions',
-  h1a:'Run your business',h1b:'with a complete banking system',
-  heroP:'Advanced net banking for businesses. International transfers, multi-currency wallets, and advanced financial reports.',
+  heroTag:'🏢 Digital Financial Solutions for Business',
+  h1a:'Run your business',h1b:'with a complete digital financial system',
+  heroP:'Advanced net wallet for businesses. International transfers, multi-currency wallets, and advanced financial reports.',
   howTitle:'Get started with a business account in 4 steps',howSub:'Open your business account and start managing your finances.',
-  steps:[{n:'01',t:'Register your company',d:'Enter company details and trade license.'},{n:'02',t:'Activate the account',d:'Verify identity and approve the account.'},{n:'03',t:'Add team members',d:'Create accounts for your team with custom permissions.'},{n:'04',t:'Start operating',d:'Use net banking and manage your transfers.'}],
-  featTitle:'Complete banking tools for business',featSub:'Everything your company needs in one professional platform',
-  feats:[{ic:'🏢',t:'Multiple accounts',d:'Separate accounts for each branch or department',cl:'feat-amber'},{ic:'📊',t:'Financial reports',d:'Advanced real-time reports and analytics',cl:'feat-blue'},{ic:'💱',t:'Currency exchange',d:'Instant exchange between 30+ currencies',cl:'feat-green'},{ic:'🌐',t:'SWIFT transfers',d:'International transfers to 170+ countries',cl:'feat-purple'},{ic:'👥',t:'Team management',d:'Custom permissions for each user',cl:'feat-pink'},{ic:'🖥️',t:'Net Banking',d:'Advanced web dashboard for businesses',cl:'feat-orange'},{ic:'🔐',t:'Multi-approval',d:'Approval system for secure transfers',cl:'feat-cyan'},{ic:'📋',t:'Business API',d:'Direct integration with accounting systems',cl:'feat-rose'}],
-  appTag:'NET BANKING',appTitle:'Advanced dashboard for your business',appSub:'Log in via the web and manage all your financial operations from anywhere.',
+  steps:[{n:'01',t:'Register your company',d:'Enter company details and trade license.'},{n:'02',t:'Activate the account',d:'Verify identity and approve the account.'},{n:'03',t:'Add team members',d:'Create accounts for your team with custom permissions.'},{n:'04',t:'Start operating',d:'Use net wallet and manage your transfers.'}],
+  featTitle:'Complete financial tools for business',featSub:'Everything your company needs in one professional platform',
+  feats:[{ic:'🏢',t:'Multiple accounts',d:'Separate accounts for each branch or department',cl:'feat-amber'},{ic:'📊',t:'Financial reports',d:'Advanced real-time reports and analytics',cl:'feat-blue'},{ic:'💱',t:'Currency exchange',d:'Instant exchange between 30+ currencies',cl:'feat-green'},{ic:'🌐',t:'SWIFT transfers',d:'International transfers to 170+ countries',cl:'feat-purple'},{ic:'👥',t:'Team management',d:'Custom permissions for each user',cl:'feat-pink'},{ic:'🖥️',t:'Net Wallet',d:'Advanced web dashboard for businesses',cl:'feat-orange'},{ic:'🔐',t:'Multi-approval',d:'Approval system for secure transfers',cl:'feat-cyan'},{ic:'📋',t:'Business API',d:'Direct integration with accounting systems',cl:'feat-rose'}],
+  appTag:'NET WALLET',appTitle:'Advanced dashboard for your business',appSub:'Log in via the web and manage all your financial operations from anywhere.',
   appFeats:[{ic:'📊',t:'Advanced Reports',d:'Comprehensive financial reports and analytics'},{ic:'👥',t:'Permission Management',d:'Custom permissions for each user'},{ic:'💱',t:'Multi Wallets',d:'Multiple currencies in one account'},{ic:'📋',t:'Statements',d:'Export data in multiple formats'},{ic:'🔐',t:'Dual Approval',d:'Security system for large transfers'},{ic:'🔗',t:'API Integration',d:'Connect with your accounting systems'}],
-  ctaTitle:'Start with a Business Account',ctaSub:'Register your company now and get a complete net banking solution.',ctaBtn:'Open business account →',ctaBtn2:'Contact sales team',
+  ctaTitle:'Start with a Business Account',ctaSub:'Register your company now and get a complete net wallet solution.',ctaBtn:'Open business account →',ctaBtn2:'Contact sales team',
   faqTag:'FAQ',faqTitle:'Business Account Questions',
-  faqs:[{q:'What are the requirements for a business account?',a:'Trade license, responsible person ID, and account opening form.'},{q:'How much does a business account cost?',a:'Basic account is free. Advanced plans start from €49/month.'},{q:'Can I add multiple users?',a:'Yes, with different permissions for each user.'},{q:'Does it support API integration?',a:'Yes, we provide a full RESTful API.'},{q:'Which currencies are supported?',a:'We support 30+ currencies with instant exchange.'}],
+  faqs:[{q:'What are the requirements for a business account?',a:'Trade license, responsible person ID, and account opening form.'},{q:'How much does a business account cost?',a:'Subscription details and pricing will be announced soon.'},{q:'Can I add multiple users?',a:'Yes, with different permissions for each user.'},{q:'Does it support API integration?',a:'Yes, we provide a full RESTful API.'},{q:'Which currencies are supported?',a:'We support 30+ currencies with instant exchange.'}],
 };
 
 /* Final merged translations */
 const tBase = computed(() => isAr.value ? {
   heroTag:'🚀 الإطلاق قريباً',
   h1a:'حوّل أموالك',h1b:'بذكاء وبشكل فوري',
-  heroP:'أرسل واستقبل الأموال بسعر الصرف الحقيقي. وفّر حتى 90% مقارنة بالبنوك التقليدية.',
+  heroP:'أرسل واستقبل الأموال بسعر الصرف الحقيقي. وفّر حتى 90% مقارنة بالخدمات التقليدية.',
   days:'يوم',hrs:'ساعة',min:'دقيقة',sec:'ثانية',
   emailPh:'بريدك الإلكتروني...',notify:'سجّل مبكراً',emailDone:'✨ تم! سنبلغك فور الإطلاق.',
   twTitle:'حاسبة التحويل',twInstant:'فوري',twSend:'أنت ترسل',twGets:'المستلم يحصل على',twFee:'رسوم',twRate:'سعر الصرف',twTime:'وقت الوصول',twSecs:'خلال ثوانٍ',twCta:'ابدأ التحويل الآن →',
@@ -251,18 +259,18 @@ const tBase = computed(() => isAr.value ? {
   partStats:[{v:'8+',l:'شريك مالي'},{v:'170+',l:'دولة مدعومة'},{v:'30+',l:'عملة'},{v:'24/7',l:'دعم متواصل'}],
   howTag:'كيف يعمل',howTitle:'أرسل المال في 4 خطوات بسيطة',howSub:'لا تعقيد، لا رسوم خفية. فقط طريقة بسيطة وشفافة.',
   steps:[{n:'01',t:'أنشئ حسابك',d:'التسجيل مجاني ويستغرق دقيقتين فقط.'},{n:'02',t:'أضف المستلم',d:'أدخل تفاصيل المستلم وحسابه المالي.'},{n:'03',t:'اختر المبلغ',d:'شاهد سعر الصرف الحقيقي والرسوم.'},{n:'04',t:'أرسل فوراً',d:'أكد التحويل وسيصل المال خلال ثوانٍ.'}],
-  featTag:'المميزات',featTitle:'كل ما تحتاجه في مكان واحد',featSub:'منصة مصرفية متكاملة توفر لك كل الأدوات لإدارة أموالك بذكاء',
-  feats:[{ic:'⚡',t:'تحويلات فورية',d:'74% من التحويلات تصل خلال 20 ثانية',cl:'feat-amber'},{ic:'🔒',t:'حماية متقدمة',d:'تشفير على مستوى البنوك',cl:'feat-blue'},{ic:'💰',t:'السعر الحقيقي',d:'سعر الصرف بدون إضافات',cl:'feat-green'},{ic:'🌍',t:'170+ دولة',d:'أرسل المال لأي مكان بالعالم',cl:'feat-purple'},{ic:'💳',t:'بطاقات ذكية',d:'بطاقات مجانية للدفع والسحب',cl:'feat-pink'},{ic:'📱',t:'تطبيق سهل',d:'أدر كل شيء من هاتفك',cl:'feat-orange'},{ic:'🕐',t:'دعم 24/7',d:'فريق دعم متاح على مدار الساعة',cl:'feat-cyan'},{ic:'🐷',t:'وفر أكثر',d:'وفر حتى 90% من الرسوم',cl:'feat-rose'}],
-  compTag:'قارن الأسعار',compTitle:'وفّر حتى 90% من رسوم التحويل',compSub:'البنوك تخفي الرسوم في سعر الصرف. نحن نقدم السعر الحقيقي بشفافية.',
+  featTag:'المميزات',featTitle:'كل ما تحتاجه في مكان واحد',featSub:'منصة مالية رقمية متكاملة توفر لك كل الأدوات لإدارة أموالك بذكاء',
+  feats:[{ic:'⚡',t:'تحويلات فورية',d:'74% من التحويلات تصل خلال 20 ثانية',cl:'feat-amber'},{ic:'🔒',t:'حماية متقدمة',d:'تشفير عسكري المستوى',cl:'feat-blue'},{ic:'💰',t:'السعر الحقيقي',d:'سعر الصرف بدون إضافات',cl:'feat-green'},{ic:'🌍',t:'170+ دولة',d:'أرسل المال لأي مكان بالعالم',cl:'feat-purple'},{ic:'💳',t:'بطاقات ذكية',d:'بطاقات مجانية للدفع والسحب',cl:'feat-pink'},{ic:'📱',t:'تطبيق سهل',d:'أدر كل شيء من هاتفك',cl:'feat-orange'},{ic:'🕐',t:'دعم 24/7',d:'فريق دعم متاح على مدار الساعة',cl:'feat-cyan'},{ic:'💰',t:'وفر أكثر',d:'وفر حتى 90% من الرسوم',cl:'feat-rose'}],
+  compTag:'قارن الأسعار',compTitle:'وفّر حتى 90% من رسوم التحويل',compSub:'الخدمات التقليدية تخفي الرسوم في سعر الصرف. نحن نقدم السعر الحقيقي بشفافية.',
   compBest:'الأفضل قيمة',compRec:'موصى به',compGets:'المستلم يحصل على',
   compSdb:{n:'SDB Wallet',amt:'14,250,000',pts:['سعر الصرف الحقيقي','رسوم 2.99$ فقط','يصل خلال ثوانٍ']},
   compBank:{n:'خدمة تقليدية',amt:'13,800,000',less:'- 450,000 أقل',pts:['هامش 3-5% مخفي','رسوم 25$+','2-5 أيام عمل']},
   compWu:{n:'Western Union',amt:'13,500,000',less:'- 750,000 أقل',pts:['سعر غير تنافسي +5%','رسوم 35$+','1-3 أيام']},
   calcTag:'حاسبة التحويل',calcTitle:'احسب تحويلك الآن',calcSub:'استخدم حاسبتنا لمعرفة المبلغ الذي سيصل للمستلم.',
-  calcBenefits:[{ic:'📈',t:'سعر الصرف الحقيقي',d:'بدون إضافات مخفية'},{ic:'⚡',t:'تحويل سريع',d:'74% تصل خلال 20 ثانية'},{ic:'🔒',t:'آمن ومضمون',d:'تشفير على مستوى البنوك'}],
+  calcBenefits:[{ic:'📈',t:'سعر الصرف الحقيقي',d:'بدون إضافات مخفية'},{ic:'⚡',t:'تحويل سريع',d:'74% تصل خلال 20 ثانية'},{ic:'🔒',t:'آمن ومضمون',d:'تشفير عسكري المستوى'}],
   calcSend:'أنت ترسل',calcGets:'المستلم يحصل على',calcFee:'الرسوم',calcExRate:'سعر الصرف',calcArrival:'وقت الوصول',calcSecs:'خلال ثوانٍ',calcCta:'ابدأ التحويل',
   appTag:'التطبيق',appTitle:'كل شيء في تطبيق واحد',appSub:'حمّل تطبيقنا وابدأ بإدارة أموالك بطريقة أذكى.',
-  appFeats:[{ic:'🔔',t:'إشعارات فورية',d:'تنبيهات لكل معاملة'},{ic:'👆',t:'مصادقة بيومترية',d:'ادخل بالبصمة أو Face ID'},{ic:'💳',t:'إدارة البطاقات',d:'تحكم كامل في بطاقاتك'},{ic:'📊',t:'تحليل المصاريف',d:'تتبع وحلل إنفاقك'},{ic:'📷',t:'دفع بـ QR',d:'ادفع بمسح رمز QR'},{ic:'💰',t:'محافظ متعددة',d:'أنشئ محافظ بعملات مختلفة'}],
+  appFeats:[{ic:'🔔',t:'إشعارات فورية',d:'تنبيهات لكل معاملة'},{ic:'👆',t:'مصادقة بيومترية',d:'بصمة، Face ID، أو Passkey'},{ic:'💳',t:'إدارة البطاقات',d:'تحكم كامل وتجميد فوري'},{ic:'📊',t:'تحليل المصاريف',d:'AI يحلل إنفاقك بذكاء'},{ic:'📷',t:'دفع بـ QR',d:'ادفع بمسح رمز QR'},{ic:'💰',t:'محافظ متعددة',d:'30+ عملة في حساب واحد'},{ic:'🪙',t:'عملات رقمية',d:'BTC, ETH, USDT وأكثر'},{ic:'🏦',t:'صناديق التوفير',d:'ادخر بأهداف ذكية مع PIN'},{ic:'🤖',t:'مساعد ذكي AI',d:'مساعدك المالي الشخصي'},{ic:'🌐',t:'حوالات سوريا',d:'أرسل لسوريا واستلم نقداً'},{ic:'💬',t:'دعم مباشر',d:'تشات مع فريق الدعم 24/7'},{ic:'🔐',t:'أمان متعدد الطبقات',d:'2FA، قفل حساب، إبلاغ فوري'}],
   globTag:'تغطية عالمية',globTitle:'أرسل المال إلى',globHighlight:'170+ دولة',globSub:'سواء كنت ترسل للعائلة أو تدفع للأعمال، نغطي معظم دول العالم.',globCta:'اكتشف جميع الدول →',globMore:'+162 عملة أخرى',
   globStats:[{v:'$0',l:'تحويلات شهرية'},{v:'0',l:'معاملة يومية'},{v:'20s',l:'متوسط وقت التحويل'},{v:'0.5%',l:'رسوم منخفضة'}],
   trustTag:'الأمان والثقة',trustTitle:'آمن في كل خطوة',trustSub:'ملايين العملاء يثقون بنا لنقل أموالهم بأمان',
@@ -270,9 +278,8 @@ const tBase = computed(() => isAr.value ? {
   trustStats:[{v:'0',l:'عميل نشط'},{v:'$0',l:'تحويلات شهرية'},{v:'99.9%',l:'وقت التشغيل'},{v:'0/5',l:'تقييم العملاء'}],
   secTag:'الأمان والحماية',secTitle:'معتمدون من أعلى الجهات',secMsg:'أموالك محمية بأعلى معايير الأمان العالمية',
   secBadges:[{ic:'🛡️',t:'PCI DSS',d:'معتمد لمعايير أمان بيانات البطاقات'},{ic:'🔒',t:'SSL 256-bit',d:'تشفير من الدرجة العسكرية'},{ic:'✅',t:'ISO 27001',d:'نظام إدارة أمن المعلومات'},{ic:'🏆',t:'SOC 2 Type II',d:'معايير الأمان والخصوصية'},{ic:'📋',t:'GDPR',d:'متوافق مع قوانين حماية البيانات'},{ic:'🌐',t:'Swift',d:'عضو في شبكة Swift العالمية'}],
-  testTag:'آراء العملاء',testTitle:'يثق بنا الملايين',testSub:'اكتشف لماذا يختار عملاؤنا SDB Wallet',
-  tests:[{n:'أحمد محمد',r:'رجل أعمال',q:'خدمة ممتازة وسريعة. التحويلات تصل في ثوانٍ. أنصح الجميع بتجربة SDB.',a:'A'},{n:'سارة العلي',r:'مهندسة برمجيات',q:'تطبيق سهل ورسوم شفافة. أفضل تجربة مصرفية رقمية.',a:'S'},{n:'محمود حسن',r:'طبيب',q:'أستخدم SDB منذ سنة. الأمان والسرعة لا مثيل لهما.',a:'M'},{n:'نور الدين',r:'مدير مشاريع',q:'وفرت الكثير مقارنة بالبنوك التقليدية.',a:'N'}],
-  testStats:[{v:'0/5',l:'تقييم App Store'},{v:'0',l:'تقييمات'},{v:'0',l:'عميل سعيد'},{v:'0%',l:'رضا العملاء'}],
+  testTag:'آراء العملاء',testTitle:'ماذا يقول عملاؤنا؟',testSub:'قريباً — سيتم عرض تقييمات العملاء الحقيقية بعد الإطلاق',
+  testComingSoon:true,testComingMsg:'سيتمكن عملاؤنا من تقييم تجربتهم مباشرة من التطبيق. كل تقييم حقيقي من عميل حقيقي.',
   faqTag:'الأسئلة الشائعة',faqTitle:'كل ما تريد معرفته',
   faqs:[{q:'كيف أفتح حساب في SDB Wallet؟',a:'التسجيل مجاني ويستغرق دقيقتين. كل ما تحتاجه بريدك الإلكتروني وإثبات هوية.'},{q:'ما هي رسوم التحويل؟',a:'رسومنا تبدأ من 0.3% فقط.'},{q:'كم يستغرق التحويل؟',a:'74% من التحويلات تصل خلال 20 ثانية.'},{q:'هل أموالي آمنة؟',a:'نعم. نستخدم تشفير AES-256 وحماية ثنائية.'},{q:'ما هي الدول المدعومة؟',a:'ندعم 170+ دولة حول العالم.'}],
   ctaTitle:'المحفظة في جيبك',ctaSub:'حمّل تطبيق SDB Wallet وأرسل الأموال من أي مكان.',ctaBtn:'افتح حسابك المجاني ←',ctaBtn2:'تواصل معنا',
@@ -280,39 +287,39 @@ const tBase = computed(() => isAr.value ? {
 } : {
   heroTag:'🚀 Launching Soon',
   h1a:'Move your money',h1b:'smarter and instantly',
-  heroP:'Send and receive money at the real exchange rate. Save up to 90% compared to banks.',
+  heroP:'Send and receive money at the real exchange rate. Save up to 90% compared to traditional services.',
   days:'Days',hrs:'Hrs',min:'Min',sec:'Sec',
   emailPh:'Your email...',notify:'Sign up early',emailDone:'✨ Done! We\'ll notify you at launch.',
   twTitle:'Transfer Calculator',twInstant:'Instant',twSend:'You send',twGets:'Recipient gets',twFee:'fee',twRate:'Exchange rate',twTime:'Delivery time',twSecs:'In seconds',twCta:'Start your transfer →',
   partTag:'OUR PARTNERS',partTitle:'Working with the best global financial networks',
   partStats:[{v:'8+',l:'Financial Partners'},{v:'170+',l:'Supported Countries'},{v:'30+',l:'Currencies'},{v:'24/7',l:'Support Available'}],
   howTag:'HOW IT WORKS',howTitle:'Send money in 4 simple steps',howSub:'No complexity, no hidden fees. Just a simple, transparent way.',
-  steps:[{n:'01',t:'Create your account',d:'Signing up is free and takes just 2 minutes.'},{n:'02',t:'Add your recipient',d:'Enter recipient details and bank account.'},{n:'03',t:'Choose the amount',d:'See the real exchange rate and fees.'},{n:'04',t:'Send instantly',d:'Confirm and money arrives in seconds.'}],
-  featTag:'FEATURES',featTitle:'Everything you need in one place',featSub:'A complete banking platform with all the tools to manage your money smartly',
-  feats:[{ic:'⚡',t:'Instant transfers',d:'74% of transfers arrive in under 20 seconds',cl:'feat-amber'},{ic:'🔒',t:'Advanced security',d:'Bank-level encryption and fraud protection',cl:'feat-blue'},{ic:'💰',t:'Real exchange rate',d:'We use the real rate with no markup',cl:'feat-green'},{ic:'🌍',t:'170+ countries',d:'Send money almost anywhere in the world',cl:'feat-purple'},{ic:'💳',t:'Smart cards',d:'Free cards to pay and withdraw anywhere',cl:'feat-pink'},{ic:'📱',t:'Easy app',d:'Manage everything easily from your phone',cl:'feat-orange'},{ic:'🕐',t:'24/7 support',d:'Support team available around the clock',cl:'feat-cyan'},{ic:'🐷',t:'Save more',d:'Save up to 90% compared to banks',cl:'feat-rose'}],
-  compTag:'COMPARE PRICES',compTitle:'Save up to 90% on transfer fees',compSub:'Banks hide fees in exchange rates. We offer the real rate with complete transparency.',
+  steps:[{n:'01',t:'Create your account',d:'Signing up is free and takes just 2 minutes.'},{n:'02',t:'Add your recipient',d:'Enter recipient details and account.'},{n:'03',t:'Choose the amount',d:'See the real exchange rate and fees.'},{n:'04',t:'Send instantly',d:'Confirm and money arrives in seconds.'}],
+  featTag:'FEATURES',featTitle:'Everything you need in one place',featSub:'A complete digital financial platform with all the tools to manage your money smartly',
+  feats:[{ic:'⚡',t:'Instant transfers',d:'74% of transfers arrive in under 20 seconds',cl:'feat-amber'},{ic:'🔒',t:'Advanced security',d:'Military-grade encryption and fraud protection',cl:'feat-blue'},{ic:'💰',t:'Real exchange rate',d:'We use the real rate with no markup',cl:'feat-green'},{ic:'🌍',t:'170+ countries',d:'Send money almost anywhere in the world',cl:'feat-purple'},{ic:'💳',t:'Smart cards',d:'Free cards to pay and withdraw anywhere',cl:'feat-pink'},{ic:'📱',t:'Easy app',d:'Manage everything easily from your phone',cl:'feat-orange'},{ic:'🕐',t:'24/7 support',d:'Support team available around the clock',cl:'feat-cyan'},{ic:'💰',t:'Save more',d:'Save up to 90% on transfer fees',cl:'feat-rose'}],
+  compTag:'COMPARE PRICES',compTitle:'Save up to 90% on transfer fees',compSub:'Traditional services hide fees in exchange rates. We offer the real rate with complete transparency.',
   compBest:'BEST VALUE',compRec:'Recommended',compGets:'Recipient gets',
   compSdb:{n:'SDB Wallet',amt:'14,250,000',pts:['Real exchange rate','Only $2.99 fee','Arrives in seconds']},
-  compBank:{n:'Traditional Bank',amt:'13,800,000',less:'- 450,000 SYP less',pts:['Marked up rate (+3%)','$25+ fees','2-5 business days']},
+  compBank:{n:'Traditional Service',amt:'13,800,000',less:'- 450,000 SYP less',pts:['Marked up rate (+3%)','$25+ fees','2-5 business days']},
   compWu:{n:'Western Union',amt:'13,500,000',less:'- 750,000 SYP less',pts:['Poor rate (+5%)','$35+ fees','1-3 days']},
   calcTag:'CALCULATOR',calcTitle:'Calculate your transfer now',calcSub:'Use our calculator to find out how much the recipient will receive.',
-  calcBenefits:[{ic:'📈',t:'Real exchange rate',d:'No hidden markups on the rate'},{ic:'⚡',t:'Fast transfer',d:'74% of transfers arrive in 20 seconds'},{ic:'🔒',t:'Safe and secure',d:'Bank-level encryption'}],
+  calcBenefits:[{ic:'📈',t:'Real exchange rate',d:'No hidden markups on the rate'},{ic:'⚡',t:'Fast transfer',d:'74% of transfers arrive in 20 seconds'},{ic:'🔒',t:'Safe and secure',d:'Military-grade encryption'}],
   calcSend:'You send',calcGets:'Recipient gets',calcFee:'Fee',calcExRate:'Exchange rate',calcArrival:'Arrival time',calcSecs:'In seconds',calcCta:'Start Transfer',
   appTag:'THE APP',appTitle:'Everything in One App',appSub:'Download our app and start managing your money smarter and easier than ever.',
-  appFeats:[{ic:'🔔',t:'Instant Notifications',d:'Alerts for every transaction'},{ic:'👆',t:'Biometric Auth',d:'Login with fingerprint or Face ID'},{ic:'💳',t:'Card Management',d:'Full control of your cards'},{ic:'📊',t:'Spending Analytics',d:'Track and analyze your spending'},{ic:'📷',t:'QR Payments',d:'Pay by scanning QR code'},{ic:'💰',t:'Multi Wallets',d:'Create wallets in different currencies'}],
+  appFeats:[{ic:'🔔',t:'Instant Notifications',d:'Alerts for every transaction'},{ic:'👆',t:'Biometric Auth',d:'Fingerprint, Face ID, or Passkey'},{ic:'💳',t:'Card Management',d:'Full control & instant freeze'},{ic:'📊',t:'AI Spending Analytics',d:'AI analyzes your spending smartly'},{ic:'📷',t:'QR Payments',d:'Pay by scanning QR code'},{ic:'💰',t:'Multi Wallets',d:'30+ currencies in one account'},{ic:'🪙',t:'Crypto Wallets',d:'BTC, ETH, USDT & more'},{ic:'🏦',t:'Savings Vaults',d:'Save with smart goals & PIN'},{ic:'🤖',t:'AI Assistant',d:'Your personal financial assistant'},{ic:'🌐',t:'Syria Remittance',d:'Send to Syria, cash pickup'},{ic:'💬',t:'Live Support',d:'Chat with support team 24/7'},{ic:'🔐',t:'Multi-layer Security',d:'2FA, account freeze, fraud alerts'}],
   globTag:'GLOBAL COVERAGE',globTitle:'Send money to',globHighlight:'170+ countries',globSub:'Whether you\'re sending to family or paying for business, we cover most countries worldwide.',globCta:'Explore all countries →',globMore:'+162 more currencies',
   globStats:[{v:'$0',l:'Monthly transfers'},{v:'0',l:'Daily transactions'},{v:'20s',l:'Avg. transfer time'},{v:'0.5%',l:'Low fees'}],
   trustTag:'SECURITY & TRUST',trustTitle:'Safe at every step',trustSub:'Millions trust us to move their money safely',
-  trustItems:[{ic:'🛡️',t:'Licensed & regulated',d:'Regulated nationwide with 65 licences worldwide'},{ic:'🔐',t:'Safeguarded funds',d:'Your money is protected in separate accounts'},{ic:'👁️',t:'Anti-fraud tech',d:'1,000+ security experts and 7M daily checks'},{ic:'🏅',t:'Bank-level encryption',d:'We use 256-bit encryption to protect your data'}],
+  trustItems:[{ic:'🛡️',t:'Licensed & regulated',d:'Regulated nationwide with 65 licences worldwide'},{ic:'🔐',t:'Safeguarded funds',d:'Your money is protected in separate accounts'},{ic:'👁️',t:'Anti-fraud tech',d:'1,000+ security experts and 7M daily checks'},{ic:'🏅',t:'Military-grade encryption',d:'We use 256-bit encryption to protect your data'}],
   trustStats:[{v:'0',l:'Active customers'},{v:'$0',l:'Monthly transfers'},{v:'99.9%',l:'Uptime'},{v:'0/5',l:'Customer rating'}],
   secTag:'SECURITY & PROTECTION',secTitle:'Certified by Top Authorities',secMsg:'Your money is protected by the highest global security standards',
   secBadges:[{ic:'🛡️',t:'PCI DSS',d:'Payment Card Industry Data Security Standard'},{ic:'🔒',t:'SSL 256-bit',d:'Military-grade encryption'},{ic:'✅',t:'ISO 27001',d:'Information Security Management'},{ic:'🏆',t:'SOC 2 Type II',d:'Security & Privacy Standards'},{ic:'📋',t:'GDPR',d:'Data Protection Compliant'},{ic:'🌐',t:'Swift',d:'Swift Network Member'}],
-  testTag:'TESTIMONIALS',testTitle:'Trusted by millions',testSub:'Discover why customers choose SDB Wallet',
-  tests:[{n:'Ahmad Mohammad',r:'Businessman',q:'Excellent and fast service. Transfers arrive in seconds.',a:'A'},{n:'Sara Al-Ali',r:'Software Engineer',q:'Easy to use app with transparent fees. Best digital banking.',a:'S'},{n:'Mahmoud Hassan',r:'Doctor',q:'I\'ve been using SDB for a year. Security and speed are unmatched.',a:'M'},{n:'Nour Al-Din',r:'Project Manager',q:'Saved a lot on fees compared to traditional banks.',a:'N'}],
+  testTag:'REVIEWS',testTitle:'What our customers say',testSub:'Coming Soon — Real customer reviews will be displayed after launch',
+  testComingSoon:true,testComingMsg:'Our customers will be able to rate their experience directly from the app. Every review is real, from a real customer.',
   testStats:[{v:'0/5',l:'App Store Rating'},{v:'0',l:'Reviews'},{v:'0',l:'Happy Customers'},{v:'0%',l:'Satisfaction Rate'}],
   faqTag:'FAQ',faqTitle:'Everything you need to know',
   faqs:[{q:'How do I open an SDB Wallet account?',a:'Registration is free and takes 2 minutes.'},{q:'What are the transfer fees?',a:'Our fees start from just 0.3%.'},{q:'How long does a transfer take?',a:'74% of transfers arrive in 20 seconds.'},{q:'Is my money safe?',a:'Yes. AES-256 encryption and 2FA.'},{q:'Which countries are supported?',a:'We support 170+ countries worldwide.'}],
-  ctaTitle:'Banking in your pocket',ctaSub:'Download the SDB Wallet app and send money from anywhere.',ctaBtn:'Open free account →',ctaBtn2:'Contact us',
+  ctaTitle:'Finance in your pocket',ctaSub:'Download the SDB Wallet app and send money from anywhere.',ctaBtn:'Open free account →',ctaBtn2:'Contact us',
   balance:'Total Balance',send:'Send',receive:'Receive',cards:'Cards',more:'More',recentTx:'Recent Transactions',received:'Received',
 });
 const t = computed(() => {
@@ -324,7 +331,7 @@ const t = computed(() => {
 const stepColors = ['sc-blue','sc-purple','sc-amber','sc-green'];
 const stepBgs = ['sb-blue','sb-purple','sb-amber','sb-green'];
 const testColors = ['tc-blue','tc-purple','tc-green','tc-orange'];
-const flagGrid = [{f:'🇺🇸',n:'USD'},{f:'🇪🇺',n:'EUR'},{f:'🇬🇧',n:'GBP'},{f:'🇦🇪',n:'AED'},{f:'🇸🇦',n:'SAR'},{f:'🇹🇷',n:'TRY'},{f:'🇯🇴',n:'JOD'},{f:'🇱🇧',n:'LBP'}];
+const flagGrid = [{f:'us',n:'USD'},{f:'eu',n:'EUR'},{f:'gb',n:'GBP'},{f:'ae',n:'AED'},{f:'sa',n:'SAR'},{f:'tr',n:'TRY'},{f:'jo',n:'JOD'},{f:'lb',n:'LBP'}];
 const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'10%'},{s:'£',top:'60%',left:'8%'},{s:'¥',top:'70%',right:'5%'},{s:'₺',top:'40%',left:'15%'}];
 </script>
 <template>
@@ -333,7 +340,7 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 
 <!-- Personal Page -->
 <template v-else>
-<Head :title="isAr?'SDB Wallet — أول محفظة إلكترونية سورية':'SDB Wallet — First Syrian Digital Bank'"/>
+<Head :title="isAr?'SDB Wallet — تحكّم بأموالك، من أي مكان':'SDB Wallet — Your Digital Financial Wallet'"/>
 
 <!-- ═══════════ 1. HERO ═══════════ -->
 <section class="hero"><div class="hero-bg"></div>
@@ -351,14 +358,14 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
     <div class="tw-glow"></div>
     <div class="tw">
       <div class="tw-head"><h3 class="tw-title">{{ t.twTitle }}</h3><span class="tw-instant">⚡ {{ t.twInstant }}</span></div>
-      <div class="tw-field"><label class="tw-lbl">{{ t.twSend }}</label><div class="tw-row"><input type="text" :value="sendAmt" @input="onSendInput" class="tw-inp" placeholder="0"/><div class="tw-cur tw-cur-pick" @click="showTwDD=!showTwDD">{{ twCur.flag }} <span>{{ twCur.code }}</span> <span class="tw-cur-arr">▾</span>
+      <div class="tw-field"><label class="tw-lbl">{{ t.twSend }}</label><div class="tw-row"><input type="text" :value="sendAmt" @input="onSendInput" class="tw-inp" placeholder="0"/><div class="tw-cur tw-cur-pick" @click="showTwDD=!showTwDD"><span :class="'fi fi-' + twCur.flag" class="cur-flag"></span> <span>{{ twCur.code }}</span> <span class="tw-cur-arr">▾</span>
         <div v-if="showTwDD" class="tw-dd" @click.stop>
-          <div v-for="c in currencies" :key="c.code" class="tw-dd-item" :class="{'tw-dd-active':c.code===twCur.code}" @click="pickTwCur(c)">{{ c.flag }} <span>{{ c.code }}</span></div>
+          <div v-for="c in currencies" :key="c.code" class="tw-dd-item" :class="{'tw-dd-active':c.code===twCur.code}" @click="pickTwCur(c)"><span :class="'fi fi-' + c.flag" class="cur-flag"></span> <span>{{ c.code }}</span></div>
         </div>
       </div></div></div>
       <div class="tw-swap"><div class="tw-swap-circle">↓</div><div class="tw-line"></div></div>
       <div class="tw-info"><span>✓ {{ fee }} {{ twCur.code }} {{ t.twFee }}</span><span>1 {{ twCur.code }} = {{ sypRate.toLocaleString() }} SYP</span></div>
-      <div class="tw-field"><label class="tw-lbl">{{ t.twGets }}</label><div class="tw-row tw-row-result"><span class="tw-result">{{ receivedAmt }}</span><div class="tw-cur tw-cur-result">🇸🇾 <span>SYP</span></div></div></div>
+      <div class="tw-field"><label class="tw-lbl">{{ t.twGets }}</label><div class="tw-row tw-row-result"><span class="tw-result">{{ receivedAmt }}</span><div class="tw-cur tw-cur-result"><span class="fi fi-sy cur-flag"></span> <span>SYP</span></div></div></div>
       <div class="tw-delivery"><span>⚡ {{ t.twTime }}</span><span class="tw-bold">{{ t.twSecs }}</span></div>
       <Link href="/preregister" class="tw-cta">{{ t.twCta }}</Link>
       <div class="tw-badges"><span>✓ {{ isAr?'مشفر':'Encrypted' }}</span><span>•</span><span>✓ {{ isAr?'آمن':'Secure' }}</span><span>•</span><span>✓ {{ isAr?'مرخص':'Licensed' }}</span></div>
@@ -395,12 +402,49 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
   </div></div>
 </div></section>
 
+<!-- ═══════════ 4b. SUBSCRIPTIONS — COMING SOON ═══════════ -->
+<section class="sec-light"><div class="sec-divider"></div><div class="sw">
+  <div class="sec-hdr an-blur"><span class="pill">{{ isAr?'الاشتراكات':'SUBSCRIPTIONS' }}</span><h2 class="t2">{{ isAr?'باقاتنا':'Our Plans' }}</h2><p class="t2-sub">{{ isAr?'قريباً — سيتم الإعلان عن تفاصيل كل باقة وأسعارها':'Coming Soon — Subscription details and pricing will be announced' }}</p></div>
+  <div class="subs-grid" data-stagger>
+    <div class="sub-card an">
+      <div class="sub-ic sub-ic-free">🆓</div>
+      <h3 class="sub-name">{{ isAr?'مجاني':'Free' }}</h3>
+      <p class="sub-desc">{{ isAr?'للأفراد — ابدأ بدون تكلفة':'For individuals — start at no cost' }}</p>
+      <div class="sub-soon-wrap"><span class="sub-soon-badge">{{ isAr?'🔜 قريباً':'🔜 Coming Soon' }}</span></div>
+      <ul class="sub-hints"><li>{{ isAr?'حساب واحد':'1 Account' }}</li><li>{{ isAr?'تحويلات أساسية':'Basic transfers' }}</li><li>{{ isAr?'بطاقة واحدة':'1 Card' }}</li></ul>
+    </div>
+    <div class="sub-card sub-card-featured an">
+
+      <div class="sub-ic sub-ic-personal">⭐</div>
+      <h3 class="sub-name">Personal</h3>
+      <p class="sub-desc">{{ isAr?'للاستخدام الشخصي المتقدم':'For advanced personal use' }}</p>
+      <div class="sub-soon-wrap"><span class="sub-soon-badge">{{ isAr?'🔜 قريباً':'🔜 Coming Soon' }}</span></div>
+      <ul class="sub-hints"><li>{{ isAr?'محافظ متعددة':'Multi wallets' }}</li><li>{{ isAr?'كاشباك':'Cashback' }}</li><li>{{ isAr?'أولوية الدعم':'Priority support' }}</li></ul>
+    </div>
+    <div class="sub-card an">
+      <div class="sub-ic sub-ic-plus">💎</div>
+      <h3 class="sub-name">Plus</h3>
+      <p class="sub-desc">{{ isAr?'للمستخدمين المميزين':'For premium users' }}</p>
+      <div class="sub-soon-wrap"><span class="sub-soon-badge">{{ isAr?'🔜 قريباً':'🔜 Coming Soon' }}</span></div>
+      <ul class="sub-hints"><li>{{ isAr?'حدود أعلى':'Higher limits' }}</li><li>{{ isAr?'كاشباك مضاعف':'Double cashback' }}</li><li>{{ isAr?'ميزات حصرية':'Exclusive features' }}</li></ul>
+    </div>
+    <div class="sub-card an">
+      <div class="sub-ic sub-ic-biz">🏢</div>
+      <h3 class="sub-name">Business</h3>
+      <p class="sub-desc">{{ isAr?'للشركات والمؤسسات':'For companies & institutions' }}</p>
+      <div class="sub-soon-wrap"><span class="sub-soon-badge">{{ isAr?'🔜 قريباً':'🔜 Coming Soon' }}</span></div>
+      <ul class="sub-hints"><li>{{ isAr?'فريق ومستخدمين':'Team & users' }}</li><li>{{ isAr?'API كامل':'Full API' }}</li><li>{{ isAr?'تقارير متقدمة':'Advanced reports' }}</li></ul>
+    </div>
+  </div>
+  <p class="subs-note an" style="text-align:center;margin-top:32px;color:#888;font-size:14px">{{ isAr?'سجّل الآن لتكون أوّل من يعرف عن الأسعار والمميزات':'Register now to be the first to know about pricing & features' }}</p>
+</div></section>
+
 <!-- ═══════════ 5. SERVICES COMPARISON ═══════════ -->
 <section class="sec-light"><div class="sec-divider sec-divider-green"></div><div class="sw">
   <div class="sec-hdr an-blur"><span class="pill">{{ t.compTag }}</span><h2 class="t2">{{ t.compTitle }}</h2><p class="t2-sub">{{ t.compSub }}</p></div>
   <div class="comp-grid" data-stagger>
     <div class="comp-card comp-best"><div class="comp-badge">{{ t.compBest }}</div><div class="comp-logo"><div class="comp-sdb-icon">SDB</div><div><h3 class="comp-name">{{ t.compSdb.n }}</h3><span class="comp-rec">{{ t.compRec }}</span></div></div><div class="comp-amt-box"><span class="comp-amt-lbl">{{ t.compGets }}</span><span class="comp-amt-val">{{ t.compSdb.amt }} <small>SYP</small></span></div><ul class="comp-pts"><li v-for="p in t.compSdb.pts" :key="p"><span class="ck">✓</span>{{ p }}</li></ul><Link href="/preregister" class="comp-cta">{{ isAr?'ابدأ الآن →':'Get started →' }}</Link></div>
-    <div class="comp-card comp-dim"><div class="comp-logo"><div class="comp-dim-icon">BANK</div><h3 class="comp-name-dim">{{ t.compBank.n }}</h3></div><div class="comp-amt-box"><span class="comp-amt-lbl">{{ t.compGets }}</span><span class="comp-amt-dim">{{ t.compBank.amt }} <small>SYP</small></span><span class="comp-less">{{ t.compBank.less }}</span></div><ul class="comp-pts-dim"><li v-for="p in t.compBank.pts" :key="p"><span class="xx">✗</span>{{ p }}</li></ul></div>
+    <div class="comp-card comp-dim"><div class="comp-logo"><div class="comp-dim-icon">TRAD</div><h3 class="comp-name-dim">{{ t.compBank.n }}</h3></div><div class="comp-amt-box"><span class="comp-amt-lbl">{{ t.compGets }}</span><span class="comp-amt-dim">{{ t.compBank.amt }} <small>SYP</small></span><span class="comp-less">{{ t.compBank.less }}</span></div><ul class="comp-pts-dim"><li v-for="p in t.compBank.pts" :key="p"><span class="xx">✗</span>{{ p }}</li></ul></div>
     <div class="comp-card comp-dim"><div class="comp-logo"><div class="comp-wu-icon">WU</div><h3 class="comp-name-dim">{{ t.compWu.n }}</h3></div><div class="comp-amt-box"><span class="comp-amt-lbl">{{ t.compGets }}</span><span class="comp-amt-dim">{{ t.compWu.amt }} <small>SYP</small></span><span class="comp-less">{{ t.compWu.less }}</span></div><ul class="comp-pts-dim"><li v-for="p in t.compWu.pts" :key="p"><span class="xx">✗</span>{{ p }}</li></ul></div>
   </div>
 </div></section>
@@ -416,12 +460,12 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
     </div>
     <div class="calc-right an-r">
       <div class="calc-card">
-        <div class="calc-field"><label class="calc-lbl">{{ t.calcSend }}</label><div class="calc-row"><input v-model="calcAmt" type="number" class="calc-inp" placeholder="0"/><div class="calc-dd-wrap" @click="showFromDD=!showFromDD"><span class="calc-flag">{{ currencies[calcFrom].flag }}</span><span class="calc-code">{{ currencies[calcFrom].code }}</span><span class="calc-chev">▾</span>
-          <div v-if="showFromDD" class="calc-dd"><button v-for="(c,i) in currencies" :key="c.code" @click.stop="pickFrom(i)" class="calc-dd-item"><span>{{ c.flag }}</span><span>{{ c.code }}</span><span class="calc-dd-name">{{ isAr?c.nameAr:c.name }}</span></button></div>
+        <div class="calc-field"><label class="calc-lbl">{{ t.calcSend }}</label><div class="calc-row"><input v-model="calcAmt" type="number" class="calc-inp" placeholder="0"/><div class="calc-dd-wrap" @click="showFromDD=!showFromDD"><span :class="'fi fi-' + currencies[calcFrom].flag" class="calc-flag"></span><span class="calc-code">{{ currencies[calcFrom].code }}</span><span class="calc-chev">▾</span>
+          <div v-if="showFromDD" class="calc-dd"><button v-for="(c,i) in currencies" :key="c.code" @click.stop="pickFrom(i)" class="calc-dd-item"><span :class="'fi fi-' + c.flag" class="cur-flag"></span><span>{{ c.code }}</span><span class="calc-dd-name">{{ isAr?c.nameAr:c.name }}</span></button></div>
         </div></div></div>
         <div class="calc-swap-wrap"><button @click="swapCalc" class="calc-swap-btn">⇅</button></div>
-        <div class="calc-field"><label class="calc-lbl">{{ t.calcGets }}</label><div class="calc-row"><div class="calc-result">{{ calcResult }}</div><div class="calc-dd-wrap" @click="showToDD=!showToDD"><span class="calc-flag">{{ currencies[calcTo].flag }}</span><span class="calc-code">{{ currencies[calcTo].code }}</span><span class="calc-chev">▾</span>
-          <div v-if="showToDD" class="calc-dd"><button v-for="(c,i) in currencies" :key="c.code" @click.stop="pickTo(i)" class="calc-dd-item"><span>{{ c.flag }}</span><span>{{ c.code }}</span><span class="calc-dd-name">{{ isAr?c.nameAr:c.name }}</span></button></div>
+        <div class="calc-field"><label class="calc-lbl">{{ t.calcGets }}</label><div class="calc-row"><div class="calc-result">{{ calcResult }}</div><div class="calc-dd-wrap" @click="showToDD=!showToDD"><span :class="'fi fi-' + currencies[calcTo].flag" class="calc-flag"></span><span class="calc-code">{{ currencies[calcTo].code }}</span><span class="calc-chev">▾</span>
+          <div v-if="showToDD" class="calc-dd"><button v-for="(c,i) in currencies" :key="c.code" @click.stop="pickTo(i)" class="calc-dd-item"><span :class="'fi fi-' + c.flag" class="cur-flag"></span><span>{{ c.code }}</span><span class="calc-dd-name">{{ isAr?c.nameAr:c.name }}</span></button></div>
         </div></div></div>
         <div class="calc-details"><div class="calc-det-row"><span>{{ t.calcFee }}</span><span class="calc-det-val">{{ calcFee }} {{ currencies[calcFrom].code }}</span></div><div class="calc-det-row"><span>{{ t.calcExRate }}</span><span class="calc-det-val calc-det-green">1 {{ currencies[calcFrom].code }} = {{ calcRate }} {{ currencies[calcTo].code }}</span></div><div class="calc-det-row calc-det-border"><span>{{ t.calcArrival }}</span><span class="calc-det-val">⚡ {{ t.calcSecs }}</span></div></div>
         <button class="calc-cta">{{ t.calcCta }}</button>
@@ -444,9 +488,13 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
   </div>
   <!-- Interactive Phone Simulator -->
   <div class="app-right an-r">
-    <div class="phone-float-notif"><div class="pfn-ic">✓</div><div><p class="pfn-sm">{{ t.received }}</p><p class="pfn-amt">+€800.00</p></div></div>
-    <PhoneSimulator />
-    <div class="phone-float-rating"><span class="pfr-score">4.9</span><span class="pfr-stars">★★★★★</span><span class="pfr-label">App Store</span></div>
+    <div class="iphone-frame">
+      <div class="iphone-notch"></div>
+      <div class="iphone-screen">
+        <iframe src="/demo/?v=20260401c#/home" class="iphone-iframe" loading="lazy" scrolling="no" title="SDB Wallet App Demo"></iframe>
+      </div>
+      <div class="iphone-home-bar"></div>
+    </div>
   </div>
 </div></section>
 
@@ -455,7 +503,7 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
   <div v-for="(fs,i) in floatingSymbols" :key="i" class="glob-float" :style="{top:fs.top,left:fs.left,right:fs.right,animationDelay:i*0.5+'s'}">{{ fs.s }}</div>
   <div class="sw glob-grid" style="position:relative;z-index:1">
     <div class="glob-left an-l"><span class="pill-green-border">{{ t.globTag }}</span><h2 class="glob-h2">{{ t.globTitle }}<br><span class="glob-hl">{{ t.globHighlight }}</span></h2><p class="glob-p">{{ t.globSub }}</p><Link href="/exchange-rates" class="glob-cta">{{ t.globCta }}</Link></div>
-    <div class="glob-right an-r"><div class="flag-grid" data-stagger><div v-for="c in flagGrid" :key="c.n" class="flag-item"><span class="flag-emoji">{{ c.f }}</span><span class="flag-code">{{ c.n }}</span></div></div><div class="flag-more">{{ t.globMore }}</div></div>
+    <div class="glob-right an-r"><div class="flag-grid" data-stagger><div v-for="c in flagGrid" :key="c.n" class="flag-item"><span :class="'fi fi-' + c.f" class="flag-icon"></span><span class="flag-code">{{ c.n }}</span></div></div><div class="flag-more">{{ t.globMore }}</div></div>
   </div>
   <div class="glob-stats an" data-counter><div v-for="s in t.globStats" :key="s.l" class="gstat"><p class="gstat-v" data-count>{{ s.v }}</p><p class="gstat-l">{{ s.l }}</p></div></div>
 </section>
@@ -475,15 +523,24 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
   <p class="sec-trust-msg an">{{ t.secMsg }}</p>
 </div></section>
 
-<!-- ═══════════ 11. TESTIMONIALS ═══════════ -->
+<!-- ═══════════ 11. REVIEWS — COMING SOON ═══════════ -->
 <section class="sec-light"><div class="sw">
   <div class="sec-hdr an-flip"><span class="pill">{{ t.testTag }}</span><h2 class="t2">{{ t.testTitle }}</h2><p class="t2-sub">{{ t.testSub }}</p></div>
-  <div class="tests-grid" data-stagger><div v-for="(tt,i) in t.tests" :key="i" class="test-card">
-    <div class="test-top"><span class="test-quote">❝</span><span class="test-stars">★★★★★</span></div>
-    <p class="test-q">"{{ tt.q }}"</p>
-    <div class="test-author"><div class="test-avatar" :class="testColors[i]">{{ tt.a }}</div><div><div class="test-name">{{ tt.n }}</div><div class="test-role">{{ tt.r }}</div></div></div>
-  </div></div>
-  <div class="test-stats-bar an" data-counter><div v-for="s in t.testStats" :key="s.l" class="ts-item"><div class="ts-v" data-count>{{ s.v }}</div><div class="ts-l">{{ s.l }}</div></div></div>
+  <div class="reviews-coming-soon an">
+    <div class="reviews-cs-icon">⭐</div>
+    <p class="reviews-cs-msg">{{ t.testComingMsg }}</p>
+    <div class="reviews-cs-preview">
+      <div class="reviews-cs-card" v-for="i in 3" :key="i">
+        <div class="reviews-cs-stars">☆☆☆☆☆</div>
+        <div class="reviews-cs-line"></div>
+        <div class="reviews-cs-line short"></div>
+        <div class="reviews-cs-author">
+          <div class="reviews-cs-avatar"></div>
+          <div class="reviews-cs-name-ph"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div></section>
 
 <!-- ═══════════ 12. FAQ ═══════════ -->
@@ -508,53 +565,53 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
 .sec-white{padding:100px 0;background:#fff;position:relative;overflow:hidden}
 .sec-light{padding:100px 0;background:#F5F9F3;position:relative;overflow:hidden}
-.sec-dark{padding:100px 0;background:linear-gradient(135deg,#163300,#1a3d00,#0f2600);position:relative;overflow:hidden;color:#fff}
+.sec-dark{padding:100px 0;background:linear-gradient(135deg,#10481A,#1a3d00,#0f2600);position:relative;overflow:hidden;color:#fff}
 .sec-cta{padding:120px 0;background:linear-gradient(135deg,#F0FBE8,#E8F5E0)}
 .sec-hdr{text-align:center;margin-bottom:48px}
-.pill{display:inline-block;padding:6px 16px;background:#E8F5E0;color:#2D6A00;font-size:12px;font-weight:700;border-radius:999px;margin-bottom:12px;letter-spacing:1px}
+.pill{display:inline-block;padding:6px 16px;background:#E8F5E0;color:#10481A;font-size:12px;font-weight:700;border-radius:999px;margin-bottom:12px;letter-spacing:1px}
 .pill-green{display:inline-block;color:#9FE870;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
 .pill-green-border{display:inline-block;padding:6px 16px;background:rgba(159,232,112,.2);color:#9FE870;font-size:12px;font-weight:700;border-radius:999px;margin-bottom:16px;border:1px solid rgba(159,232,112,.3)}
-.t2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px;color:#163300}.rtl .t2{letter-spacing:0}
+.t2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px;color:#10481A}.rtl .t2{letter-spacing:0}
 .t2-sub{font-size:16px;color:#666;line-height:1.85;max-width:550px;margin:0 auto}
 .hero{padding:160px 0 80px;position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center}
 .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#E8F5E0,#F0FBE8,#fff)}
 .hero-circles{position:absolute;inset:0;overflow:hidden}
 .hc{position:absolute;border-radius:50%;filter:blur(80px)}.hc1{top:-20%;right:-10%;width:600px;height:600px;background:rgba(159,232,112,.3);animation:pulse 4s ease-in-out infinite}.hc2{bottom:-20%;left:-10%;width:500px;height:500px;background:rgba(159,232,112,.2);animation:pulse 6s ease-in-out infinite}.hc3{top:40%;left:30%;width:300px;height:300px;background:rgba(22,51,0,.05)}
 .hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;position:relative;z-index:1}
-.hero-tag{display:inline-flex;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;color:#163300;border:1px solid rgba(159,232,112,.3);margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.hero-h1{font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:900;color:#163300;line-height:1.05;letter-spacing:-.04em;margin-bottom:20px}.hero-em{color:#2D6A00}
+.hero-tag{display:inline-flex;background:rgba(255,255,255,.8);backdrop-filter:blur(8px);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:600;color:#10481A;border:1px solid rgba(159,232,112,.3);margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.hero-h1{font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:900;color:#10481A;line-height:1.05;letter-spacing:-.04em;margin-bottom:20px}.hero-em{color:#10481A}
 .hero-p{font-size:18px;color:#555;line-height:1.85;margin-bottom:24px;max-width:500px}
 .hero-cd{display:flex;gap:18px;margin-bottom:28px}
-.cd-box{text-align:center}.cd-n{font-size:38px;font-weight:900;color:#163300;line-height:1;font-variant-numeric:tabular-nums}.cd-l{font-size:10px;color:rgba(22,51,0,.4);margin-top:3px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.hero-eml{display:flex;max-width:420px;border:2px solid #163300;border-radius:999px;overflow:hidden;margin-bottom:28px}
-.eml-i{flex:1;padding:14px 20px;border:none;outline:none;font-size:15px;background:transparent;color:#163300;font-family:inherit}.eml-i::placeholder{color:#aaa}
-.eml-b{padding:14px 28px;background:#163300;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}.eml-b:hover{background:#1e4400}
-.eml-ok{padding:14px;color:#2D6A00;font-weight:700;font-size:14px}.eml-err{font-size:12px;color:#DC2626;font-weight:700;margin-top:6px}
+.cd-box{text-align:center}.cd-n{font-size:38px;font-weight:900;color:#10481A;line-height:1;font-variant-numeric:tabular-nums}.cd-l{font-size:10px;color:rgba(22,51,0,.4);margin-top:3px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero-eml{display:flex;max-width:420px;border:2px solid #10481A;border-radius:999px;overflow:hidden;margin-bottom:28px}
+.eml-i{flex:1;padding:14px 20px;border:none;outline:none;font-size:15px;background:transparent;color:#10481A;font-family:inherit}.eml-i::placeholder{color:#aaa}
+.eml-b{padding:14px 28px;background:#10481A;color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}.eml-b:hover{background:#0d3a14}
+.eml-ok{padding:14px;color:#10481A;font-weight:700;font-size:14px}.eml-err{font-size:12px;color:#DC2626;font-weight:700;margin-top:6px}
 .rtl .hero-eml{flex-direction:row-reverse}
 .hero-right{position:relative}
 .tw-glow{position:absolute;inset:0;background:linear-gradient(135deg,rgba(159,232,112,.4),rgba(159,232,112,.2));border-radius:36px;filter:blur(40px);transform:scale(.9);opacity:.6}
 .tw{position:relative;background:#fff;border-radius:32px;box-shadow:0 20px 80px rgba(0,0,0,.08);padding:32px;max-width:440px;margin:0 auto;border:1px solid #f0f0f0}
 .tw-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.tw-title{font-weight:800;color:#163300;font-size:18px}.tw-instant{background:#F0FDF4;color:#16A34A;font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px}
+.tw-title{font-weight:800;color:#10481A;font-size:18px}.tw-instant{background:#F0FDF4;color:#16A34A;font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px}
 .tw-field{margin-bottom:8px}.tw-lbl{font-size:13px;font-weight:600;color:#888;margin-bottom:8px;display:block}
 .tw-row{display:flex;align-items:center;justify-content:space-between;border:2px solid #f0f0f0;border-radius:16px;padding:16px 20px;transition:all .2s}.tw-row:focus-within{border-color:#9FE870;box-shadow:0 0 0 4px rgba(159,232,112,.1)}
 .tw-row-result{background:linear-gradient(to right,#F0FBE8,#E8F5E0);border-color:#9FE870}
-.tw-inp{font-size:28px;font-weight:900;color:#163300;border:none;outline:none;background:transparent;width:100%;font-family:inherit}.tw-inp::-webkit-inner-spin-button,.tw-inp::-webkit-outer-spin-button{-webkit-appearance:none}
-.tw-result{font-size:28px;font-weight:900;color:#163300;flex:1}
-.tw-cur{display:flex;align-items:center;gap:8px;background:#f8f8f8;border-radius:12px;padding:8px 16px;flex-shrink:0;cursor:pointer;transition:background .2s;font-size:18px}.tw-cur:hover{background:#f0f0f0}.tw-cur span{font-weight:700;color:#163300;font-size:14px}
+.tw-inp{font-size:28px;font-weight:900;color:#10481A;border:none;outline:none;background:transparent;width:100%;font-family:inherit}.tw-inp::-webkit-inner-spin-button,.tw-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.tw-result{font-size:28px;font-weight:900;color:#10481A;flex:1}
+.tw-cur{display:flex;align-items:center;gap:8px;background:#f8f8f8;border-radius:12px;padding:8px 16px;flex-shrink:0;cursor:pointer;transition:background .2s;font-size:18px}.tw-cur:hover{background:#f0f0f0}.tw-cur span{font-weight:700;color:#10481A;font-size:14px}
 .tw-cur-pick{position:relative;border:1.5px solid rgba(159,232,112,.15)}.tw-cur-pick:hover{border-color:#9FE870}
 .tw-cur-arr{font-size:10px!important;color:rgba(10,10,10,.3)!important;font-weight:400!important}
 .tw-dd{position:absolute;top:calc(100% + 6px);left:0;right:0;min-width:200px;background:#fff;border:1px solid rgba(159,232,112,.1);border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,.12);padding:6px;z-index:100;max-height:260px;overflow-y:auto}
 .rtl .tw-dd{left:auto;right:0}
-.tw-dd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:15px;transition:background .15s}.tw-dd-item:hover{background:rgba(159,232,112,.06)}.tw-dd-item span{font-weight:700;font-size:13px;color:#163300}
+.tw-dd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:15px;transition:background .15s}.tw-dd-item:hover{background:rgba(159,232,112,.06)}.tw-dd-item span{font-weight:700;font-size:13px;color:#10481A}
 .tw-dd-active{background:rgba(159,232,112,.1)!important}
 .tw-cur-result{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .tw-swap{position:relative;padding:12px 0;display:flex;align-items:center;justify-content:center}
-.tw-swap-circle{width:40px;height:40px;background:#163300;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;box-shadow:0 4px 12px rgba(22,51,0,.2);z-index:1}
+.tw-swap-circle{width:40px;height:40px;background:#10481A;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;box-shadow:0 4px 12px rgba(22,51,0,.2);z-index:1}
 .tw-line{position:absolute;top:50%;left:0;right:0;height:1px;border-top:1px dashed #e0e0e0}
 .tw-info{display:flex;justify-content:space-between;padding:0 8px;margin-bottom:8px;font-size:13px;color:#888}.tw-info span:first-child{color:#16A34A}
-.tw-delivery{display:flex;justify-content:space-between;padding:12px 16px;background:#f8f8f8;border-radius:12px;margin:16px 0;font-size:13px;color:#888}.tw-bold{font-weight:800;color:#163300}
-.tw-cta{display:block;padding:16px;background:#163300;color:#fff;font-size:15px;font-weight:800;text-align:center;border-radius:16px;text-decoration:none;transition:all .2s;margin-bottom:16px}.tw-cta:hover{background:#1e4400;transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,51,0,.15)}
+.tw-delivery{display:flex;justify-content:space-between;padding:12px 16px;background:#f8f8f8;border-radius:12px;margin:16px 0;font-size:13px;color:#888}.tw-bold{font-weight:800;color:#10481A}
+.tw-cta{display:block;padding:16px;background:#10481A;color:#fff;font-size:15px;font-weight:800;text-align:center;border-radius:16px;text-decoration:none;transition:all .2s;margin-bottom:16px}.tw-cta:hover{background:#0d3a14;transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,51,0,.15)}
 .tw-badges{display:flex;justify-content:center;gap:8px;font-size:11px;color:#aaa}
 .partners-sec{padding:80px 0}.partners-glow{position:absolute;top:0;left:25%;width:500px;height:500px;background:#9FE870;border-radius:50%;filter:blur(150px);opacity:.3;animation:pulse 4s ease-in-out infinite}
 .part-title{font-size:clamp(1.2rem,2.5vw,1.5rem);color:#fff;font-weight:500;text-align:center}
@@ -569,59 +626,60 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 .sc-blue{background:linear-gradient(135deg,#3B82F6,#2563EB)}.sc-purple{background:linear-gradient(135deg,#8B5CF6,#7C3AED)}.sc-amber{background:linear-gradient(135deg,#F59E0B,#EA580C)}.sc-green{background:linear-gradient(135deg,#22C55E,#10B981)}
 .step-card{border-radius:16px;padding:20px;transition:all .3s}.step-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.06)}
 .sb-blue{background:#EFF6FF}.sb-purple{background:#F5F3FF}.sb-amber{background:#FFFBEB}.sb-green{background:#F0FDF4}
-.step-t{font-size:17px;font-weight:800;color:#163300;margin-bottom:8px}.step-d{font-size:14px;color:#666;line-height:1.7}
+.step-t{font-size:17px;font-weight:800;color:#10481A;margin-bottom:8px}.step-d{font-size:14px;color:#666;line-height:1.7}
 .sec-feat-bg{overflow:hidden;position:relative}.sec-feat-glow1{position:absolute;top:0;left:0;width:100%;height:128px;background:linear-gradient(to bottom,#F0FBE8,transparent)}.sec-feat-glow2{position:absolute;bottom:0;right:0;width:384px;height:384px;background:rgba(159,232,112,.1);border-radius:50%;filter:blur(100px)}
 .feats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .feat{padding:24px;background:#fff;border:2px solid #f0f0f0;border-radius:24px;transition:all .4s;cursor:pointer}.feat:hover{border-color:#9FE870;transform:translateY(-6px);box-shadow:0 16px 40px rgba(159,232,112,.15)}
 .feat-ic{font-size:32px;display:block;margin-bottom:12px;transition:transform .3s}.feat:hover .feat-ic{transform:scale(1.15) rotate(6deg)}
-.feat-t{font-size:16px;font-weight:800;color:#163300;margin-bottom:6px;transition:color .3s}.feat:hover .feat-t{color:#2D6A00}
+.feat-t{font-size:16px;font-weight:800;color:#10481A;margin-bottom:6px;transition:color .3s}.feat:hover .feat-t{color:#10481A}
 .feat-d{font-size:13px;color:#666;line-height:1.7}
 .comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .comp-card{background:#fff;border-radius:24px;padding:28px;border:1px solid #e8e8e8;position:relative;transition:all .3s}
 .comp-best{border:2px solid #9FE870;box-shadow:0 16px 40px rgba(159,232,112,.15)}
-.comp-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);padding:6px 18px;background:linear-gradient(135deg,#163300,#2D6A00);color:#fff;font-size:11px;font-weight:800;border-radius:999px;white-space:nowrap;box-shadow:0 4px 12px rgba(22,51,0,.2)}
+.comp-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);padding:6px 18px;background:linear-gradient(135deg,#10481A,#10481A);color:#fff;font-size:11px;font-weight:800;border-radius:999px;white-space:nowrap;box-shadow:0 4px 12px rgba(22,51,0,.2)}
 .comp-logo{display:flex;align-items:center;gap:10px;margin-bottom:20px}
-.comp-sdb-icon{width:48px;height:48px;background:linear-gradient(135deg,#9FE870,#7ACC50);border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#163300;font-size:13px;box-shadow:0 4px 12px rgba(159,232,112,.3)}
-.comp-name{font-weight:800;color:#163300;font-size:16px}.comp-rec{font-size:11px;color:#2D6A00}
+.comp-sdb-icon{width:48px;height:48px;background:linear-gradient(135deg,#9FE870,#7ACC50);border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#10481A;font-size:13px;box-shadow:0 4px 12px rgba(159,232,112,.3)}
+.comp-name{font-weight:800;color:#10481A;font-size:16px}.comp-rec{font-size:11px;color:#10481A}
 .comp-dim{opacity:.75;transition:opacity .3s}.comp-dim:hover{opacity:1}
 .comp-dim-icon{width:48px;height:48px;background:#f0f0f0;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#aaa;font-size:12px}
 .comp-wu-icon{width:48px;height:48px;background:#FEF9E7;border:1px solid #F59E0B;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#D97706;font-size:12px}
 .comp-name-dim{font-weight:800;color:#888;font-size:16px}
 .comp-amt-box{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #f0f0f0}.comp-amt-lbl{display:block;font-size:12px;color:#888;margin-bottom:4px}
-.comp-amt-val{font-size:28px;font-weight:900;color:#163300}.comp-amt-val small{font-size:14px;color:#888;margin-inline-start:4px}
+.comp-amt-val{font-size:28px;font-weight:900;color:#10481A}.comp-amt-val small{font-size:14px;color:#888;margin-inline-start:4px}
 .comp-amt-dim{font-size:28px;font-weight:900;color:#bbb}.comp-amt-dim small{font-size:14px}
 .comp-less{display:block;font-size:11px;color:#EF4444;margin-top:2px}
 .comp-pts{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:10px}
 .comp-pts li{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#333}
-.ck{width:22px;height:22px;background:#E8F5E0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2D6A00;font-size:12px;font-weight:900;flex-shrink:0}
+.ck{width:22px;height:22px;background:#E8F5E0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#10481A;font-size:12px;font-weight:900;flex-shrink:0}
 .comp-pts-dim{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
 .comp-pts-dim li{display:flex;align-items:center;gap:8px;font-size:13px;color:#aaa}
 .xx{width:22px;height:22px;background:#FEE2E2;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#EF4444;font-size:12px;font-weight:900;flex-shrink:0}
-.comp-cta{display:block;padding:14px;background:#163300;color:#fff;text-align:center;border-radius:14px;font-weight:800;font-size:14px;text-decoration:none;transition:all .2s}.comp-cta:hover{background:#1e4400;box-shadow:0 8px 20px rgba(22,51,0,.15)}
+.comp-cta{display:block;padding:14px;background:#10481A;color:#fff;text-align:center;border-radius:14px;font-weight:800;font-size:14px;text-decoration:none;transition:all .2s}.comp-cta:hover{background:#0d3a14;box-shadow:0 8px 20px rgba(22,51,0,.15)}
 .sec-calc{padding:100px 0;background:#F8FBF5;position:relative;overflow:hidden}
 .sec-calc-glow1{position:absolute;top:0;right:0;width:600px;height:600px;background:rgba(159,232,112,.1);border-radius:50%;filter:blur(150px)}.sec-calc-glow2{position:absolute;bottom:0;left:0;width:400px;height:400px;background:rgba(22,51,0,.05);border-radius:50%;filter:blur(100px)}
 .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
 .calc-benefits{display:flex;flex-direction:column;gap:12px}
 .calc-ben{display:flex;align-items:flex-start;gap:16px;padding:16px;background:#fff;border:1px solid #f0f0f0;border-radius:16px}
 .calc-ben-ic{width:48px;height:48px;border-radius:12px;background:#E8F5E0;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.calc-ben-t{font-weight:700;color:#163300;margin-bottom:2px;font-size:14px}.calc-ben-d{font-size:13px;color:#888}
+.calc-ben-t{font-weight:700;color:#10481A;margin-bottom:2px;font-size:14px}.calc-ben-d{font-size:13px;color:#888}
 .calc-card{background:#fff;border-radius:24px;box-shadow:0 20px 60px rgba(22,51,0,.08);padding:32px;border:1px solid #f0f0f0}
 .calc-field{margin-bottom:8px}.calc-lbl{font-size:12px;font-weight:600;color:#888;margin-bottom:8px;display:block}
 .calc-row{display:flex;gap:12px}
-.calc-inp{flex:1;font-size:28px;font-weight:900;color:#163300;background:#f8f8f8;border:2px solid #f0f0f0;border-radius:16px;padding:16px 20px;outline:none;font-family:inherit;transition:all .2s}.calc-inp:focus{border-color:#9FE870;box-shadow:0 0 0 4px rgba(159,232,112,.15)}
+.calc-inp{flex:1;font-size:28px;font-weight:900;color:#10481A;background:#f8f8f8;border:2px solid #f0f0f0;border-radius:16px;padding:16px 20px;outline:none;font-family:inherit;transition:all .2s}.calc-inp:focus{border-color:#9FE870;box-shadow:0 0 0 4px rgba(159,232,112,.15)}
 .calc-inp::-webkit-inner-spin-button,.calc-inp::-webkit-outer-spin-button{-webkit-appearance:none}.calc-inp{-moz-appearance:textfield}
-.calc-result{flex:1;font-size:28px;font-weight:900;color:#163300;background:#E8F5E0;border:2px solid rgba(159,232,112,.3);border-radius:16px;padding:16px 20px}
+.calc-result{flex:1;font-size:28px;font-weight:900;color:#10481A;background:#E8F5E0;border:2px solid rgba(159,232,112,.3);border-radius:16px;padding:16px 20px}
 .calc-dd-wrap{position:relative;display:flex;align-items:center;gap:8px;background:#f8f8f8;border:2px solid #f0f0f0;border-radius:16px;padding:12px 16px;cursor:pointer;transition:border-color .2s}.calc-dd-wrap:hover{border-color:#ccc}
-.calc-flag{font-size:22px}.calc-code{font-weight:700;color:#163300;font-size:14px}.calc-chev{font-size:12px;color:#888}
+.calc-flag{font-size:22px;border-radius:3px}.calc-code{font-weight:700;color:#10481A;font-size:14px}.calc-chev{font-size:12px;color:#888}
+.cur-flag{font-size:18px;border-radius:3px;line-height:1}
 .calc-dd{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.12);border:1px solid #f0f0f0;padding:8px;width:200px;z-index:50;max-height:256px;overflow-y:auto}.rtl .calc-dd{right:auto;left:0}
-.calc-dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;width:100%;border:none;background:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;color:#163300;transition:background .2s}.calc-dd-item:hover{background:#f8f8f8}
+.calc-dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;width:100%;border:none;background:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;color:#10481A;transition:background .2s}.calc-dd-item:hover{background:#f8f8f8}
 .calc-dd-name{font-size:11px;color:#888;font-weight:400}
 .calc-swap-wrap{display:flex;justify-content:center;margin:-6px 0;position:relative;z-index:2}
-.calc-swap-btn{width:48px;height:48px;background:#9FE870;border:none;border-radius:50%;font-size:18px;font-weight:700;color:#163300;cursor:pointer;box-shadow:0 4px 16px rgba(159,232,112,.3);transition:all .2s}.calc-swap-btn:hover{transform:scale(1.1)}
+.calc-swap-btn{width:48px;height:48px;background:#9FE870;border:none;border-radius:50%;font-size:18px;font-weight:700;color:#10481A;cursor:pointer;box-shadow:0 4px 16px rgba(159,232,112,.3);transition:all .2s}.calc-swap-btn:hover{transform:scale(1.1)}
 .calc-details{background:#f8f8f8;border-radius:16px;padding:20px;margin:20px 0;display:flex;flex-direction:column;gap:10px}
-.calc-det-row{display:flex;justify-content:space-between;font-size:13px;color:#888}.calc-det-val{font-weight:700;color:#163300}.calc-det-green{color:#2D6A00}
+.calc-det-row{display:flex;justify-content:space-between;font-size:13px;color:#888}.calc-det-val{font-weight:700;color:#10481A}.calc-det-green{color:#10481A}
 .calc-det-border{padding-top:10px;border-top:1px solid #e8e8e8}
-.calc-cta{width:100%;padding:16px;background:#9FE870;color:#163300;font-size:15px;font-weight:800;border:none;border-radius:16px;cursor:pointer;font-family:inherit;transition:all .2s}.calc-cta:hover{background:#8FD860;box-shadow:0 8px 24px rgba(159,232,112,.3);transform:translateY(-2px)}
+.calc-cta{width:100%;padding:16px;background:#9FE870;color:#10481A;font-size:15px;font-weight:800;border:none;border-radius:16px;cursor:pointer;font-family:inherit;transition:all .2s}.calc-cta:hover{background:#8FD860;box-shadow:0 8px 24px rgba(159,232,112,.3);transform:translateY(-2px)}
 .app-sec{padding:100px 0}.app-glow1{position:absolute;top:0;right:0;width:600px;height:600px;background:rgba(159,232,112,.1);border-radius:50%;filter:blur(150px)}.app-glow2{position:absolute;bottom:0;left:0;width:500px;height:500px;background:rgba(159,232,112,.05);border-radius:50%;filter:blur(120px)}
 .app-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 .app-badge{display:inline-block;padding:8px 20px;background:#2d5a00;border-radius:999px;color:#9FE870;font-size:13px;font-weight:700;margin-bottom:24px}
@@ -638,9 +696,18 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 .dl-sm{font-size:9px;color:rgba(255,255,255,.5)}.dl-lg{font-size:13px;font-weight:800;color:#fff}
 .dl-sm-dark{font-size:9px;color:#888}.dl-lg-dark{font-size:13px;font-weight:800;color:#111}
 .app-right{position:relative;display:flex;justify-content:center}
+/* Realistic iPhone 17 Pro Max Frame */
+.iphone-frame{position:relative;width:390px;height:800px;background:#1a1a1a;border-radius:56px;padding:10px;box-shadow:0 50px 100px rgba(0,0,0,.5),0 0 0 3px #2a2a2a,0 0 0 4px #111,inset 0 0 1px 1px rgba(255,255,255,.05);overflow:hidden}
+.iphone-notch{display:none}
+.iphone-screen{width:100%;height:100%;border-radius:46px;overflow:hidden;background:#000}
+.iphone-iframe{width:100%;height:100%;border:none;border-radius:46px;pointer-events:auto}
+.iphone-home-bar{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);width:140px;height:5px;background:rgba(255,255,255,.25);border-radius:999px;z-index:10}
+/* Side buttons */
+.iphone-frame::before{content:'';position:absolute;top:140px;right:-3px;width:3px;height:80px;background:#2a2a2a;border-radius:0 2px 2px 0}
+.iphone-frame::after{content:'';position:absolute;top:200px;left:-3px;width:3px;height:50px;background:#2a2a2a;border-radius:2px 0 0 2px}
 /* Phone wrapper — old styles kept for compat but PhoneSimulator.vue handles the actual shell */
 .phone-float-notif{position:absolute;top:-8px;right:-16px;z-index:30;display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.15);animation:float 3s ease-in-out infinite}
-.pfn-ic{width:40px;height:40px;background:#9FE870;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#163300;font-weight:900;font-size:16px}
+.pfn-ic{width:40px;height:40px;background:#9FE870;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#10481A;font-weight:900;font-size:16px}
 .pfn-sm{font-size:10px;color:#888}.pfn-amt{font-size:16px;font-weight:900;color:#111}
 .phone-float-rating{position:absolute;bottom:-20px;right:16px;z-index:20;display:flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .pfr-score{font-size:18px;font-weight:900;color:#111}.pfr-stars{color:#F59E0B;font-size:12px;letter-spacing:1px}.pfr-label{font-size:10px;color:#888}
@@ -650,10 +717,11 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 .glob-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
 .glob-h2{font-size:clamp(2rem,4vw,3rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:16px}.glob-hl{color:#9FE870}
 .glob-p{font-size:16px;color:rgba(255,255,255,.7);line-height:1.85;margin-bottom:24px}
-.glob-cta{display:inline-block;padding:14px 32px;background:#9FE870;color:#163300;font-weight:800;font-size:14px;border-radius:999px;text-decoration:none;transition:all .3s;box-shadow:0 4px 16px rgba(159,232,112,.3)}.glob-cta:hover{background:#8FD860;transform:scale(1.05);box-shadow:0 8px 24px rgba(159,232,112,.4)}
+.glob-cta{display:inline-block;padding:14px 32px;background:#9FE870;color:#10481A;font-weight:800;font-size:14px;border-radius:999px;text-decoration:none;transition:all .3s;box-shadow:0 4px 16px rgba(159,232,112,.3)}.glob-cta:hover{background:#8FD860;transform:scale(1.05);box-shadow:0 8px 24px rgba(159,232,112,.4)}
 .flag-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .flag-item{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;text-align:center;transition:all .3s;cursor:pointer}.flag-item:hover{background:rgba(255,255,255,.2);border-color:rgba(159,232,112,.3);transform:scale(1.1) translateY(-4px)}
 .flag-emoji{font-size:28px;display:block;margin-bottom:6px;transition:transform .3s}.flag-item:hover .flag-emoji{transform:scale(1.25)}
+.flag-icon{font-size:28px;display:block;margin-bottom:6px;transition:transform .3s;border-radius:4px;line-height:1}.flag-item:hover .flag-icon{transform:scale(1.25)}
 .flag-code{font-size:13px;font-weight:700;color:#fff}
 .flag-more{margin-top:12px;padding:12px;background:linear-gradient(to right,rgba(159,232,112,.2),rgba(159,232,112,.1));border:1px solid rgba(159,232,112,.3);border-radius:16px;text-align:center;color:#9FE870;font-weight:700;font-size:14px;cursor:pointer;transition:all .3s}.flag-more:hover{background:linear-gradient(to right,rgba(159,232,112,.3),rgba(159,232,112,.2))}
 .glob-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:32px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:24px;backdrop-filter:blur(8px);margin-top:64px;max-width:1200px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}
@@ -672,7 +740,7 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 .sec-badges{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 .sbadge{text-align:center;padding:24px 16px;background:#fff;border:1px solid #f0f0f0;border-radius:20px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}.sbadge:hover{border-color:rgba(159,232,112,.5);transform:translateY(-6px);box-shadow:0 12px 32px rgba(159,232,112,.1)}
 .sbadge-ic{font-size:28px;margin-bottom:12px;transition:transform .3s}.sbadge:hover .sbadge-ic{transform:scale(1.15)}
-.sbadge-t{font-weight:800;color:#163300;margin-bottom:4px;font-size:14px}.sbadge-d{font-size:11px;color:#888;line-height:1.5}
+.sbadge-t{font-weight:800;color:#10481A;margin-bottom:4px;font-size:14px}.sbadge-d{font-size:11px;color:#888;line-height:1.5}
 .sec-trust-msg{text-align:center;color:#888;margin-top:40px}
 .tests-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .test-card{background:#fff;border-radius:24px;padding:28px;border:1px solid #e8e8e8;transition:all .4s;cursor:pointer}.test-card:hover{border-color:rgba(159,232,112,.3);box-shadow:0 16px 40px rgba(0,0,0,.06);transform:translateY(-3px)}
@@ -682,17 +750,17 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 .test-author{display:flex;align-items:center;gap:12px}
 .test-avatar{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;transition:transform .3s;box-shadow:0 4px 12px rgba(0,0,0,.1)}.test-card:hover .test-avatar{transform:scale(1.1)}
 .tc-blue{background:linear-gradient(135deg,#60A5FA,#3B82F6)}.tc-purple{background:linear-gradient(135deg,#A78BFA,#8B5CF6)}.tc-green{background:linear-gradient(135deg,#4ADE80,#22C55E)}.tc-orange{background:linear-gradient(135deg,#FB923C,#F97316)}
-.test-name{font-weight:800;color:#163300;font-size:15px}.test-role{font-size:12px;color:#888}
+.test-name{font-weight:800;color:#10481A;font-size:15px}.test-role{font-size:12px;color:#888}
 .test-stats-bar{margin-top:40px;background:#fff;border-radius:24px;padding:28px;border:1px solid #e8e8e8;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;text-align:center}
-.ts-v{font-size:24px;font-weight:900;color:#163300;margin-bottom:2px}.ts-l{font-size:12px;color:#888}
+.ts-v{font-size:24px;font-weight:900;color:#10481A;margin-bottom:2px}.ts-l{font-size:12px;color:#888}
 .faqs{display:flex;flex-direction:column;gap:8px}
 .faq{background:#fff;border:1px solid #e8e8e8;border-radius:16px;padding:16px 20px;cursor:pointer;transition:all .3s}.faq:hover,.faqOpen{border-color:#9FE870;box-shadow:0 4px 16px rgba(159,232,112,.1)}
-.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:#163300}
+.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:#10481A}
 .faq-arrow{font-size:20px;color:#9FE870;font-weight:300;flex-shrink:0;margin-inline-start:16px}
 .faq-a{margin-top:12px;font-size:14px;color:#666;line-height:1.8;padding-top:12px;border-top:1px solid #f0f0f0}
 .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.cta-btn{display:inline-block;padding:18px 48px;background:#163300;color:#fff;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;transition:all .3s}.cta-btn:hover{background:#1e4400;transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,51,0,.15)}
-.cta-btn2{display:inline-block;padding:18px 48px;background:transparent;color:#163300;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;border:2px solid rgba(22,51,0,.15);transition:all .2s}.cta-btn2:hover{border-color:#163300}
+.cta-btn{display:inline-block;padding:18px 48px;background:#10481A;color:#fff;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;transition:all .3s}.cta-btn:hover{background:#0d3a14;transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,51,0,.15)}
+.cta-btn2{display:inline-block;padding:18px 48px;background:transparent;color:#10481A;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;border:2px solid rgba(22,51,0,.15);transition:all .2s}.cta-btn2:hover{border-color:#10481A}
 /* ── Animation classes ── */
 .an{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1),filter .7s cubic-bezier(.16,1,.3,1);filter:blur(2px)}.an.vi{opacity:1;transform:none;filter:none}
 .an-l{opacity:0;transform:translateX(-50px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),filter .8s ease}.an-l.vi{opacity:1;transform:none}
@@ -701,14 +769,72 @@ const floatingSymbols = [{s:'$',top:'10%',left:'5%'},{s:'€',top:'20%',right:'1
 .an-blur{opacity:0;transform:translateY(24px);filter:blur(8px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .9s cubic-bezier(.16,1,.3,1)}.an-blur.vi{opacity:1;transform:none;filter:none}
 .an-flip{opacity:0;transform:perspective(800px) rotateX(8deg) translateY(30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}.an-flip.vi{opacity:1;transform:none}
 /* Section divider reveals */
-.sec-divider{width:64px;height:4px;background:linear-gradient(to right,#9FE870,#2D6A00);border-radius:999px;margin:0 auto 0;position:relative;top:-2px;z-index:2;opacity:0;transform:scaleX(0);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+.sec-divider{width:64px;height:4px;background:linear-gradient(to right,#9FE870,#10481A);border-radius:999px;margin:0 auto 0;position:relative;top:-2px;z-index:2;opacity:0;transform:scaleX(0);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
 .sec-divider-green{background:linear-gradient(to right,#9FE870,#22C55E)}
 .sec-white .sec-divider,.sec-light .sec-divider,.sec-calc .sec-divider{animation:dividerReveal .8s .3s forwards}
 @keyframes dividerReveal{to{opacity:1;transform:scaleX(1)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 /* Stagger children get subtle scale+blur entry */
 [data-stagger]>*.an{filter:blur(2px);transform:translateY(28px) scale(.96)}[data-stagger]>*.an.vi{filter:none;transform:none}
-@media(max-width:1024px){.sec-badges{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:32px;text-align:center}.hero-left{display:flex;flex-direction:column;align-items:center}.hero-p{text-align:center}.steps-grid{grid-template-columns:repeat(2,1fr)}.feats-grid{grid-template-columns:repeat(2,1fr)}.comp-grid{grid-template-columns:1fr}.tests-grid{grid-template-columns:1fr}.calc-grid{grid-template-columns:1fr}.app-grid{grid-template-columns:1fr}.app-feats{grid-template-columns:1fr}.glob-grid{grid-template-columns:1fr;text-align:center}.glob-left{display:flex;flex-direction:column;align-items:center}.trust-grid{grid-template-columns:1fr}.trust-stats,.glob-stats,.part-stats{grid-template-columns:repeat(2,1fr)}.sec-badges{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.hero{padding:120px 0 40px}.sec-white,.sec-light,.sec-dark,.sec-calc{padding:60px 0}.sw{padding:0 16px}.t2{font-size:clamp(1.4rem,6vw,2rem)}.steps-grid,.feats-grid,.sec-badges{grid-template-columns:1fr}.hero-cd{flex-wrap:wrap;gap:12px;justify-content:center}.cd-n{font-size:28px}.hero-eml{flex-direction:column!important;border:none!important;border-radius:0!important;overflow:visible!important;gap:10px}.eml-i{border:2px solid #163300!important;border-radius:14px!important;background:#fff!important}.eml-b{border-radius:14px!important;width:100%}.cta-btn,.cta-btn2{width:100%;text-align:center;padding:16px}.cta-row{flex-direction:column;padding:0 16px}.phone{width:260px;border-radius:44px}.phone-island{width:96px;height:28px}.phone-float-notif{right:-8px;padding:8px 12px}.flag-grid{grid-template-columns:repeat(2,1fr)}.glob-float{display:none}.test-stats-bar{grid-template-columns:repeat(2,1fr)}.app-dl{flex-direction:column}.trust-card{flex-direction:column;align-items:center;text-align:center}.part-stats{grid-template-columns:repeat(2,1fr);gap:12px}}
+/* ── Subscription Cards ── */
+.subs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sub-card{position:relative;background:#fff;border:2px solid #f0f0f0;border-radius:24px;padding:32px 24px;text-align:center;transition:all .4s;cursor:pointer}
+.sub-card:hover{border-color:#9FE870;transform:translateY(-6px);box-shadow:0 16px 40px rgba(159,232,112,.15)}
+.sub-card-featured{border-color:#9FE870;box-shadow:0 8px 32px rgba(159,232,112,.12);transform:scale(1.02)}
+.sub-card-featured:hover{transform:scale(1.02) translateY(-6px)}
+.sub-popular{position:absolute;top:-14px;left:50%;transform:translateX(-50%);padding:6px 18px;background:#10481A;color:#fff;font-size:11px;font-weight:800;border-radius:999px;white-space:nowrap;box-shadow:0 4px 12px rgba(22,51,0,.2)}
+.sub-ic{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;transition:transform .3s}
+.sub-card:hover .sub-ic{transform:scale(1.15) rotate(6deg)}
+.sub-ic-free{background:linear-gradient(135deg,#E8F5E0,#F0FBE8)}
+.sub-ic-personal{background:linear-gradient(135deg,#FEF3C7,#FFFBEB)}
+.sub-ic-plus{background:linear-gradient(135deg,#EDE9FE,#F5F3FF)}
+.sub-ic-biz{background:linear-gradient(135deg,#DBEAFE,#EFF6FF)}
+.sub-name{font-size:20px;font-weight:900;color:#10481A;margin-bottom:6px}
+.sub-desc{font-size:13px;color:#888;margin-bottom:16px;line-height:1.6}
+.sub-soon-wrap{margin-bottom:16px}
+.sub-soon-badge{display:inline-block;padding:8px 20px;background:linear-gradient(135deg,#E8F5E0,#F0FBE8);color:#10481A;font-size:13px;font-weight:700;border-radius:999px;animation:subPulse 2s ease-in-out infinite}
+@keyframes subPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.8;transform:scale(1.03)}}
+.sub-hints{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.sub-hints li{font-size:12px;color:#666;padding:6px 0;border-top:1px solid #f6f6f6}
+.sub-hints li:first-child{border-top:none}
+/* ── Reviews Coming Soon ── */
+.reviews-coming-soon{text-align:center;padding:40px 20px}
+.reviews-cs-icon{font-size:56px;margin-bottom:16px}
+.reviews-cs-msg{font-size:15px;color:#888;max-width:480px;margin:0 auto 40px;line-height:1.7}
+.reviews-cs-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.reviews-cs-card{background:#fff;border:2px dashed #e0e0e0;border-radius:20px;padding:28px 24px;opacity:.5}
+.reviews-cs-stars{font-size:20px;color:#d0d0d0;letter-spacing:4px;margin-bottom:16px}
+.reviews-cs-line{height:10px;background:#f0f0f0;border-radius:8px;margin-bottom:10px;width:100%}
+.reviews-cs-line.short{width:65%}
+.reviews-cs-author{display:flex;align-items:center;gap:10px;margin-top:18px}
+.reviews-cs-avatar{width:36px;height:36px;border-radius:50%;background:#f0f0f0;flex-shrink:0}
+.reviews-cs-name-ph{height:10px;width:70px;background:#f0f0f0;border-radius:6px}
+/* App feats 3 columns for 12 items */
+.app-feats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px}
+@media(max-width:1024px){.sec-badges{grid-template-columns:repeat(3,1fr)}.subs-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:32px;text-align:center}.hero-left{display:flex;flex-direction:column;align-items:center}.hero-p{text-align:center}.steps-grid{grid-template-columns:repeat(2,1fr)}.feats-grid{grid-template-columns:repeat(2,1fr)}.comp-grid{grid-template-columns:1fr}.tests-grid{grid-template-columns:1fr}.calc-grid{grid-template-columns:1fr}.app-grid{grid-template-columns:1fr}.app-right{display:flex;justify-content:center;margin-top:32px;overflow:hidden}.iphone-frame{transform:scale(0.85);transform-origin:top center;margin-bottom:-120px}.app-feats{grid-template-columns:repeat(2,1fr)}.glob-grid{grid-template-columns:1fr;text-align:center}.glob-left{display:flex;flex-direction:column;align-items:center}.trust-grid{grid-template-columns:1fr}.trust-stats,.glob-stats,.part-stats{grid-template-columns:repeat(2,1fr)}.sec-badges{grid-template-columns:repeat(2,1fr)}.subs-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+  .hero{padding:100px 0 40px}
+  .sec-white,.sec-light,.sec-dark,.sec-calc{padding:60px 0}
+  .sw{padding:0 16px}.t2{font-size:clamp(1.4rem,6vw,2rem)}
+  .steps-grid,.feats-grid,.sec-badges,.subs-grid{grid-template-columns:1fr}
+  .hero-cd{flex-wrap:wrap;gap:12px;justify-content:center}.cd-n{font-size:28px}
+  .hero-eml{flex-direction:column!important;border:none!important;border-radius:0!important;overflow:visible!important;gap:10px}
+  .eml-i{border:2px solid #10481A!important;border-radius:14px!important;background:#fff!important}.eml-b{border-radius:14px!important;width:100%}
+  .tw{padding:20px 16px; border-radius: 24px}
+  .tw-row{padding: 12px 14px}
+  .tw-inp, .tw-result {font-size: 20px}
+  .tw-cur {padding: 6px 10px; font-size: 14px}
+  .tw-swap-circle{width:32px;height:32px;font-size:14px}
+  .cta-btn,.cta-btn2{width:100%;text-align:center;padding:16px}.cta-row{flex-direction:column;padding:0 16px}
+  .phone-float-notif{right:-8px;padding:8px 12px}
+  .flag-grid{grid-template-columns:repeat(2,1fr)}.glob-float{display:none}
+  .test-stats-bar{grid-template-columns:repeat(2,1fr)}.app-dl{flex-direction:column}
+  .trust-card{flex-direction:column;align-items:center;text-align:center}
+  .part-stats{grid-template-columns:repeat(2,1fr);gap:12px}.app-feats{grid-template-columns:1fr}
+  .mq-item{padding:8px 16px;font-size:14px;border-radius:8px;}
+}
+@media(max-width:400px){
+  .iphone-frame{transform:scale(0.75);margin-bottom:-200px}
+}
 </style>

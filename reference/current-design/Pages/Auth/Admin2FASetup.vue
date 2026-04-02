@@ -96,7 +96,7 @@ const submit = () => form.post(route('admin.2fa.setup.verify'), { onFinish: () =
 .s2-code-input{width:100%;padding:16px;border:2px solid #e2e8f0;border-radius:14px;font-size:28px;font-weight:900;text-align:center;letter-spacing:8px;outline:none;transition:border .2s;font-family:'Inter',monospace}
 .s2-code-input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .s2-error{font-size:12px;color:#ef4444;font-weight:600;text-align:center}
-.s2-btn{width:100%;padding:15px;background:linear-gradient(135deg,#2D6A00,#3d8a00);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px}
+.s2-btn{width:100%;padding:15px;background:linear-gradient(135deg,#10481A,#3d8a00);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px}
 .s2-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,106,0,.2)}
 .s2-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .s2-spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}

@@ -55,7 +55,7 @@ const navItems = [
         <header class="ap-topbar">
             <div>
                 <h1 class="ap-title">مرحباً، {{ user?.full_name?.split(' ')[0] }} 👋</h1>
-                <p class="ap-date">{{ new Date().toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
+                <p class="ap-date">{{ new Date().toLocaleDateString('ar-u-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
             </div>
             <div class="ap-header-badges">
                 <span class="ap-badge ap-badge-purple">🏦 وكيل حوالات</span>

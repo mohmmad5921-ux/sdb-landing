@@ -7,8 +7,8 @@ const isAr = inject('isAr', computed(() => true));
 let obs;
 onMounted(()=>{obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vi');if(x.target.hasAttribute('data-stagger'))x.target.querySelectorAll(':scope > *').forEach((ch,i)=>{setTimeout(()=>ch.classList.add('vi'),i*100)})}}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});document.querySelectorAll('.an').forEach(el=>obs.observe(el));document.querySelectorAll('[data-stagger]').forEach(p=>{p.querySelectorAll(':scope > *').forEach(ch=>ch.classList.add('an'));obs.observe(p)})});
 const t = computed(() => isAr.value ? {
-  tag:'قصتنا',title:'نحن SDB Wallet.',fade:'أول محفظة سورية رقمية.',
-  story:'ولدت فكرة SDB Wallet من معاناة حقيقية: ملايين السوريين حول العالم يعانون من صعوبة التحويلات المالية والوصول للخدمات البنكية. قررنا أن نغيّر هذا الواقع بتكنولوجيا أوروبية وروح سورية.',
+  tag:'قصتنا',title:'نحن SDB Wallet.',fade:'محفظتك الرقمية الذكية.',
+  story:'ولدت فكرة SDB Wallet من معاناة حقيقية: ملايين السوريين حول العالم يعانون من صعوبة التحويلات المالية والوصول للخدمات المالية. قررنا أن نغيّر هذا الواقع بتكنولوجيا حديثة وروح سورية.',
   mission:'مهمتنا',missionText:'جعل الخدمات المالية متاحة لكل سوري — داخل سوريا أو خارجها — بدون حدود جغرافية أو عوائق بيروقراطية.',
   vision:'رؤيتنا',visionText:'أن نكون المحفظة الرائدة للسوريين حول العالم. محفظة بلا فروع، بلا ورق، بلا طوابير — مالك كله بهاتفك.',
   values:'قيمنا',
@@ -22,25 +22,24 @@ const t = computed(() => isAr.value ? {
   ],
   timeline:'مسيرتنا',
   events:[
-    {y:'2024',t:'البداية',d:'ولدت الفكرة في كوبنهاغن — محفظة رقمية مصمم للسوريين.'},
-    {y:'2025 Q1',t:'التأسيس',d:'تسجيل SDB Wallet ApS في أوروبا والبدء بتطوير المنصة.'},
-    {y:'2025 Q3',t:'الترخيص',d:'الحصول على التراخيص المالية الأوروبية اللازمة.'},
+    {y:'2024',t:'البداية',d:'ولدت الفكرة — محفظة رقمية مصممة للسوريين حول العالم.'},
+    {y:'2025',t:'التأسيس',d:'تأسيس SDB Wallet في أوروبا والبدء بتطوير المنصة.'},
     {y:'2026 Q1',t:'الإطلاق التجريبي',d:'فتح التسجيل المسبق واختبار المنصة.'},
     {y:'2026 Q2',t:'الإطلاق الرسمي',d:'إطلاق الخدمة الكاملة: حسابات، بطاقات، تحويلات.'},
-    {y:'2027',t:'التوسع',d:'خدمات إضافية: قروض، تأمين، استثمار. توسع إقليمي.'},
+    {y:'2027',t:'التوسع',d:'خدمات إضافية: أقساط، استثمار، توسع إقليمي.'},
   ],
-  teamTitle:'فريقنا',teamDesc:'فريق متنوع من خبراء التكنولوجيا والمالية — سوريون وأوروبيون يعملون معاً.',
+  teamTitle:'فريقنا',teamDesc:'فريق متنوع من خبراء التكنولوجيا والمالية يعملون معاً لبناء أفضل تجربة مالية رقمية.',
   team:[
-    {n:'أحمد الحسن',r:'المؤسس والرئيس التنفيذي',d:'خبرة 15 سنة في القطاع المالي الأوروبي.'},
-    {n:'طارق النجار',r:'رئيس التكنولوجيا',d:'مهندس برمجيات سابق في Revolut و N26.'},
-    {n:'ليلى خانكان',r:'رئيسة العمليات',d:'خبرة في إدارة العمليات المصرفية في Danske Bank.'},
-    {n:'مارك ينسن',r:'رئيس الامتثال',d:'خبير الامتثال المالي الأوروبي — GDPR و PSD2.'},
+    {n:'🛡️',r:'فريق الأمان',d:'متخصصون في حماية البيانات والتشفير وأمن المعلومات.'},
+    {n:'💻',r:'فريق التطوير',d:'مهندسون يبنون تطبيقات سريعة وآمنة على iOS و Android.'},
+    {n:'📞',r:'فريق الدعم',d:'متاحون 24/7 لمساعدتك بالعربية والإنجليزية.'},
+    {n:'📊',r:'فريق المنتجات',d:'يصممون ميزات جديدة بناءً على احتياجات مجتمعنا.'},
   ],
-  numbers:[{v:'50K+',l:'مستخدم مسجّل'},{v:'150+',l:'دولة مدعومة'},{v:'30+',l:'عملة'},{v:'99.99%',l:'وقت تشغيل'}],
+  numbers:[{v:'170+',l:'دولة مدعومة'},{v:'30+',l:'عملة متاحة'},{v:'24/7',l:'دعم متواصل'},{v:'<20s',l:'متوسط وقت التحويل'}],
   ctaTitle:'انضم لعائلة SDB',ctaSub:'افتح حسابك المجاني بدقيقتين.',ctaBtn:'افتح حسابك ←',
 } : {
-  tag:'Our Story',title:'We are SDB Wallet.',fade:'The first Syrian digital bank.',
-  story:'SDB Wallet was born from a real struggle: millions of Syrians worldwide face difficulties with money transfers and banking access. We decided to change this reality with European technology and a Syrian soul.',
+  tag:'Our Story',title:'We are SDB Wallet.',fade:'Your smart digital wallet.',
+  story:'SDB Wallet was born from a real struggle: millions of Syrians worldwide face difficulties with money transfers and access to financial services. We decided to change this reality with modern technology and a Syrian soul.',
   mission:'Our Mission',missionText:'Making financial services accessible to every Syrian — inside or outside Syria — without geographic borders or bureaucratic barriers.',
   vision:'Our Vision',visionText:'To be the leading wallet for Syrians worldwide. A wallet without branches, without paper, without queues — your money all in your phone.',
   values:'Our Values',
@@ -54,21 +53,20 @@ const t = computed(() => isAr.value ? {
   ],
   timeline:'Our Journey',
   events:[
-    {y:'2024',t:'The Beginning',d:'The idea was born in Copenhagen — a digital bank designed for Syrians.'},
-    {y:'2025 Q1',t:'Foundation',d:'SDB Wallet ApS registered in Europe, platform development begins.'},
-    {y:'2025 Q3',t:'Licensing',d:'Obtaining the necessary European financial licenses.'},
+    {y:'2024',t:'The Beginning',d:'The idea was born — a digital wallet designed for Syrians worldwide.'},
+    {y:'2025',t:'Foundation',d:'SDB Wallet founded in Europe, platform development begins.'},
     {y:'2026 Q1',t:'Beta Launch',d:'Pre-registration opens and platform beta testing.'},
     {y:'2026 Q2',t:'Official Launch',d:'Full service launch: accounts, cards, transfers.'},
-    {y:'2027',t:'Expansion',d:'Additional services: loans, insurance, investments. Regional expansion.'},
+    {y:'2027',t:'Expansion',d:'Additional services: installments, investments, regional expansion.'},
   ],
-  teamTitle:'Our Team',teamDesc:'A diverse team of tech and finance experts — Syrians and Danes working together.',
+  teamTitle:'Our Team',teamDesc:'A diverse team of tech and finance experts working together to build the best digital financial experience.',
   team:[
-    {n:'Ahmed Al-Hassan',r:'Founder & CEO',d:'15 years experience in European financial sector.'},
-    {n:'Tarek Al-Najjar',r:'CTO',d:'Former software engineer at Revolut and N26.'},
-    {n:'Layla Khankan',r:'COO',d:'Banking operations management experience at Danske Bank.'},
-    {n:'Marc Jensen',r:'Head of Compliance',d:'European financial compliance expert — GDPR & PSD2.'},
+    {n:'🛡️',r:'Security Team',d:'Specialists in data protection, encryption, and information security.'},
+    {n:'💻',r:'Development Team',d:'Engineers building fast, secure apps on iOS & Android.'},
+    {n:'📞',r:'Support Team',d:'Available 24/7 to help you in Arabic & English.'},
+    {n:'📊',r:'Product Team',d:'Designing new features based on our community\'s needs.'},
   ],
-  numbers:[{v:'50K+',l:'Registered users'},{v:'150+',l:'Countries'},{v:'30+',l:'Currencies'},{v:'99.99%',l:'Uptime'}],
+  numbers:[{v:'170+',l:'Supported Countries'},{v:'30+',l:'Currencies'},{v:'24/7',l:'Support'},{v:'<20s',l:'Avg. Transfer Time'}],
   ctaTitle:'Join the SDB family',ctaSub:'Open your free account in 2 minutes.',ctaBtn:'Open account →',
 });
 </script>
@@ -122,33 +120,33 @@ const t = computed(() => isAr.value ? {
 <style scoped>
 /* ═══ V0 GREEN THEME ═══ */
 .hero{padding:160px 0 80px;position:relative;overflow:hidden;color:#fff}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#0f2600 100%)}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#0f2600 100%)}
 .hc{position:absolute;border-radius:50%;filter:blur(80px)}.hc1{top:-20%;right:-10%;width:500px;height:500px;background:rgba(159,232,112,.2);animation:pulse 6s ease-in-out infinite}.hc2{bottom:-20%;left:-10%;width:400px;height:400px;background:rgba(159,232,112,.1);animation:pulse 8s ease-in-out infinite}
 .hero-tag{font-size:12px;font-weight:800;letter-spacing:3px;color:#9FE870;text-transform:uppercase;margin-bottom:24px;display:inline-block}
 .hero-h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:20px;letter-spacing:-.02em}.hero-em{color:#9FE870}
 .hero-p{font-size:16px;color:rgba(255,255,255,.7);line-height:1.85}
-.t2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1.1;margin-bottom:16px;color:#163300;letter-spacing:-.02em}.t2-em{color:#2D6A00}
+.t2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1.1;margin-bottom:16px;color:#10481A;letter-spacing:-.02em}.t2-em{color:#10481A}
 .t2-sub{font-size:16px;color:#666;line-height:1.85;max-width:520px}
 .sec{padding:80px 0}.sec-alt{background:#F5F9F3}.sec-cta{padding:100px 0;background:linear-gradient(135deg,#F0FBE8,#E8F5E0)}
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
 .mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .mv-card{padding:40px;background:#fff;border:1px solid rgba(159,232,112,.15);border-radius:24px;box-shadow:0 4px 16px rgba(0,0,0,.03);transition:all .3s}.mv-card:hover{border-color:rgba(159,232,112,.4);transform:translateY(-3px);box-shadow:0 12px 32px rgba(159,232,112,.08)}
-.mv-ic{font-size:36px;margin-bottom:16px}.mv-t{font-size:20px;font-weight:900;color:#163300;margin-bottom:10px}.mv-d{font-size:15px;color:#666;line-height:1.8}
+.mv-ic{font-size:36px;margin-bottom:16px}.mv-t{font-size:20px;font-weight:900;color:#10481A;margin-bottom:10px}.mv-d{font-size:15px;color:#666;line-height:1.8}
 .vals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .val-c{padding:28px;background:#fff;border:1px solid rgba(159,232,112,.1);border-radius:20px;text-align:center;transition:all .3s}.val-c:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(159,232,112,.1);border-color:rgba(159,232,112,.3)}
-.val-ic{font-size:28px;display:block;margin-bottom:10px;transition:transform .3s}.val-c:hover .val-ic{transform:scale(1.15) rotate(6deg)}.val-t{font-size:15px;font-weight:800;color:#163300;margin-bottom:6px}.val-d{font-size:13px;color:#666;line-height:1.7}
+.val-ic{font-size:28px;display:block;margin-bottom:10px;transition:transform .3s}.val-c:hover .val-ic{transform:scale(1.15) rotate(6deg)}.val-t{font-size:15px;font-weight:800;color:#10481A;margin-bottom:6px}.val-d{font-size:13px;color:#666;line-height:1.7}
 .tl{display:flex;flex-direction:column;max-width:600px;margin:0 auto;position:relative;padding-inline-start:32px}
 .tl::before{content:'';position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#9FE870,rgba(159,232,112,.1));inset-inline-start:8px}
 .tl-item{position:relative;padding:20px 0}.tl-dot{width:16px;height:16px;background:#9FE870;border:3px solid #fff;border-radius:50%;position:absolute;inset-inline-start:-28px;top:24px;box-shadow:0 0 0 3px rgba(159,232,112,.25)}
-.tl-y{font-size:12px;font-weight:800;color:#2D6A00;margin-bottom:4px}.tl-t{font-size:16px;font-weight:800;color:#163300;margin-bottom:4px}.tl-d{font-size:14px;color:#666;line-height:1.7}
+.tl-y{font-size:12px;font-weight:800;color:#10481A;margin-bottom:4px}.tl-t{font-size:16px;font-weight:800;color:#10481A;margin-bottom:4px}.tl-d{font-size:14px;color:#666;line-height:1.7}
 .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .team-c{padding:28px;background:#fff;border:1px solid rgba(159,232,112,.1);border-radius:20px;text-align:center;transition:all .3s}.team-c:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(159,232,112,.08);border-color:rgba(159,232,112,.3)}
-.team-av{width:56px;height:56px;background:linear-gradient(135deg,#9FE870,#7ACC50);color:#163300;font-size:22px;font-weight:900;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 4px 12px rgba(159,232,112,.25)}
-.team-n{font-size:15px;font-weight:800;color:#163300;margin-bottom:4px}.team-r{font-size:12px;font-weight:700;color:#2D6A00;margin-bottom:8px}.team-d{font-size:12px;color:#888;line-height:1.6}
+.team-av{width:56px;height:56px;background:linear-gradient(135deg,#9FE870,#7ACC50);color:#10481A;font-size:22px;font-weight:900;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 4px 12px rgba(159,232,112,.25)}
+.team-n{font-size:15px;font-weight:800;color:#10481A;margin-bottom:4px}.team-r{font-size:12px;font-weight:700;color:#10481A;margin-bottom:8px}.team-d{font-size:12px;color:#888;line-height:1.6}
 .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(159,232,112,.15);border:1px solid rgba(159,232,112,.15);border-radius:24px;overflow:hidden}
 .num-i{padding:40px 20px;background:#fff;text-align:center;transition:all .3s}.num-i:hover{background:#F5F9F3}
-.num-v{font-size:clamp(2rem,4vw,3rem);font-weight:900;color:#2D6A00;margin-bottom:4px;transition:transform .3s}.num-i:hover .num-v{transform:scale(1.1)}.num-l{font-size:13px;color:#888;font-weight:600}
-.cta-btn{display:inline-block;padding:18px 48px;background:#163300;color:#fff;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;transition:all .3s;box-shadow:0 4px 16px rgba(22,51,0,.15)}.cta-btn:hover{background:#1e4400;transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,51,0,.2)}
+.num-v{font-size:clamp(2rem,4vw,3rem);font-weight:900;color:#10481A;margin-bottom:4px;transition:transform .3s}.num-i:hover .num-v{transform:scale(1.1)}.num-l{font-size:13px;color:#888;font-weight:600}
+.cta-btn{display:inline-block;padding:18px 48px;background:#10481A;color:#fff;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;transition:all .3s;box-shadow:0 4px 16px rgba(22,51,0,.15)}.cta-btn:hover{background:#0d3a14;transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,51,0,.2)}
 .an{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.an.vi{opacity:1;transform:none}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 @media(max-width:768px){

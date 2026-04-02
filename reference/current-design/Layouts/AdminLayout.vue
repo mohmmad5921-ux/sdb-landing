@@ -1,10 +1,13 @@
 <script setup>
 import { Link, usePage, router } from '@inertiajs/vue3';
-import { ref, computed, watch, nextTick } from 'vue';
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue';
+import AdminCallOverlay from '@/Components/AdminCallOverlay.vue';
+import EmployeeLayout from './EmployeeLayout.vue';
 
 const sidebarOpen = ref(true);
 const page = usePage();
 const currentRoute = computed(() => page.url);
+const isEmployee = computed(() => page.props.auth?.user?.role === 'employee');
 
 // Global Search
 const searchQuery = ref('');
@@ -57,7 +60,7 @@ const sendAiMsg = async () => {
   try {
     const history = aiMessages.value.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content }));
     const res = await fetch(route('admin.ai-chat'), {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content },
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name=_t]')?.content || document.querySelector('meta[name=sw-token]')?.content || document.querySelector('meta[name=csrf-token]')?.content },
       body: JSON.stringify({ message: msg, history }),
     });
     const data = await res.json();
@@ -67,10 +70,61 @@ const sendAiMsg = async () => {
   nextTick(() => { if (aiChatBody.value) aiChatBody.value.scrollTop = aiChatBody.value.scrollHeight; });
 };
 
-// Sidebar navigation — organized into logical categories
+// RBAC — get user role
+const userRole = computed(() => page.props.auth?.user?.role || 'admin');
+const employeeRole = computed(() => page.props.auth?.user?.employee_role || '');
+const isSuperAdmin = computed(() => ['super_admin', 'admin'].includes(userRole.value));
+const employeePermissions = computed(() => page.props.auth?.employee_permissions || []);
+
+const hasAccess = (roles) => {
+  if (!roles || isSuperAdmin.value) return true;
+  if (userRole.value === 'employee') {
+    const role = employeeRole.value;
+    // Employee admins and team leads get full access
+    if (['admin', 'team_lead'].includes(role)) return true;
+    // Check against employee_permissions (multi-permission system)
+    const perms = employeePermissions.value;
+    // Special: 'admin_only' means only super_admin/admin roles
+    if (roles.includes('admin_only')) return false;
+    return roles.some(r => perms.includes(r));
+  }
+  return true;
+};
+
+// ═══ Live Permission Sync (poll every 30s) ═══
+let permissionPoll = null;
+const lastPermUpdated = ref(page.props.auth?.permissions_updated_at || '');
+
+const checkPermissionUpdates = async () => {
+  if (userRole.value !== 'employee') return;
+  try {
+    const res = await fetch(route('admin.employees.check-permissions'), {
+      headers: { 'Accept': 'application/json' },
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.permissions_updated_at && data.permissions_updated_at !== lastPermUpdated.value) {
+      lastPermUpdated.value = data.permissions_updated_at;
+      // Permissions changed — reload page to reflect new sidebar
+      router.reload({ preserveScroll: true });
+    }
+  } catch (e) { /* silent */ }
+};
+
+onMounted(() => {
+  if (userRole.value === 'employee') {
+    permissionPoll = setInterval(checkPermissionUpdates, 30000);
+  }
+});
+
+onUnmounted(() => {
+  if (permissionPoll) clearInterval(permissionPoll);
+});
+
+// Sidebar navigation — organized into logical categories with RBAC
 const sideItems = [
   { label: 'لوحة التحكم', icon: 'dashboard', route: 'admin.dashboard' },
-  { id: 'finance', label: 'العمليات المالية', icon: 'payments', children: [
+  { id: 'finance', label: 'العمليات المالية', icon: 'payments', roles: ['finance'], children: [
     { label: 'الإيداعات', route: 'admin.transactions' },
     { label: 'التحويلات', route: 'admin.accounts' },
     { label: 'التسويات', route: 'admin.remittances' },
@@ -78,8 +132,9 @@ const sideItems = [
     { label: 'الرسوم', route: 'admin.fees' },
     { label: 'البطاقات', route: 'admin.cards' },
     { label: 'الكريبتو', route: 'admin.crypto' },
+    { label: '🏦 NymCard', route: 'admin.nymcard' },
   ]},
-  { id: 'customers', label: 'العملاء', icon: 'users', children: [
+  { id: 'customers', label: 'العملاء', icon: 'users', roles: ['support','compliance'], children: [
     { label: 'جميع العملاء', route: 'admin.users' },
     { label: 'التحقق KYC', route: 'admin.kyc' },
     { label: 'تصنيف العملاء', route: 'admin.tags' },
@@ -87,7 +142,7 @@ const sideItems = [
     { label: 'الاشتراكات', route: 'admin.subscriptions' },
     { label: 'خريطة العملاء', route: 'admin.customer-map' },
   ]},
-  { id: 'merchants', label: 'التجار والوكلاء', icon: 'shop', children: [
+  { id: 'merchants', label: 'التجار والوكلاء', icon: 'shop', roles: ['finance'], children: [
     { label: 'لوحة الشركات', route: 'admin.businesses.dashboard' },
     { label: 'حسابات الشركات', route: 'admin.businesses.index' },
     { label: 'التجار', route: 'admin.merchants' },
@@ -95,15 +150,15 @@ const sideItems = [
     { label: 'الوكلاء', route: 'admin.agents' },
     { label: 'الحوالات', route: 'admin.remittances' },
   ]},
-  { label: 'الاستشارات', icon: 'consult', route: 'admin.consultations' },
-  { id: 'employees', label: 'الدعم الفني', icon: 'support', children: [
+  { label: 'الاستشارات', icon: 'consult', route: 'admin.consultations', roles: ['support', 'finance'] },
+  { id: 'employees', label: 'الدعم الفني', icon: 'support', roles: ['support'], children: [
     { label: 'إدارة الموظفين', route: 'admin.employees' },
     { label: 'الدعم الفني', route: 'admin.support' },
     { label: 'تذاكر الدعم', route: 'admin.tickets' },
     { label: 'محادثات الدعم', route: 'admin.chat' },
     { label: 'طلبات خاصة', route: 'admin.special-requests' },
   ]},
-  { id: 'analytics', label: 'التقارير والتحليلات', icon: 'dashboard', children: [
+  { id: 'analytics', label: 'التقارير والتحليلات', icon: 'dashboard', roles: ['finance'], children: [
     { label: 'التحليلات', route: 'admin.analytics' },
     { label: 'تحليل المستخدمين', route: 'admin.user-analytics' },
     { label: 'الإيرادات', route: 'admin.revenue' },
@@ -113,7 +168,8 @@ const sideItems = [
     { label: 'مركز التقارير', route: 'admin.report-center' },
     { label: 'التقارير العامة', route: 'admin.reports' },
   ]},
-  { id: 'security', label: 'الأمان والمخاطر', icon: 'settings', children: [
+  { id: 'security', label: 'الأمان والمخاطر', icon: 'settings', roles: ['compliance'], children: [
+    { label: '🛡️ مركز الأمان', route: 'admin.security' },
     { label: 'كشف الاحتيال', route: 'admin.fraud' },
     { label: 'مكافحة غسيل الأموال', route: 'admin.aml' },
     { label: 'مراقبة المعاملات', route: 'admin.transaction-monitor' },
@@ -126,7 +182,7 @@ const sideItems = [
     { label: 'التنبيهات الأمنية', route: 'admin.alerts' },
     { label: 'سجل التغييرات', route: 'admin.changelog' },
   ]},
-  { id: 'marketing', label: 'التسويق والتواصل', icon: 'consult', children: [
+  { id: 'marketing', label: 'التسويق والتواصل', icon: 'consult', roles: ['marketing'], children: [
     { label: 'العروض والترويج', route: 'admin.promotions' },
     { label: 'الإحالات', route: 'admin.referrals' },
     { label: 'حملات البريد', route: 'admin.campaigns' },
@@ -135,13 +191,14 @@ const sideItems = [
     { label: 'إشعارات جماعية', route: 'admin.broadcast' },
     { label: 'التواصل', route: 'admin.communications' },
   ]},
-  { id: 'app', label: 'التطبيق', icon: 'cards', children: [
+  { id: 'app', label: 'التطبيق', icon: 'cards', roles: ['app_management'], children: [
     { label: 'إدارة التطبيق', route: 'admin.app-management' },
+    { label: '🎉 المناسبات والأعياد', route: 'admin.holidays' },
     { label: 'خلفيات التطبيق', route: 'admin.backgrounds' },
     { label: 'الصور والشعارات', route: 'admin.assets' },
     { label: 'رسالة داخل التطبيق', route: 'admin.in-app-message' },
   ]},
-  { id: 'settings', label: 'الإعدادات', icon: 'settings', children: [
+  { id: 'settings', label: 'الإعدادات', icon: 'settings', roles: ['settings'], children: [
     { label: 'إعدادات عامة', route: 'admin.settings' },
     { label: 'إدارة المحتوى', route: 'admin.cms' },
     { label: 'حالة API', route: 'admin.api-status' },
@@ -215,16 +272,19 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
 </script>
 
 <template>
-  <div class="ps-root">
+  <!-- Employee users → render EmployeeLayout (government style) -->
+  <EmployeeLayout v-if="isEmployee">
+    <slot />
+  </EmployeeLayout>
+
+  <!-- Admin/Super Admin → render normal AdminLayout -->
+  <div v-else class="ps-root">
     <!-- SIDEBAR -->
     <aside class="ps-sidebar" :class="{'ps-collapsed': !sidebarOpen}">
       <!-- Logo -->
       <div class="ps-logo">
         <div class="ps-logo-mark">
-          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" fill="#10b981"/><path d="M10 16.5L14 20.5L22 12.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div v-if="sidebarOpen" class="ps-logo-text">
-          <span class="ps-brand">SDB Wallet</span>
+          <img src="/images/sdb-logo.png" alt="SDB Wallet" style="width:34px;height:34px;border-radius:8px;object-fit:contain" />
         </div>
       </div>
 
@@ -232,7 +292,7 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
       <nav class="ps-nav">
         <template v-for="item in sideItems" :key="item.label">
           <!-- Simple link (no children) -->
-          <Link v-if="item.route && !item.children"
+          <Link v-if="item.route && !item.children && hasAccess(item.roles)"
             :href="route(item.route)"
             :class="['ps-nav-item', isActive(item.route) ? 'ps-active' : '']">
             <span class="ps-nav-svg" v-html="iconMap[item.icon]"></span>
@@ -241,7 +301,7 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
           </Link>
 
           <!-- Group with children -->
-          <template v-if="item.children">
+          <template v-if="item.children && hasAccess(item.roles)">
             <button
               :class="['ps-nav-item ps-group-btn', item.children.some(c => isActive(c.route)) ? 'ps-active' : '']"
               @click="toggleGroup(item.id)"
@@ -318,6 +378,10 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
 
         <div class="ps-topbar-left">
           <slot name="actions" />
+          <!-- AI Assistant Button (in topbar) -->
+          <button class="ai-topbar-btn" @click="aiOpen = !aiOpen" :class="{active: aiOpen}" title="مساعد SDB الذكي">
+            <span>🤖</span>
+          </button>
           <!-- Notification Bell -->
           <Link v-if="notifCount > 0" :href="route('admin.kyc')" class="ps-notif-btn" title="إشعارات">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
@@ -336,12 +400,6 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
         <slot />
       </div>
     </main>
-
-    <!-- AI Chat FAB -->
-    <button class="ai-fab" @click="aiOpen = !aiOpen" :class="{active: aiOpen}" title="مساعد SDB الذكي">
-      <span v-if="!aiOpen">🤖</span>
-      <span v-else>✕</span>
-    </button>
 
     <!-- AI Chat Panel -->
     <div class="ai-panel" v-if="aiOpen">
@@ -378,6 +436,10 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
         <button @click="sendAiMsg" class="ai-send" :disabled="aiLoading || !aiMsg.trim()">➤</button>
       </div>
     </div>
+    
+    <!-- Global WebRTC Admin Call Overlay -->
+    <AdminCallOverlay />
+
   </div>
 </template>
 
@@ -552,13 +614,13 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
   .ps-topbar-center { display: none; }
 }
 
-/* ═══ AI Chat Widget (preserved from original) ═══ */
-.ai-fab { position: fixed; bottom: 24px; left: 24px; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669); color: white; font-size: 24px; border: none; cursor: pointer; box-shadow: 0 6px 24px rgba(16,185,129,0.4); z-index: 9999; transition: all .3s; display: flex; align-items: center; justify-content: center; }
-.ai-fab:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(16,185,129,0.5); }
-.ai-fab.active { background: #64748b; box-shadow: 0 4px 16px rgba(100,116,139,0.4); }
+/* ═══ AI Chat Widget ═══ */
+.ai-topbar-btn { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #10b981, #059669); color: white; font-size: 18px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(16,185,129,0.3); transition: all .2s; display: flex; align-items: center; justify-content: center; }
+.ai-topbar-btn:hover { transform: scale(1.08); box-shadow: 0 4px 16px rgba(16,185,129,0.4); }
+.ai-topbar-btn.active { background: #64748b; box-shadow: 0 2px 8px rgba(100,116,139,0.3); }
 
-.ai-panel { position: fixed; bottom: 86px; left: 24px; width: 380px; max-height: 500px; background: #fff; border-radius: 18px; box-shadow: 0 12px 48px rgba(0,0,0,0.15); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; animation: ai-slideUp .3s ease; }
-@keyframes ai-slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.ai-panel { position: fixed; top: 60px; left: 24px; width: 380px; max-height: 500px; background: #fff; border-radius: 18px; box-shadow: 0 12px 48px rgba(0,0,0,0.15); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; animation: ai-slideDown .3s ease; }
+@keyframes ai-slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 .ai-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: linear-gradient(135deg, #10b981, #059669); color: white; }
 .ai-header-info { display: flex; align-items: center; gap: 10px; }
@@ -600,7 +662,6 @@ defineProps({ title: { type: String, default: '' }, subtitle: { type: String, de
 .ai-send:disabled { opacity: 0.4; cursor: not-allowed; }
 
 @media (max-width: 768px) {
-  .ai-panel { left: 8px; right: 8px; width: auto; bottom: 76px; max-height: 65vh; }
-  .ai-fab { bottom: 16px; left: 16px; width: 48px; height: 48px; font-size: 20px; }
+  .ai-panel { left: 8px; right: 8px; width: auto; top: 56px; max-height: 65vh; }
 }
 </style>

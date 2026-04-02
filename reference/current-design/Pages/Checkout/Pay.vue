@@ -95,7 +95,7 @@ const isExpired = computed(() => props.session.status === 'expired' || new Date(
                             <div class="flex items-center justify-center gap-2 text-gray-500 text-xs">
                                 <span>🔒</span>
                                 <span>مؤمّن بواسطة سوريا ديجيتال بنك</span>
-                                <span>Secured by Syria Digital Bank</span>
+                                <span>Secured by Syria Digital Wallet</span>
                             </div>
                         </div>
                     </form>
@@ -103,7 +103,7 @@ const isExpired = computed(() => props.session.status === 'expired' || new Date(
             </div>
 
             <!-- Footer -->
-            <div class="text-center mt-6 text-gray-600 text-xs">Syria Digital Bank Payment Gateway v1.0</div>
+            <div class="text-center mt-6 text-gray-600 text-xs">Syria Digital Wallet Payment Gateway v1.0</div>
         </div>
     </div>
 </template>

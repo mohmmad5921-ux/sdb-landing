@@ -11,20 +11,21 @@ onUnmounted(()=>{obs?.disconnect()});
 const t = computed(() => isAr.value ? {
   title:'الباقات والأسعار — SDB Wallet',
   heroTag:'الباقات',heroH:'اختر الباقة',heroEm:'المناسبة لك.',
-  heroP:'حسابات شخصية وتجارية بمميزات استثنائية — عمولات منافسة، 5 بطاقات Mastercard، مساعد ذكي بالذكاء الاصطناعي، وتأمين ضد الاحتيال.',
+  heroP:'حسابات شخصية وتجارية بمميزات استثنائية — 5 بطاقات Mastercard، مساعد ذكي بالذكاء الاصطناعي، وتأمين ضد الاحتيال.',
   persTag:'حسابات شخصية',persTitle:'للأفراد',persSub:'حساب رقمي شامل مع بطاقات Mastercard وتحويلات عالمية.',
-  bizTag:'حسابات تجارية',bizTitle:'للشركات',bizSub:'حلول مصرفية متكاملة لإدارة أعمالك.',
+  bizTag:'حسابات تجارية',bizTitle:'للشركات',bizSub:'حلول مالية متكاملة لإدارة أعمالك.',
+  comingSoonPrice:'سيظهر قريباً',comingSoonFee:'سيظهر قريباً',
   personal:[
-    {n:'Personal',p:'€9.99',p2:'/شهر',c:'#9FE870',cDark:'#2D6A00',pop:false,ic:'⭐',target:'للأفراد',link:'/preregister?type=personal&plan=personal',feats:[
-      {t:'5 بطاقات Mastercard',h:true},{t:'5 حسابات',h:true},{t:'عمولة تحويل 2.5%',h:false},{t:'عمولة إيداع 2%',h:false},{t:'صرف عملات +3%',h:false},{t:'تداول كريبتو 2%',h:false},{t:'AI مساعد ذكي',h:true},{t:'تأمين ضد الاحتيال',h:true}
+    {n:'Personal',p:'قريباً',p2:'',c:'#9FE870',cDark:'#10481A',pop:false,ic:'⭐',target:'للأفراد',link:'/preregister?type=personal&plan=personal',feats:[
+      {t:'5 بطاقات Mastercard',h:true},{t:'5 حسابات',h:true},{t:'عمولة تحويل — سيظهر قريباً',h:false},{t:'عمولة إيداع — سيظهر قريباً',h:false},{t:'صرف عملات — سيظهر قريباً',h:false},{t:'تداول كريبتو — سيظهر قريباً',h:false},{t:'AI مساعد ذكي',h:true},{t:'تأمين ضد الاحتيال',h:true}
     ]},
-    {n:'Plus',p:'€19.99',p2:'/شهر',c:'#7C3AED',cDark:'#4C1D95',pop:true,ic:'💎',target:'للعملاء المتقدمين',link:'/preregister?type=personal&plan=plus',feats:[
-      {t:'5 بطاقات Mastercard',h:true},{t:'5 حسابات',h:true},{t:'عمولة تحويل 1.5%',h:true},{t:'عمولة إيداع 1%',h:true},{t:'صرف عملات +1.5%',h:true},{t:'تداول كريبتو 1%',h:true},{t:'كاشباك 1%',h:true},{t:'AI مساعد ذكي',h:true},{t:'تأمين ضد الاحتيال',h:true},{t:'دعم أولوية',h:true}
+    {n:'Plus',p:'قريباً',p2:'',c:'#7C3AED',cDark:'#4C1D95',pop:false,ic:'💎',target:'للعملاء المتقدمين',link:'/preregister?type=personal&plan=plus',feats:[
+      {t:'5 بطاقات Mastercard',h:true},{t:'5 حسابات',h:true},{t:'عمولة تحويل — سيظهر قريباً',h:true},{t:'عمولة إيداع — سيظهر قريباً',h:true},{t:'صرف عملات — سيظهر قريباً',h:true},{t:'تداول كريبتو — سيظهر قريباً',h:true},{t:'كاشباك — سيظهر قريباً',h:true},{t:'AI مساعد ذكي',h:true},{t:'تأمين ضد الاحتيال',h:true},{t:'دعم أولوية',h:true}
     ]},
   ],
   business:[
-    {n:'Business',p:'€49',p2:'/شهر',c:'#3B82F6',cDark:'#1E3A5F',pop:false,ic:'🏢',target:'للشركات والمشاريع',link:'/preregister?type=business&plan=business',feats:[
-      {t:'5 بطاقات Mastercard',h:true},{t:'5 حسابات',h:true},{t:'عمولة تحويل 1%',h:true},{t:'عمولة إيداع 0.8%',h:true},{t:'صرف عملات +1%',h:true},{t:'Payment Gateway',h:true},{t:'Net Bank Business',h:true},{t:'نظام محاسبة',h:true},{t:'فواتير',h:true},{t:'API Access',h:true},{t:'AI مساعد ذكي',h:true},{t:'تأمين ضد الاحتيال',h:true},{t:'دعم أولوية',h:true}
+    {n:'Business',p:'قريباً',p2:'',c:'#3B82F6',cDark:'#1E3A5F',pop:false,ic:'🏢',target:'للشركات والمشاريع',link:'/preregister?type=business&plan=business',feats:[
+      {t:'5 بطاقات Mastercard',h:true},{t:'5 حسابات',h:true},{t:'عمولة تحويل — سيظهر قريباً',h:true},{t:'عمولة إيداع — سيظهر قريباً',h:true},{t:'صرف عملات — سيظهر قريباً',h:true},{t:'Payment Gateway',h:true},{t:'Net Bank Business',h:true},{t:'نظام محاسبة',h:true},{t:'فواتير',h:true},{t:'API Access',h:true},{t:'AI مساعد ذكي',h:true},{t:'تأمين ضد الاحتيال',h:true},{t:'دعم أولوية',h:true}
     ]},
     {n:'Enterprise',p:'مخصص',p2:'',c:'#F59E0B',cDark:'#78350F',pop:false,ic:'🚀',target:'للمؤسسات الكبيرة',link:'/contact',feats:[
       {t:'كل ميزات Business',h:true},{t:'عمولات مخصصة',h:true},{t:'Web Shop متكامل',h:true},{t:'ربط ERP / SAP',h:true},{t:'تطوير حسب الطلب',h:true},{t:'مدير حساب مخصص',h:true},{t:'SLA مخصص',h:true}
@@ -34,11 +35,11 @@ const t = computed(() => isAr.value ? {
   compH:['','Personal','Plus','Business','Enterprise'],
   compCat:[
     {cat:'العمولات',rows:[
-      {f:'السعر الشهري',v:['€9.99','€19.99','€49','مخصص']},
-      {f:'عمولة تحويل',v:['2.5%','1.5%','1%','مخصص']},
-      {f:'عمولة إيداع',v:['2%','1%','0.8%','مخصص']},
-      {f:'صرف عملات',v:['+3%','+1.5%','+1%','مخصص']},
-      {f:'تداول كريبتو',v:['2%','1%','1%','مخصص']},
+      {f:'السعر الشهري',v:['قريباً','قريباً','قريباً','مخصص']},
+      {f:'عمولة تحويل',v:['قريباً','قريباً','قريباً','مخصص']},
+      {f:'عمولة إيداع',v:['قريباً','قريباً','قريباً','مخصص']},
+      {f:'صرف عملات',v:['قريباً','قريباً','قريباً','مخصص']},
+      {f:'تداول كريبتو',v:['قريباً','قريباً','قريباً','مخصص']},
     ]},
     {cat:'البطاقات والحسابات',rows:[
       {f:'بطاقات Mastercard',v:['5','5','5','5']},
@@ -72,20 +73,21 @@ const t = computed(() => isAr.value ? {
 } : {
   title:'Plans & Pricing — SDB Wallet',
   heroTag:'PLANS',heroH:'Choose the plan',heroEm:'that fits you.',
-  heroP:'Personal and business accounts with exceptional features — competitive fees, 5 Mastercard cards, AI assistant, and fraud protection.',
+  heroP:'Personal and business accounts with exceptional features — 5 Mastercard cards, AI assistant, and fraud protection.',
   persTag:'PERSONAL ACCOUNTS',persTitle:'For individuals',persSub:'Complete digital account with Mastercard cards and global transfers.',
-  bizTag:'BUSINESS ACCOUNTS',bizTitle:'For companies',bizSub:'Complete banking solutions for your business.',
+  bizTag:'BUSINESS ACCOUNTS',bizTitle:'For companies',bizSub:'Complete financial solutions for your business.',
+  comingSoonPrice:'Coming Soon',comingSoonFee:'Coming Soon',
   personal:[
-    {n:'Personal',p:'€9.99',p2:'/month',c:'#9FE870',cDark:'#2D6A00',pop:false,ic:'⭐',target:'For individuals',link:'/preregister?type=personal&plan=personal',feats:[
-      {t:'5 Mastercard cards',h:true},{t:'5 accounts',h:true},{t:'2.5% transfer fee',h:false},{t:'2% deposit fee',h:false},{t:'+3% currency exchange',h:false},{t:'2% crypto trading',h:false},{t:'AI assistant',h:true},{t:'Fraud protection',h:true}
+    {n:'Personal',p:'Coming Soon',p2:'',c:'#9FE870',cDark:'#10481A',pop:false,ic:'⭐',target:'For individuals',link:'/preregister?type=personal&plan=personal',feats:[
+      {t:'5 Mastercard cards',h:true},{t:'5 accounts',h:true},{t:'Transfer fee — Coming Soon',h:false},{t:'Deposit fee — Coming Soon',h:false},{t:'Currency exchange — Coming Soon',h:false},{t:'Crypto trading — Coming Soon',h:false},{t:'AI assistant',h:true},{t:'Fraud protection',h:true}
     ]},
-    {n:'Plus',p:'€19.99',p2:'/month',c:'#7C3AED',cDark:'#4C1D95',pop:true,ic:'💎',target:'For advanced users',link:'/preregister?type=personal&plan=plus',feats:[
-      {t:'5 Mastercard cards',h:true},{t:'5 accounts',h:true},{t:'1.5% transfer fee',h:true},{t:'1% deposit fee',h:true},{t:'+1.5% currency exchange',h:true},{t:'1% crypto trading',h:true},{t:'1% Cashback',h:true},{t:'AI assistant',h:true},{t:'Fraud protection',h:true},{t:'Priority support',h:true}
+    {n:'Plus',p:'Coming Soon',p2:'',c:'#7C3AED',cDark:'#4C1D95',pop:false,ic:'💎',target:'For advanced users',link:'/preregister?type=personal&plan=plus',feats:[
+      {t:'5 Mastercard cards',h:true},{t:'5 accounts',h:true},{t:'Transfer fee — Coming Soon',h:true},{t:'Deposit fee — Coming Soon',h:true},{t:'Currency exchange — Coming Soon',h:true},{t:'Crypto trading — Coming Soon',h:true},{t:'Cashback — Coming Soon',h:true},{t:'AI assistant',h:true},{t:'Fraud protection',h:true},{t:'Priority support',h:true}
     ]},
   ],
   business:[
-    {n:'Business',p:'€49',p2:'/month',c:'#3B82F6',cDark:'#1E3A5F',pop:false,ic:'🏢',target:'Companies & startups',link:'/preregister?type=business&plan=business',feats:[
-      {t:'5 Mastercard cards',h:true},{t:'5 accounts',h:true},{t:'1% transfer fee',h:true},{t:'0.8% deposit fee',h:true},{t:'+1% currency exchange',h:true},{t:'Payment Gateway',h:true},{t:'Net Bank Business',h:true},{t:'Accounting system',h:true},{t:'Invoicing',h:true},{t:'API Access',h:true},{t:'AI assistant',h:true},{t:'Fraud protection',h:true},{t:'Priority support',h:true}
+    {n:'Business',p:'Coming Soon',p2:'',c:'#3B82F6',cDark:'#1E3A5F',pop:false,ic:'🏢',target:'Companies & startups',link:'/preregister?type=business&plan=business',feats:[
+      {t:'5 Mastercard cards',h:true},{t:'5 accounts',h:true},{t:'Transfer fee — Coming Soon',h:true},{t:'Deposit fee — Coming Soon',h:true},{t:'Currency exchange — Coming Soon',h:true},{t:'Payment Gateway',h:true},{t:'Net Bank Business',h:true},{t:'Accounting system',h:true},{t:'Invoicing',h:true},{t:'API Access',h:true},{t:'AI assistant',h:true},{t:'Fraud protection',h:true},{t:'Priority support',h:true}
     ]},
     {n:'Enterprise',p:'Custom',p2:'',c:'#F59E0B',cDark:'#78350F',pop:false,ic:'🚀',target:'Large enterprises',link:'/contact',feats:[
       {t:'All Business features',h:true},{t:'Custom fees',h:true},{t:'Full Web Shop',h:true},{t:'ERP / SAP integration',h:true},{t:'Custom development',h:true},{t:'Dedicated account manager',h:true},{t:'Custom SLA',h:true}
@@ -95,11 +97,11 @@ const t = computed(() => isAr.value ? {
   compH:['','Personal','Plus','Business','Enterprise'],
   compCat:[
     {cat:'Fees',rows:[
-      {f:'Monthly price',v:['€9.99','€19.99','€49','Custom']},
-      {f:'Transfer fee',v:['2.5%','1.5%','1%','Custom']},
-      {f:'Deposit fee',v:['2%','1%','0.8%','Custom']},
-      {f:'Currency exchange',v:['+3%','+1.5%','+1%','Custom']},
-      {f:'Crypto trading',v:['2%','1%','1%','Custom']},
+      {f:'Monthly price',v:['Soon','Soon','Soon','Custom']},
+      {f:'Transfer fee',v:['Soon','Soon','Soon','Custom']},
+      {f:'Deposit fee',v:['Soon','Soon','Soon','Custom']},
+      {f:'Currency exchange',v:['Soon','Soon','Soon','Custom']},
+      {f:'Crypto trading',v:['Soon','Soon','Soon','Custom']},
     ]},
     {cat:'Cards & Accounts',rows:[
       {f:'Mastercard cards',v:['5','5','5','5']},
@@ -152,7 +154,7 @@ function toggleFaq(i){faqOpen.value=faqOpen.value===i?-1:i}
   <div class="sec-hdr an"><span class="pill-green-border">{{ t.persTag }}</span><h2 class="t2">{{ t.persTitle }}</h2><p class="t2-sub">{{ t.persSub }}</p></div>
   <div class="plans-g" data-stagger>
     <div v-for="p in t.personal" :key="p.n" class="plan-card" :class="{'plan-pop':p.pop}">
-      <div v-if="p.pop" class="plan-badge">{{ isAr?'الأكثر طلباً':'Most popular' }}</div>
+
       <div class="plan-top" :style="{background:`linear-gradient(135deg,${p.cDark},${p.c})`}">
         <span class="plan-ic">{{ p.ic }}</span>
         <h3 class="plan-name">{{ p.n }}</h3>
@@ -226,20 +228,20 @@ function toggleFaq(i){faqOpen.value=faqOpen.value===i?-1:i}
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
 .sec-white{padding:100px 0;background:#fff;position:relative;overflow:hidden}
 .sec-light{padding:100px 0;background:#F5F9F3;position:relative;overflow:hidden}
-.sec-dark{padding:100px 0;background:linear-gradient(135deg,#163300,#1a3d00,#0f2600);position:relative;overflow:hidden;color:#fff}
+.sec-dark{padding:100px 0;background:linear-gradient(135deg,#10481A,#1a3d00,#0f2600);position:relative;overflow:hidden;color:#fff}
 .sec-cta{padding:120px 0;background:linear-gradient(135deg,#F0FBE8,#E8F5E0)}
 .sec-glow1{position:absolute;top:0;right:0;width:600px;height:600px;background:rgba(159,232,112,.1);border-radius:50%;filter:blur(150px)}
 .sec-glow2{position:absolute;bottom:0;left:0;width:500px;height:500px;background:rgba(159,232,112,.05);border-radius:50%;filter:blur(120px)}
 .sec-hdr{text-align:center;margin-bottom:48px}
-.pill{display:inline-block;padding:6px 16px;background:#E8F5E0;color:#2D6A00;font-size:12px;font-weight:700;border-radius:999px;margin-bottom:12px;letter-spacing:1px}
+.pill{display:inline-block;padding:6px 16px;background:#E8F5E0;color:#10481A;font-size:12px;font-weight:700;border-radius:999px;margin-bottom:12px;letter-spacing:1px}
 .pill-green-border{display:inline-block;padding:6px 16px;background:rgba(159,232,112,.2);color:#9FE870;font-size:12px;font-weight:700;border-radius:999px;margin-bottom:16px;border:1px solid rgba(159,232,112,.3)}
-.t2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px;color:#163300}.rtl .t2{letter-spacing:0}
+.t2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px;color:#10481A}.rtl .t2{letter-spacing:0}
 .t2-sub{font-size:16px;color:#666;line-height:1.85;max-width:550px;margin:0 auto}
 .hero{padding:160px 0 80px;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#E8F5E0,#F0FBE8,#fff)}
 .hero-circles{position:absolute;inset:0;overflow:hidden}
 .hc{position:absolute;border-radius:50%;filter:blur(80px)}.hc1{top:-20%;right:-10%;width:600px;height:600px;background:rgba(159,232,112,.3);animation:pulse 4s ease-in-out infinite}.hc2{bottom:-20%;left:-10%;width:500px;height:500px;background:rgba(159,232,112,.2);animation:pulse 6s ease-in-out infinite}.hc3{top:40%;left:30%;width:300px;height:300px;background:rgba(22,51,0,.05)}
-.hero-h1{font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:900;color:#163300;line-height:1.05;letter-spacing:-.04em;margin-bottom:20px}.hero-em{color:#2D6A00}
+.hero-h1{font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:900;color:#10481A;line-height:1.05;letter-spacing:-.04em;margin-bottom:20px}.hero-em{color:#10481A}
 .hero-p{font-size:18px;color:#555;line-height:1.85;margin:0 auto;max-width:650px}
 .plans-g{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:860px;margin:0 auto}
 .plan-card{background:#fff;border-radius:28px;overflow:hidden;border:2px solid #f0f0f0;transition:all .4s;position:relative}.plan-card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.1)}
@@ -257,33 +259,33 @@ function toggleFaq(i){faqOpen.value=faqOpen.value===i?-1:i}
 .plan-feats{list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:8px}
 .plan-feats li{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:rgba(10,10,10,.5);padding:8px 0;border-bottom:1px solid rgba(10,10,10,.04);transition:color .2s}
 .plan-feats-dark li{color:rgba(255,255,255,.4);border-color:rgba(255,255,255,.05)}
-.feat-hl{color:#163300!important;font-weight:600}
+.feat-hl{color:#10481A!important;font-weight:600}
 .feat-hl-dark{color:rgba(255,255,255,.85)!important;font-weight:600}
-.feat-ck{width:22px;height:22px;border-radius:50%;background:#E8F5E0;display:flex;align-items:center;justify-content:center;color:#2D6A00;font-size:11px;font-weight:900;flex-shrink:0}
+.feat-ck{width:22px;height:22px;border-radius:50%;background:#E8F5E0;display:flex;align-items:center;justify-content:center;color:#10481A;font-size:11px;font-weight:900;flex-shrink:0}
 .feat-ck-dark{background:rgba(159,232,112,.15);color:#9FE870}
 .plan-cta{display:block;padding:16px;color:#fff;font-size:15px;font-weight:800;border-radius:16px;text-decoration:none;text-align:center;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.15)}.plan-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
 /* Table */
 .tbl-wrap{overflow-x:auto;border-radius:24px;border:2px solid #f0f0f0;box-shadow:0 8px 32px rgba(0,0,0,.04)}
 .tbl{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
-.tbl thead{background:linear-gradient(135deg,#163300,#1a3d00)}
+.tbl thead{background:linear-gradient(135deg,#10481A,#1a3d00)}
 .tbl th{padding:16px 20px;color:#fff;font-weight:800;font-size:13px;text-align:center;white-space:nowrap}.tbl th:first-child{text-align:start;min-width:180px}
 .th-plan{position:relative}
 .tbl-cat-row{background:#F5F9F3}
 .tbl-cat{padding:12px 20px;font-weight:800;color:#9FE870;font-size:12px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid rgba(159,232,112,.1)}
-.tbl-feat{padding:12px 20px;font-weight:600;color:#163300;text-align:start;border-bottom:1px solid rgba(0,0,0,.03)}
+.tbl-feat{padding:12px 20px;font-weight:600;color:#10481A;text-align:start;border-bottom:1px solid rgba(0,0,0,.03)}
 .tbl td{padding:12px 20px;text-align:center;border-bottom:1px solid rgba(0,0,0,.03);color:rgba(10,10,10,.5)}
-.tbl-yes{color:#2D6A00!important;font-weight:700}.tbl-no{color:rgba(10,10,10,.12)!important}
+.tbl-yes{color:#10481A!important;font-weight:700}.tbl-no{color:rgba(10,10,10,.12)!important}
 .tbl tbody tr:hover{background:rgba(159,232,112,.03)}
 /* FAQ */
 .faqs{display:flex;flex-direction:column;gap:8px}
 .faq{background:#fff;border:1px solid #e8e8e8;border-radius:16px;padding:16px 20px;cursor:pointer;transition:all .3s}.faq:hover,.faqOpen{border-color:#9FE870;box-shadow:0 4px 16px rgba(159,232,112,.1)}
-.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:#163300}
+.faq-q{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:#10481A}
 .faq-arrow{font-size:20px;color:#9FE870;font-weight:300;flex-shrink:0;margin-inline-start:16px}
 .faq-a{margin-top:12px;font-size:14px;color:#666;line-height:1.8;padding-top:12px;border-top:1px solid #f0f0f0}
 /* CTA */
 .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.cta-btn{display:inline-block;padding:18px 48px;background:#163300;color:#fff;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;transition:all .3s}.cta-btn:hover{background:#1e4400;transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,51,0,.15)}
-.cta-btn2{display:inline-block;padding:18px 48px;background:transparent;color:#163300;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;border:2px solid rgba(22,51,0,.15);transition:all .2s}.cta-btn2:hover{border-color:#163300}
+.cta-btn{display:inline-block;padding:18px 48px;background:#10481A;color:#fff;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;transition:all .3s}.cta-btn:hover{background:#0d3a14;transform:translateY(-2px);box-shadow:0 12px 32px rgba(22,51,0,.15)}
+.cta-btn2{display:inline-block;padding:18px 48px;background:transparent;color:#10481A;font-size:16px;font-weight:800;border-radius:999px;text-decoration:none;border:2px solid rgba(22,51,0,.15);transition:all .2s}.cta-btn2:hover{border-color:#10481A}
 /* Animations */
 .an{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}.an.vi{opacity:1;transform:none}
 .an-l{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}.an-l.vi{opacity:1;transform:none}

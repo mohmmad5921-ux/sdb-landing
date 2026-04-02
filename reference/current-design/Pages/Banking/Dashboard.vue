@@ -131,7 +131,7 @@ const navItems = [
                 <header class="bd-topbar">
                     <div>
                         <h1 class="text-lg font-bold text-white">{{ greetTime }}، {{ user?.full_name?.split(' ')[0] }} 👋</h1>
-                        <p class="text-xs text-gray-500">{{ new Date().toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
+                        <p class="text-xs text-gray-500">{{ new Date().toLocaleDateString('ar-u-nu-latn', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <div v-if="user?.customer_number" class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/20">{{ user.customer_number }}</div>
@@ -263,7 +263,7 @@ const navItems = [
                                     <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-sm">{{ t.type === 'transfer' ? '↗' : t.type === 'deposit' ? '💳' : t.type === 'exchange' ? '💱' : '💸' }}</div>
                                     <div>
                                         <div class="text-sm font-medium text-white">{{ typeLabels[t.type] || t.type }}</div>
-                                        <div class="text-[10px] text-gray-600">{{ t.reference_number }} · {{ new Date(t.created_at).toLocaleDateString('ar-EG',{day:'numeric',month:'short'}) }}</div>
+                                        <div class="text-[10px] text-gray-600">{{ t.reference_number }} · {{ new Date(t.created_at).toLocaleDateString('ar-u-nu-latn',{day:'numeric',month:'short'}) }}</div>
                                     </div>
                                 </div>
                                 <div class="text-right">

@@ -30,7 +30,7 @@ const goBack = () => {
     else if (step.value === 'role') { step.value = 'type'; accountType.value = ''; }
 };
 
-const submit = () => form.post(route('login'), { onFinish: () => form.reset('password') });
+const submit = () => form.post('/business/login', { onFinish: () => form.reset('password') });
 
 const typeLabel = { business: 'حساب تجاري', agent: 'حساب وكيل' };
 const roleLabels = {
@@ -55,10 +55,8 @@ const roleLabels = {
         </div>
         <div class="bl-left-center">
           <div class="bl-brand-logo">
-            <span class="bl-brand-text">SDB</span>
-            <span class="bl-flag"></span>
+            <img src="/images/sdb-business-logo-white.png" alt="SDB Business" class="bl-brand-logo-img" />
           </div>
-          <p class="bl-brand-tagline">BUSINESS BANKING</p>
           <h2 class="bl-brand-headline">نت واليت متكامل<br/>لأعمالك</h2>
           <div class="bl-brand-features">
             <div class="bl-bf"><span class="bl-bf-dot"></span>إدارة الموظفين والصلاحيات</div>
@@ -80,8 +78,7 @@ const roleLabels = {
       <div class="bl-card">
         <div class="bl-card-header">
           <div class="bl-card-logo">
-            <span class="bl-card-logo-text">SDB</span>
-            <span class="bl-flag sm"></span>
+            <img src="/images/sdb-business-logo.png" alt="SDB Business" class="bl-card-logo-img" />
           </div>
           <h1 class="bl-title">بوابة الأعمال</h1>
           <p class="bl-subtitle">سجّل دخولك إلى حسابك التجاري أو حساب الوكيل</p>
@@ -232,8 +229,8 @@ const roleLabels = {
 .bl-back-link{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.4);font-size:13px;font-weight:600;text-decoration:none;transition:color .2s;direction:ltr}
 .bl-back-link:hover{color:rgba(255,255,255,.7)}
 .bl-left-center{flex:1;display:flex;flex-direction:column;justify-content:center}
-.bl-brand-logo{display:flex;align-items:center;gap:4px;direction:ltr;margin-bottom:4px}
-.bl-brand-text{font-family:'Inter',sans-serif;font-size:48px;font-weight:900;color:#fff;letter-spacing:-2px;line-height:1}
+.bl-brand-logo{display:flex;align-items:center;direction:ltr;margin-bottom:16px}
+.bl-brand-logo-img{height:60px;width:auto}
 .bl-flag{display:inline-block;width:28px;height:28px;border-radius:50%;flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='60' fill='%23007a3d'/%3E%3Cpath d='M0 40h120v40H0z' fill='%23fff'/%3E%3Cpath d='M0 80h120v40a60 60 0 01-120 0z' fill='%23000'/%3E%3Cpath d='M0 0h120v40a0 0 0 010 0H0z' fill='%23007a3d'/%3E%3Cg fill='%23ce1126'%3E%3Cpolygon points='35,55 36.5,60 41.5,60 37.5,63 39,68 35,65 31,68 32.5,63 28.5,60 33.5,60'/%3E%3Cpolygon points='60,55 61.5,60 66.5,60 62.5,63 64,68 60,65 56,68 57.5,63 53.5,60 58.5,60'/%3E%3Cpolygon points='85,55 86.5,60 91.5,60 87.5,63 89,68 85,65 81,68 82.5,63 78.5,60 83.5,60'/%3E%3C/g%3E%3C/svg%3E");background-size:cover}
 .bl-flag.sm{width:22px;height:22px}
 .bl-brand-tagline{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;color:rgba(255,255,255,.25);letter-spacing:4px;text-transform:uppercase;margin-bottom:32px;direction:ltr}
@@ -248,18 +245,18 @@ const roleLabels = {
 .bl-right{flex:1;display:flex;align-items:center;justify-content:center;padding:40px;background:#fafafa}
 .bl-card{width:100%;max-width:480px;background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:40px 36px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.04)}
 .bl-card-header{text-align:center;margin-bottom:24px}
-.bl-card-logo{display:flex;align-items:center;justify-content:center;gap:3px;margin-bottom:12px;direction:ltr}
-.bl-card-logo-text{font-family:'Inter',sans-serif;font-size:28px;font-weight:900;color:#0a0a0a;letter-spacing:-1.5px}
+.bl-card-logo{display:flex;align-items:center;justify-content:center;margin-bottom:12px;direction:ltr}
+.bl-card-logo-img{height:42px;width:auto}
 .bl-title{font-size:22px;font-weight:900;color:#0a0a0a}
 .bl-subtitle{font-size:13px;color:#6b7280;margin-top:4px;font-weight:500}
 
 /* Progress Steps */
 .bl-steps{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:28px}
 .bl-step{display:flex;align-items:center;gap:6px;font-size:11px;color:#9ca3af;font-weight:600}
-.bl-step.active{color:#007a3d}
+.bl-step.active{color:#106F24}
 .bl-step.done{color:#9FE870}
 .bl-step-dot{width:24px;height:24px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#9ca3af;transition:all .3s}
-.bl-step.active .bl-step-dot{background:#007a3d;color:#fff}
+.bl-step.active .bl-step-dot{background:#106F24;color:#fff}
 .bl-step.done .bl-step-dot{background:#9FE870;color:#fff}
 .bl-step-line{width:40px;height:2px;background:#e5e7eb;margin:0 8px;transition:background .3s}
 .bl-step-line.active{background:#9FE870}
@@ -274,7 +271,7 @@ const roleLabels = {
 /* Type Cards */
 .bl-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .bl-type-card{padding:24px 16px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;cursor:pointer;transition:all .3s;text-align:center}
-.bl-type-card:hover{border-color:#007a3d;background:#f0fdf4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,122,61,.08)}
+.bl-type-card:hover{border-color:#106F24;background:#f0fdf4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,122,61,.08)}
 .bl-type-card.agent:hover{border-color:#7c3aed;background:#f5f3ff}
 .bl-type-icon{font-size:36px;margin-bottom:8px}
 .bl-type-name{font-size:16px;font-weight:900;color:#0a0a0a;margin-bottom:4px}
@@ -285,12 +282,12 @@ const roleLabels = {
 /* Role Cards */
 .bl-role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .bl-role-card{padding:24px 16px;background:#fff;border:2px solid #e5e7eb;border-radius:16px;cursor:pointer;transition:all .3s;text-align:center}
-.bl-role-card:hover{border-color:#007a3d;background:#f0fdf4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,122,61,.08)}
+.bl-role-card:hover{border-color:#106F24;background:#f0fdf4;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,122,61,.08)}
 .bl-role-icon{font-size:28px;margin-bottom:6px}
 .bl-role-title{font-size:15px;font-weight:900;color:#0a0a0a;margin-bottom:4px}
 .bl-role-desc{font-size:11px;color:#6b7280;font-weight:500;line-height:1.5}
 
-.bl-back-btn{display:block;margin:16px auto 0;background:none;border:none;color:#007a3d;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;padding:8px 16px;border-radius:8px;transition:all .2s}
+.bl-back-btn{display:block;margin:16px auto 0;background:none;border:none;color:#106F24;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;padding:8px 16px;border-radius:8px;transition:all .2s}
 .bl-back-btn:hover{background:#f0fdf4}
 
 /* Selected Badge */
@@ -301,15 +298,15 @@ const roleLabels = {
 .bl-field{display:flex;flex-direction:column;gap:6px}
 .bl-label{font-size:13px;font-weight:700;color:#374151}
 .bl-input{width:100%;padding:13px 16px;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:12px;font-size:15px;color:#0a0a0a;outline:none;transition:all .2s;font-family:inherit}
-.bl-input:focus{border-color:#007a3d;background:#fff;box-shadow:0 0 0 3px rgba(0,122,61,.08)}
+.bl-input:focus{border-color:#106F24;background:#fff;box-shadow:0 0 0 3px rgba(0,122,61,.08)}
 .bl-input::placeholder{color:#9ca3af}
 .bl-error{font-size:12px;color:#dc2626;margin-top:4px}
 .bl-options{display:flex;justify-content:space-between;align-items:center}
 .bl-check{display:flex;align-items:center;gap:8px;font-size:13px;color:#6b7280;cursor:pointer;font-weight:500}
-.bl-check input{width:16px;height:16px;accent-color:#007a3d;border-radius:4px}
-.bl-forgot{font-size:13px;color:#007a3d;text-decoration:none;font-weight:700}
+.bl-check input{width:16px;height:16px;accent-color:#106F24;border-radius:4px}
+.bl-forgot{font-size:13px;color:#106F24;text-decoration:none;font-weight:700}
 .bl-forgot:hover{text-decoration:underline}
-.bl-btn{width:100%;padding:14px;background:linear-gradient(135deg,#007a3d,#00a04d);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px}
+.bl-btn{width:100%;padding:14px;background:linear-gradient(135deg,#106F24,#00a04d);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px}
 .bl-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,122,61,.25)}
 .bl-btn:active{transform:translateY(0)}
 .bl-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
@@ -317,7 +314,7 @@ const roleLabels = {
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .bl-footer{text-align:center;font-size:14px;color:#6b7280;font-weight:500;margin-top:20px;padding-top:16px;border-top:1px solid #f3f4f6}
-.bl-footer-link{color:#007a3d;font-weight:800;text-decoration:none;margin-right:6px}
+.bl-footer-link{color:#106F24;font-weight:800;text-decoration:none;margin-right:6px}
 .bl-footer-link:hover{text-decoration:underline}
 
 @media(max-width:900px){

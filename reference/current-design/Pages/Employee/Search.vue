@@ -20,7 +20,7 @@ const kycLabel = s => ({verified:'موثّق',pending:'قيد المراجعة',
 <div class="es">
   <!-- Hero Section -->
   <div class="es-hero" v-if="!q">
-    <img src="/images/sdb-staff-logo.png" alt="SDB Wallet" class="es-logo" />
+    <img src="/images/sdb-logo.png" alt="SDB Wallet" class="es-logo" />
     <h1 class="es-title">بحث عن عميل</h1>
     <p class="es-subtitle">بوابة موظفي الدعم — SDB Wallet</p>
   </div>

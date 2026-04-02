@@ -228,7 +228,7 @@ const fmtCrypto = (a) => Number(a).toLocaleString('en-US', { minimumFractionDigi
                   </div>
                   <div>
                     <div class="text-sm font-medium text-white">{{ t.metadata?.trade_type === 'crypto_buy' ? 'شراء' : 'بيع' }} {{ t.metadata?.crypto_code }}</div>
-                    <div class="text-[10px] text-gray-600">{{ t.reference_number }} · {{ new Date(t.created_at).toLocaleDateString('ar-EG',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) }}</div>
+                    <div class="text-[10px] text-gray-600">{{ t.reference_number }} · {{ new Date(t.created_at).toLocaleDateString('ar-u-nu-latn',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) }}</div>
                   </div>
                 </div>
                 <div class="text-right">

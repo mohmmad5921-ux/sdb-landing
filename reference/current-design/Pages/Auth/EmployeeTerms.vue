@@ -5,7 +5,7 @@ import { Head } from '@inertiajs/vue3';
 <Head title="شروط استخدام بوابة الموظفين — SDB Wallet" />
 <div class="st-page">
   <div class="st-center">
-    <img src="/images/sdb-staff-logo.png" alt="SDB Wallet" class="st-logo" />
+    <img src="/images/sdb-logo.png" alt="SDB Wallet" class="st-logo" />
     <div class="st-card">
       <h1 class="st-title">📋 شروط استخدام بوابة الموظفين</h1>
       <p class="st-date">آخر تحديث: مارس 2026</p>
@@ -74,7 +74,7 @@ import { Head } from '@inertiajs/vue3';
 
       <a href="/staff/portal" class="st-back">← العودة إلى صفحة الدخول</a>
     </div>
-    <p class="st-copy">© 2026 SDB Wallet — Syria Digital Bank</p>
+    <p class="st-copy">© 2026 SDB Wallet — Syria Digital Wallet</p>
   </div>
 </div>
 </template>

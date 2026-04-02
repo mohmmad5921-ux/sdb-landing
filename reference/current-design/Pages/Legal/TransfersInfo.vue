@@ -5,13 +5,13 @@ import SiteLayout from '@/Layouts/SiteLayout.vue';
 defineOptions({ layout: SiteLayout });
 const isAr = inject('isAr', computed(() => true));
 const countries = [
-  {flag:'🇸🇾',ar:'سوريا',en:'Syria',c:'SYP'},{flag:'🇦🇪',ar:'الإمارات',en:'UAE',c:'AED'},{flag:'🇸🇦',ar:'السعودية',en:'Saudi Arabia',c:'SAR'},
-  {flag:'🇹🇷',ar:'تركيا',en:'Turkey',c:'TRY'},{flag:'🇩🇪',ar:'ألمانيا',en:'Germany',c:'EUR'},{flag:'🇬🇧',ar:'بريطانيا',en:'UK',c:'GBP'},
-  {flag:'🇺🇸',ar:'أمريكا',en:'USA',c:'USD'},{flag:'🇫🇷',ar:'فرنسا',en:'France',c:'EUR'},{flag:'🇪🇬',ar:'مصر',en:'Egypt',c:'EGP'},
-  {flag:'🇯🇴',ar:'الأردن',en:'Jordan',c:'JOD'},{flag:'🇱🇧',ar:'لبنان',en:'Lebanon',c:'LBP'},{flag:'🇮🇶',ar:'العراق',en:'Iraq',c:'IQD'},
-  {flag:'🇸🇪',ar:'السويد',en:'Sweden',c:'SEK'},{flag:'🇳🇴',ar:'النرويج',en:'Norway',c:'NOK'},{flag:'🇩🇰',ar:'الدنمارك',en:'Denmark',c:'DKK'},
-  {flag:'🇨🇦',ar:'كندا',en:'Canada',c:'CAD'},{flag:'🇦🇺',ar:'أستراليا',en:'Australia',c:'AUD'},{flag:'🇯🇵',ar:'اليابان',en:'Japan',c:'JPY'},
-  {flag:'🇰🇷',ar:'كوريا',en:'South Korea',c:'KRW'},{flag:'🇮🇳',ar:'الهند',en:'India',c:'INR'},
+  {flag:'sy',ar:'سوريا',en:'Syria',c:'SYP'},{flag:'ae',ar:'الإمارات',en:'UAE',c:'AED'},{flag:'sa',ar:'السعودية',en:'Saudi Arabia',c:'SAR'},
+  {flag:'tr',ar:'تركيا',en:'Turkey',c:'TRY'},{flag:'de',ar:'ألمانيا',en:'Germany',c:'EUR'},{flag:'gb',ar:'بريطانيا',en:'UK',c:'GBP'},
+  {flag:'us',ar:'أمريكا',en:'USA',c:'USD'},{flag:'fr',ar:'فرنسا',en:'France',c:'EUR'},{flag:'eg',ar:'مصر',en:'Egypt',c:'EGP'},
+  {flag:'jo',ar:'الأردن',en:'Jordan',c:'JOD'},{flag:'lb',ar:'لبنان',en:'Lebanon',c:'LBP'},{flag:'iq',ar:'العراق',en:'Iraq',c:'IQD'},
+  {flag:'se',ar:'السويد',en:'Sweden',c:'SEK'},{flag:'no',ar:'النرويج',en:'Norway',c:'NOK'},{flag:'dk',ar:'الدنمارك',en:'Denmark',c:'DKK'},
+  {flag:'ca',ar:'كندا',en:'Canada',c:'CAD'},{flag:'au',ar:'أستراليا',en:'Australia',c:'AUD'},{flag:'jp',ar:'اليابان',en:'Japan',c:'JPY'},
+  {flag:'kr',ar:'كوريا',en:'South Korea',c:'KRW'},{flag:'in',ar:'الهند',en:'India',c:'INR'},
 ];
 const t = computed(() => isAr.value ? {
   title:'التحويلات — SDB Wallet',tag:'حوّل لأهلك',
@@ -87,7 +87,7 @@ const t = computed(() => isAr.value ? {
 
 <section class="sec sec-dark"><div class="sw"><div class="sec-hdr"><h2 class="t2 t2-w">{{ t.syriaTitle }}<br><span class="t2-em-w">{{ t.syriaFade }}</span></h2><p class="t2-sub t2-sub-w">{{ t.syriaDesc }}</p></div></div></section>
 
-<section class="sec"><div class="sw"><h2 class="t2 tc">{{ t.countriesTitle }}</h2><div class="country-g"><div v-for="c in countries" :key="c.c" class="cnt-c"><span class="cnt-fl">{{ c.flag }}</span><div><div class="cnt-name">{{ isAr ? c.ar : c.en }}</div><div class="cnt-code">{{ c.c }}</div></div></div></div></div></section>
+<section class="sec"><div class="sw"><h2 class="t2 tc">{{ t.countriesTitle }}</h2><div class="country-g"><div v-for="c in countries" :key="c.c" class="cnt-c"><span :class="'fi fi-' + c.flag" class="cnt-fl"></span><div><div class="cnt-name">{{ isAr ? c.ar : c.en }}</div><div class="cnt-code">{{ c.c }}</div></div></div></div></div></section>
 
 <section class="sec sec-alt"><div class="sw"><h2 class="t2 tc">{{ t.faqTitle }}</h2><div class="faqs"><div v-for="f in t.faqs" :key="f.q" class="faq-c"><h4 class="faq-q">{{ f.q }}</h4><p class="faq-a">{{ f.a }}</p></div></div></div></section>
 
@@ -95,13 +95,13 @@ const t = computed(() => isAr.value ? {
 </template>
 <style scoped>
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}
-.sec{padding:100px 0}.sec-alt{background:#fafafa}.sec-dark{background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.sec{padding:100px 0}.sec-alt{background:#fafafa}.sec-dark{background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .tc{text-align:center}
 .t2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:48px}.t2-w{color:#fff}
 .t2-em-w{color:#9FE870}
 .t2-sub{font-size:16px;color:rgba(10,10,10,.35);line-height:1.8;max-width:500px}.t2-sub-w{color:rgba(255,255,255,.3)}
 .sec-hdr{margin-bottom:0}
-.p-hero{padding:160px 0 80px;background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff;text-align:center}
+.p-hero{padding:160px 0 80px;background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff;text-align:center}
 .p-hero-tag{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:24px}
 .p-hero-h{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.1;margin-bottom:20px}
 .p-hero-em{color:rgba(255,255,255,.6)}
@@ -128,7 +128,7 @@ const t = computed(() => isAr.value ? {
 .typ-mv{font-size:13px;font-weight:700;color:#9FE870}
 .country-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .cnt-c{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid rgba(10,10,10,.06);border-radius:12px;transition:all .3s}.cnt-c:hover{border-color:rgba(159,232,112,.15);transform:translateY(-2px)}
-.cnt-fl{font-size:28px}
+.cnt-fl{font-size:28px;border-radius:4px}
 .cnt-name{font-size:13px;font-weight:700}
 .cnt-code{font-size:11px;color:rgba(10,10,10,.3)}
 .faqs{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:12px}

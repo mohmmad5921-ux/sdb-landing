@@ -36,7 +36,7 @@ const t = computed(() => isAr.value ? {
     'يجب تسوية أي أرصدة مستحقة قبل طلب الحذف',
   ],
   s6t: 'تواصل معنا',
-  s6items: ['📧 dpo@sdbwallet.com','🏢 قسم حماية البيانات — SDB Wallet ApS، أوروبا','💬 الدعم داخل التطبيق: متاح 24/7'],
+  s6items: ['📧 dpo@sdbwallet.com','🏢 قسم حماية البيانات — SDB Wallet، أوروبا','💬 الدعم داخل التطبيق: متاح 24/7'],
 } : {
   title: 'Data Deletion — SDB Wallet',
   badge: '🗑️ Data Deletion',
@@ -69,7 +69,7 @@ const t = computed(() => isAr.value ? {
     'Any outstanding balances must be settled before requesting deletion',
   ],
   s6t: 'Contact Us',
-  s6items: ['📧 dpo@sdbwallet.com','🏢 Data Protection Dept. — SDB Wallet ApS, Europe','💬 In-app support: Available 24/7'],
+  s6items: ['📧 dpo@sdbwallet.com','🏢 Data Protection Dept. — SDB Wallet, Europe','💬 In-app support: Available 24/7'],
 });
 </script>
 

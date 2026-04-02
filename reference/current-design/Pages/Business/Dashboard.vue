@@ -1,186 +1,204 @@
 <script setup>
-import { Head, Link, usePage } from '@inertiajs/vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { computed } from 'vue';
+import BusinessLayout from '@/Layouts/BusinessLayout.vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 
-const props = defineProps({
-    user: Object,
-    business: Object,
-    accounts: Array,
-    recentTransactions: Array,
-    totalBalance: Number,
-    stats: Object,
+const page = usePage();
+const stats = computed(() => page.props.stats || {});
+const accounts = computed(() => page.props.accounts || []);
+const recentTx = computed(() => page.props.recentTransactions || []);
+
+// Currency switcher
+const currencies = computed(() => {
+    const seen = {};
+    (accounts.value || []).forEach(a => {
+        const code = a.currency?.code || 'USD';
+        if (!seen[code]) seen[code] = { code, symbol: a.currency?.symbol || '$' };
+    });
+    return Object.values(seen);
+});
+const activeCurrency = ref(null);
+const currentCurrency = computed(() => activeCurrency.value || currencies.value[0]?.code || 'USD');
+const currentSymbol = computed(() => currencies.value.find(c => c.code === currentCurrency.value)?.symbol || '$');
+
+const filteredAccounts = computed(() => {
+    if (!currentCurrency.value) return accounts.value;
+    return (accounts.value || []).filter(a => (a.currency?.code || 'USD') === currentCurrency.value);
 });
 
-const fmt = (a, s = '€') => Number(a || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + s;
-const fmtK = (a) => { a = Number(a || 0); if (a >= 1000000) return (a/1000000).toFixed(1) + 'M'; if (a >= 1000) return (a/1000).toFixed(1) + 'K'; return a.toFixed(0); };
+const totalBalance = computed(() => filteredAccounts.value.reduce((s, a) => s + Number(a.balance || 0), 0));
 
-const navItems = [
-    { label: 'لوحة التحكم', icon: '🏠', href: '/business/dashboard', active: true },
-    { label: 'الحسابات', icon: '💰', href: '/business/dashboard' },
-    { label: 'الموظفين', icon: '👥', href: '/business/dashboard' },
-    { label: 'الفواتير', icon: '🧾', href: '/business/dashboard' },
-    { label: 'التقارير', icon: '📊', href: '/business/dashboard' },
-    { label: 'البطاقات', icon: '💳', href: '/business/dashboard' },
-    { label: 'الإعدادات', icon: '⚙️', href: '/business/dashboard' },
-];
+const fmt = (a) => Number(a || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtDate = (d) => d ? new Date(d).toLocaleDateString('ar-u-nu-latn', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
 </script>
 
 <template>
-<Head title="لوحة التحكم — الحساب التجاري" />
-<AuthenticatedLayout>
-<div class="bp-root">
-    <!-- Sidebar -->
-    <aside class="bp-sidebar">
-        <div class="bp-logo">
-            <div class="bp-logo-text">SDB</div>
-            <div class="bp-logo-sub">Business</div>
+<BusinessLayout title="لوحة التحكم">
+    <div class="db-grid">
+        <!-- Currency Switcher -->
+        <div class="db-currency-bar" v-if="currencies.length > 1">
+            <button v-for="c in currencies" :key="c.code"
+                :class="['db-cur-btn', currentCurrency === c.code && 'db-cur-active']"
+                @click="activeCurrency = c.code">
+                {{ c.symbol }} {{ c.code }}
+            </button>
         </div>
-        <nav class="bp-nav">
-            <Link v-for="n in navItems" :key="n.label" :href="n.href"
-                  :class="['bp-nav-item', n.active ? 'bp-nav-active' : '']">
-                <span>{{ n.icon }}</span>
-                <span>{{ n.label }}</span>
-            </Link>
-        </nav>
-        <div class="bp-sidebar-footer">
-            <Link href="/profile" class="bp-nav-item"><span>👤</span><span>الملف الشخصي</span></Link>
-            <Link :href="route('logout')" method="post" as="button" class="bp-nav-item bp-logout"><span>🚪</span><span>تسجيل الخروج</span></Link>
+
+        <!-- KPI Stats -->
+        <div class="db-stats">
+            <div class="db-stat">
+                <div class="db-stat-icon db-green">💰</div>
+                <div>
+                    <div class="db-stat-label">الرصيد الإجمالي</div>
+                    <div class="db-stat-value">{{ currentSymbol }}{{ fmt(totalBalance) }}</div>
+                    <div class="db-stat-sub">{{ filteredAccounts.length }} حساب · {{ currentCurrency }}</div>
+                </div>
+            </div>
+            <div class="db-stat">
+                <div class="db-stat-icon db-blue">📈</div>
+                <div>
+                    <div class="db-stat-label">الوارد هذا الشهر</div>
+                    <div class="db-stat-value db-green-text">+{{ fmt(stats.monthlyIn) }}</div>
+                    <div class="db-stat-sub">📬 واردات</div>
+                </div>
+            </div>
+            <div class="db-stat">
+                <div class="db-stat-icon db-red">📉</div>
+                <div>
+                    <div class="db-stat-label">المنفق هذا الشهر</div>
+                    <div class="db-stat-value db-red-text">-{{ fmt(stats.monthlyOut) }}</div>
+                    <div class="db-stat-sub">📤 مصروفات</div>
+                </div>
+            </div>
+            <div class="db-stat">
+                <div class="db-stat-icon db-purple">🧾</div>
+                <div>
+                    <div class="db-stat-label">معاملات معلقة</div>
+                    <div class="db-stat-value">{{ stats.pendingCount || 0 }}</div>
+                    <div class="db-stat-sub">✅ {{ stats.completedCount || 0 }} مكتمل</div>
+                </div>
+            </div>
         </div>
-    </aside>
 
-    <!-- Main -->
-    <main class="bp-main">
-        <header class="bp-topbar">
-            <div>
-                <h1 class="bp-title">مرحباً، {{ user?.full_name?.split(' ')[0] }} 👋</h1>
-                <p class="bp-date">{{ new Date().toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</p>
-            </div>
-            <div class="bp-header-badges">
-                <span class="bp-badge bp-badge-green">🏢 حساب تجاري</span>
-                <span v-if="business?.business_name" class="bp-badge">{{ business.business_name }}</span>
-            </div>
-        </header>
+        <!-- Quick Actions -->
+        <div class="db-actions">
+            <Link href="/business/invoices" class="db-action"><span>🧾</span> إنشاء فاتورة</Link>
+            <Link href="/business/pos" class="db-action"><span>🏪</span> نقطة بيع</Link>
+            <Link href="/business/installments" class="db-action"><span>📋</span> عقد ائتمان</Link>
+            <Link href="/business/payroll" class="db-action"><span>💵</span> دورة رواتب</Link>
+            <Link href="/business/customers" class="db-action"><span>👥</span> إضافة عميل</Link>
+        </div>
 
-        <div class="bp-content">
-            <!-- Stats Row -->
-            <div class="bp-stats-grid">
-                <div class="bp-stat">
-                    <div class="bp-stat-icon" style="background:rgba(16,185,129,.12)">💰</div>
-                    <div>
-                        <div class="bp-stat-label">الرصيد الإجمالي</div>
-                        <div class="bp-stat-value" style="color:#10b981">{{ fmt(totalBalance) }}</div>
-                    </div>
-                </div>
-                <div class="bp-stat">
-                    <div class="bp-stat-icon" style="background:rgba(99,102,241,.12)">📊</div>
-                    <div>
-                        <div class="bp-stat-label">الحجم الشهري</div>
-                        <div class="bp-stat-value" style="color:#6366f1">{{ fmtK(stats?.monthlyVolume) }}</div>
-                    </div>
-                </div>
-                <div class="bp-stat">
-                    <div class="bp-stat-icon" style="background:rgba(245,158,11,.12)">🏦</div>
-                    <div>
-                        <div class="bp-stat-label">الحسابات</div>
-                        <div class="bp-stat-value" style="color:#f59e0b">{{ stats?.totalAccounts || 0 }}</div>
-                    </div>
-                </div>
-                <div class="bp-stat">
-                    <div class="bp-stat-icon" style="background:rgba(139,92,246,.12)">💳</div>
-                    <div>
-                        <div class="bp-stat-label">البطاقات</div>
-                        <div class="bp-stat-value" style="color:#8b5cf6">{{ stats?.totalCards || 0 }}</div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="db-bottom">
             <!-- Accounts -->
-            <div>
-                <h2 class="bp-section-title">💰 الحسابات</h2>
-                <div class="bp-accounts-grid">
-                    <div v-for="acc in accounts" :key="acc.id" class="bp-account-card">
-                        <div class="bp-acc-top">
-                            <span class="bp-acc-currency">{{ acc.currency?.symbol || '€' }}</span>
-                            <span class="bp-acc-status">{{ acc.status === 'active' ? '✅ نشط' : '⏸ مغلق' }}</span>
+            <div class="db-section">
+                <div class="db-section-header">
+                    <h3>💰 حساباتي</h3>
+                    <Link href="/business/accounts" class="db-link">عرض الكل ←</Link>
+                </div>
+                <div class="db-accounts">
+                    <div v-for="acc in accounts" :key="acc.id" class="db-acc" :class="{ 'db-acc-dim': activeCurrency && (acc.currency?.code || 'USD') !== currentCurrency }">
+                        <div class="db-acc-top">
+                            <span class="db-acc-currency">{{ acc.currency?.code || 'USD' }}</span>
+                            <span :class="['db-acc-status', acc.status === 'active' ? 'active' : '']">{{ acc.status === 'active' ? 'نشط' : acc.status }}</span>
                         </div>
-                        <div class="bp-acc-balance">{{ fmt(acc.balance, acc.currency?.symbol || '€') }}</div>
-                        <div class="bp-acc-iban">{{ acc.iban }}</div>
-                        <div class="bp-acc-code">{{ acc.currency?.code }} · {{ acc.account_number }}</div>
+                        <div class="db-acc-balance">{{ acc.currency?.symbol || '$' }} {{ fmt(acc.balance) }}</div>
+                        <div class="db-acc-num">🏦 {{ acc.account_number }}</div>
                     </div>
-                    <div v-if="!accounts?.length" class="bp-empty">لا توجد حسابات</div>
+                    <div v-if="!accounts.length" class="db-empty">لا توجد حسابات</div>
                 </div>
             </div>
 
             <!-- Recent Transactions -->
-            <div class="bp-tx-section">
-                <h2 class="bp-section-title">📋 آخر المعاملات</h2>
-                <div class="bp-tx-list">
-                    <div v-for="tx in recentTransactions" :key="tx.id" class="bp-tx-row">
-                        <div class="bp-tx-left">
-                            <div class="bp-tx-icon">{{ tx.type === 'transfer' ? '↗' : tx.type === 'deposit' ? '💳' : '💸' }}</div>
-                            <div>
-                                <div class="bp-tx-type">{{ tx.type }}</div>
-                                <div class="bp-tx-date">{{ new Date(tx.created_at).toLocaleDateString('ar-EG') }}</div>
-                            </div>
+            <div class="db-section">
+                <div class="db-section-header">
+                    <h3>📋 آخر المعاملات</h3>
+                    <Link href="/business/transactions" class="db-link">عرض الكل ←</Link>
+                </div>
+                <div class="db-tx-list">
+                    <div v-for="tx in recentTx" :key="tx.id" class="db-tx">
+                        <div :class="['db-tx-icon', tx.type === 'credit' ? 'db-tx-in' : 'db-tx-out']">
+                            {{ tx.type === 'credit' ? '↓' : '↑' }}
                         </div>
-                        <div class="bp-tx-amount" :class="tx.type === 'deposit' ? 'green' : ''">{{ fmt(tx.amount) }}</div>
+                        <div class="db-tx-info">
+                            <div class="db-tx-desc">{{ tx.description || tx.type }}</div>
+                            <div class="db-tx-date">{{ fmtDate(tx.created_at) }}</div>
+                        </div>
+                        <div :class="['db-tx-amount', tx.type === 'credit' ? 'db-green-text' : 'db-red-text']">
+                            {{ tx.type === 'credit' ? '+' : '-' }}{{ fmt(tx.amount) }}
+                        </div>
                     </div>
-                    <div v-if="!recentTransactions?.length" class="bp-empty">لا توجد معاملات</div>
+                    <div v-if="!recentTx.length" class="db-empty">لا توجد معاملات بعد</div>
                 </div>
             </div>
         </div>
-    </main>
-</div>
-</AuthenticatedLayout>
+    </div>
+</BusinessLayout>
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
-.bp-root{display:flex;min-height:100vh;background:#060b18;font-family:'Cairo',system-ui,sans-serif;direction:rtl;color:#fff}
-.bp-sidebar{width:220px;background:#0a0f1f;border-left:1px solid rgba(255,255,255,.05);flex-shrink:0;display:flex;flex-direction:column}
-.bp-logo{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,.05);text-align:center}
-.bp-logo-text{font-family:'Inter',sans-serif;font-size:28px;font-weight:900;color:#fff;letter-spacing:-1px}
-.bp-logo-sub{font-size:10px;color:#10b981;font-weight:700;letter-spacing:2px;text-transform:uppercase}
-.bp-nav{padding:12px 8px;flex:1;display:flex;flex-direction:column;gap:2px}
-.bp-nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;font-size:13px;color:rgba(255,255,255,.4);text-decoration:none;font-weight:600;transition:all .2s;border:none;background:none;cursor:pointer;width:100%;text-align:right}
-.bp-nav-item:hover{background:rgba(255,255,255,.04);color:rgba(255,255,255,.7)}
-.bp-nav-active{background:rgba(16,185,129,.1)!important;color:#10b981!important;font-weight:700}
-.bp-sidebar-footer{padding:8px;border-top:1px solid rgba(255,255,255,.05)}
-.bp-logout{color:rgba(239,68,68,.6)!important}.bp-logout:hover{color:#ef4444!important;background:rgba(239,68,68,.08)!important}
-.bp-main{flex:1;display:flex;flex-direction:column;overflow-y:auto}
-.bp-topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,.05)}
-.bp-title{font-size:18px;font-weight:800;color:#fff}
-.bp-date{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px}
-.bp-header-badges{display:flex;gap:8px}
-.bp-badge{font-size:11px;padding:5px 12px;border-radius:10px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);font-weight:600}
-.bp-badge-green{background:rgba(16,185,129,.1);color:#10b981}
-.bp-content{padding:24px 28px;display:flex;flex-direction:column;gap:24px}
-.bp-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.bp-stat{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:18px 16px}
-.bp-stat-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.bp-stat-label{font-size:11px;color:rgba(255,255,255,.35);font-weight:600}
-.bp-stat-value{font-size:22px;font-weight:900;margin-top:2px}
-.bp-section-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:12px}
-.bp-accounts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.bp-account-card{background:linear-gradient(135deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:18px;transition:all .2s}
-.bp-account-card:hover{border-color:rgba(16,185,129,.2)}
-.bp-acc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.bp-acc-currency{font-size:24px}
-.bp-acc-status{font-size:10px;color:#10b981;font-weight:600}
-.bp-acc-balance{font-size:20px;font-weight:900;color:#fff;margin-bottom:4px}
-.bp-acc-iban{font-size:10px;color:rgba(255,255,255,.25);font-family:monospace;margin-bottom:2px}
-.bp-acc-code{font-size:10px;color:rgba(255,255,255,.15)}
-.bp-tx-section{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:16px;overflow:hidden}
-.bp-tx-list{max-height:400px;overflow-y:auto}
-.bp-tx-row{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.03);transition:background .2s}
-.bp-tx-row:hover{background:rgba(255,255,255,.02)}
-.bp-tx-left{display:flex;align-items:center;gap:12px}
-.bp-tx-icon{width:36px;height:36px;background:rgba(255,255,255,.05);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
-.bp-tx-type{font-size:13px;font-weight:700;color:#fff}
-.bp-tx-date{font-size:10px;color:rgba(255,255,255,.25)}
-.bp-tx-amount{font-size:14px;font-weight:800;color:#fff}
-.bp-tx-amount.green{color:#10b981}
-.bp-empty{padding:40px;text-align:center;color:rgba(255,255,255,.2);font-size:14px}
-@media(max-width:900px){.bp-sidebar{display:none}.bp-stats-grid{grid-template-columns:repeat(2,1fr)}.bp-accounts-grid{grid-template-columns:1fr}}
+.db-grid { display: flex; flex-direction: column; gap: 24px; }
+
+/* Currency Switcher */
+.db-currency-bar { display: flex; gap: 8px; }
+.db-cur-btn { padding: 8px 20px; border-radius: 10px; border: 1.5px solid #e2e8f0; background: #fff; font-size: 13px; font-weight: 700; color: #64748b; cursor: pointer; font-family: 'Cairo'; transition: all .2s; }
+.db-cur-btn:hover { border-color: #106F24; color: #106F24; }
+.db-cur-active { background: #106F24 !important; color: #fff !important; border-color: #106F24 !important; }
+
+/* Stats */
+.db-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.db-stat { background: #fff; border: 1px solid #e8ecf1; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px; transition: box-shadow .2s; }
+.db-stat:hover { box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+.db-stat-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.db-green { background: #ecfdf5; }
+.db-blue { background: #eff6ff; }
+.db-red { background: #fef2f2; }
+.db-purple { background: #f5f3ff; }
+.db-stat-label { font-size: 12px; color: #9ca3af; font-weight: 600; }
+.db-stat-value { font-size: 24px; font-weight: 900; color: #1a1a2e; margin-top: 2px; }
+.db-stat-sub { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.db-green-text { color: #059669 !important; }
+.db-red-text { color: #dc2626 !important; }
+
+/* Actions */
+.db-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.db-action { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: #fff; border: 1px solid #e8ecf1; border-radius: 12px; font-size: 13px; font-weight: 700; color: #1a1a2e; text-decoration: none; transition: all .2s; }
+.db-action:hover { border-color: #106F24; color: #106F24; box-shadow: 0 2px 8px rgba(16,111,36,.08); }
+
+/* Bottom */
+.db-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.db-section { background: #fff; border: 1px solid #e8ecf1; border-radius: 16px; padding: 20px; }
+.db-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.db-section-header h3 { font-size: 15px; font-weight: 800; color: #1a1a2e; }
+.db-link { font-size: 12px; color: #106F24; font-weight: 700; text-decoration: none; }
+
+/* Accounts */
+.db-accounts { display: flex; flex-direction: column; gap: 10px; }
+.db-acc { padding: 16px; background: #f8f9fb; border-radius: 12px; border: 1px solid #e8ecf1; transition: opacity .2s; }
+.db-acc-dim { opacity: .4; }
+.db-acc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.db-acc-currency { font-size: 14px; font-weight: 800; color: #1a1a2e; background: #ecfdf5; padding: 2px 10px; border-radius: 6px; }
+.db-acc-status { font-size: 10px; color: #9ca3af; font-weight: 600; }
+.db-acc-status.active { color: #059669; }
+.db-acc-balance { font-size: 22px; font-weight: 900; color: #1a1a2e; }
+.db-acc-num { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+
+/* Transactions */
+.db-tx-list { display: flex; flex-direction: column; }
+.db-tx { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+.db-tx:last-child { border-bottom: none; }
+.db-tx-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; flex-shrink: 0; }
+.db-tx-in { background: #ecfdf5; color: #059669; }
+.db-tx-out { background: #fef2f2; color: #dc2626; }
+.db-tx-info { flex: 1; }
+.db-tx-desc { font-size: 13px; font-weight: 700; color: #1a1a2e; }
+.db-tx-date { font-size: 11px; color: #9ca3af; }
+.db-tx-amount { font-size: 14px; font-weight: 800; }
+
+.db-empty { text-align: center; padding: 30px; color: #9ca3af; font-size: 13px; }
+
+@media (max-width: 900px) {
+    .db-stats { grid-template-columns: repeat(2, 1fr); }
+    .db-bottom { grid-template-columns: 1fr; }
+}
 </style>

@@ -7,28 +7,28 @@ const isAr = inject('isAr', computed(() => true));
 
 /* ─── Currencies with flags ─── */
 const curs = [
-  {c:'SYP',f:'🇸🇾',n:'ليرة سورية',en:'Syrian Lira'},
-  {c:'EUR',f:'🇪🇺',n:'يورو',en:'Euro'},
-  {c:'USD',f:'🇺🇸',n:'دولار أمريكي',en:'US Dollar'},
-  {c:'GBP',f:'🇬🇧',n:'جنيه إسترليني',en:'British Pound'},
-  {c:'DKK',f:'🇩🇰',n:'كرونة دنماركية',en:'Danish Krone'},
-  {c:'SEK',f:'🇸🇪',n:'كرونة سويدية',en:'Swedish Krona'},
-  {c:'NOK',f:'🇳🇴',n:'كرونة نرويجية',en:'Norwegian Krone'},
-  {c:'CHF',f:'🇨🇭',n:'فرنك سويسري',en:'Swiss Franc'},
-  {c:'TRY',f:'🇹🇷',n:'ليرة تركية',en:'Turkish Lira'},
-  {c:'AED',f:'🇦🇪',n:'درهم إماراتي',en:'UAE Dirham'},
-  {c:'SAR',f:'🇸🇦',n:'ريال سعودي',en:'Saudi Riyal'},
-  {c:'KWD',f:'🇰🇼',n:'دينار كويتي',en:'Kuwaiti Dinar'},
-  {c:'QAR',f:'🇶🇦',n:'ريال قطري',en:'Qatari Riyal'},
-  {c:'BHD',f:'🇧🇭',n:'دينار بحريني',en:'Bahraini Dinar'},
-  {c:'OMR',f:'🇴🇲',n:'ريال عماني',en:'Omani Rial'},
-  {c:'JOD',f:'🇯🇴',n:'دينار أردني',en:'Jordanian Dinar'},
-  {c:'EGP',f:'🇪🇬',n:'جنيه مصري',en:'Egyptian Pound'},
-  {c:'LBP',f:'🇱🇧',n:'ليرة لبنانية',en:'Lebanese Pound'},
-  {c:'IQD',f:'🇮🇶',n:'دينار عراقي',en:'Iraqi Dinar'},
-  {c:'CAD',f:'🇨🇦',n:'دولار كندي',en:'Canadian Dollar'},
-  {c:'AUD',f:'🇦🇺',n:'دولار أسترالي',en:'Australian Dollar'},
-  {c:'JPY',f:'🇯🇵',n:'ين ياباني',en:'Japanese Yen'},
+  {c:'SYP',f:'sy',n:'ليرة سورية',en:'Syrian Lira'},
+  {c:'EUR',f:'eu',n:'يورو',en:'Euro'},
+  {c:'USD',f:'us',n:'دولار أمريكي',en:'US Dollar'},
+  {c:'GBP',f:'gb',n:'جنيه إسترليني',en:'British Pound'},
+  {c:'DKK',f:'dk',n:'كرونة دنماركية',en:'Danish Krone'},
+  {c:'SEK',f:'se',n:'كرونة سويدية',en:'Swedish Krona'},
+  {c:'NOK',f:'no',n:'كرونة نرويجية',en:'Norwegian Krone'},
+  {c:'CHF',f:'ch',n:'فرنك سويسري',en:'Swiss Franc'},
+  {c:'TRY',f:'tr',n:'ليرة تركية',en:'Turkish Lira'},
+  {c:'AED',f:'ae',n:'درهم إماراتي',en:'UAE Dirham'},
+  {c:'SAR',f:'sa',n:'ريال سعودي',en:'Saudi Riyal'},
+  {c:'KWD',f:'kw',n:'دينار كويتي',en:'Kuwaiti Dinar'},
+  {c:'QAR',f:'qa',n:'ريال قطري',en:'Qatari Riyal'},
+  {c:'BHD',f:'bh',n:'دينار بحريني',en:'Bahraini Dinar'},
+  {c:'OMR',f:'om',n:'ريال عماني',en:'Omani Rial'},
+  {c:'JOD',f:'jo',n:'دينار أردني',en:'Jordanian Dinar'},
+  {c:'EGP',f:'eg',n:'جنيه مصري',en:'Egyptian Pound'},
+  {c:'LBP',f:'lb',n:'ليرة لبنانية',en:'Lebanese Pound'},
+  {c:'IQD',f:'iq',n:'دينار عراقي',en:'Iraqi Dinar'},
+  {c:'CAD',f:'ca',n:'دولار كندي',en:'Canadian Dollar'},
+  {c:'AUD',f:'au',n:'دولار أسترالي',en:'Australian Dollar'},
+  {c:'JPY',f:'jp',n:'ين ياباني',en:'Japanese Yen'},
 ];
 
 /* Rates vs EUR — fetched live from API */
@@ -110,12 +110,12 @@ function selectTo(c){ toCur.value = c; showToDD.value = false; }
 
 /* Popular pairs */
 const popularPairs = [
-  {from:'EUR',to:'SYP',f1:'🇪🇺',f2:'🇸🇾'},{from:'USD',to:'SYP',f1:'🇺🇸',f2:'🇸🇾'},
-  {from:'GBP',to:'SYP',f1:'🇬🇧',f2:'🇸🇾'},{from:'TRY',to:'SYP',f1:'🇹🇷',f2:'🇸🇾'},
-  {from:'AED',to:'SYP',f1:'🇦🇪',f2:'🇸🇾'},{from:'SAR',to:'SYP',f1:'🇸🇦',f2:'🇸🇾'},
-  {from:'EUR',to:'USD',f1:'🇪🇺',f2:'🇺🇸'},{from:'EUR',to:'GBP',f1:'🇪🇺',f2:'🇬🇧'},
-  {from:'USD',to:'TRY',f1:'🇺🇸',f2:'🇹🇷'},{from:'EUR',to:'DKK',f1:'🇪🇺',f2:'🇩🇰'},
-  {from:'GBP',to:'EUR',f1:'🇬🇧',f2:'🇪🇺'},{from:'USD',to:'JPY',f1:'🇺🇸',f2:'🇯🇵'},
+  {from:'EUR',to:'SYP',f1:'eu',f2:'sy'},{from:'USD',to:'SYP',f1:'us',f2:'sy'},
+  {from:'GBP',to:'SYP',f1:'gb',f2:'sy'},{from:'TRY',to:'SYP',f1:'tr',f2:'sy'},
+  {from:'AED',to:'SYP',f1:'ae',f2:'sy'},{from:'SAR',to:'SYP',f1:'sa',f2:'sy'},
+  {from:'EUR',to:'USD',f1:'eu',f2:'us'},{from:'EUR',to:'GBP',f1:'eu',f2:'gb'},
+  {from:'USD',to:'TRY',f1:'us',f2:'tr'},{from:'EUR',to:'DKK',f1:'eu',f2:'dk'},
+  {from:'GBP',to:'EUR',f1:'gb',f2:'eu'},{from:'USD',to:'JPY',f1:'us',f2:'jp'},
 ];
 function pairRate(from,to){ return ((ratesVsEUR.value[to]||1)/(ratesVsEUR.value[from]||1)); }
 function fmtRate(r){ return r >= 100 ? Math.round(r).toLocaleString('en-US') : r >= 1 ? r.toFixed(4) : r.toFixed(6); }
@@ -190,13 +190,13 @@ const t = computed(() => isAr.value ? {
     <label class="conv-label">{{ t.youSend }}</label>
     <div class="conv-row">
       <div class="cur-picker" @click="showFromDD=!showFromDD;showToDD=false">
-        <span class="cur-flag">{{ fromObj.f }}</span>
+        <span :class="'fi fi-' + fromObj.f" class="cur-flag"></span>
         <span class="cur-code">{{ fromObj.c }}</span>
         <span class="cur-arrow">▾</span>
         <!-- Dropdown -->
         <div v-if="showFromDD" class="cur-dd">
           <div v-for="c in curs" :key="c.c" class="cur-dd-item" :class="{'cur-dd-active':c.c===fromCur}" @click.stop="selectFrom(c.c)">
-            <span>{{ c.f }}</span><span class="cur-dd-code">{{ c.c }}</span><span class="cur-dd-name">{{ isAr?c.n:c.en }}</span>
+            <span :class="'fi fi-' + c.f" style="font-size:18px;border-radius:3px"></span><span class="cur-dd-code">{{ c.c }}</span><span class="cur-dd-name">{{ isAr?c.n:c.en }}</span>
           </div>
         </div>
       </div>
@@ -214,12 +214,12 @@ const t = computed(() => isAr.value ? {
     <label class="conv-label">{{ t.recipientGets }}</label>
     <div class="conv-row">
       <div class="cur-picker" @click="showToDD=!showToDD;showFromDD=false">
-        <span class="cur-flag">{{ toObj.f }}</span>
+        <span :class="'fi fi-' + toObj.f" class="cur-flag"></span>
         <span class="cur-code">{{ toObj.c }}</span>
         <span class="cur-arrow">▾</span>
         <div v-if="showToDD" class="cur-dd">
           <div v-for="c in curs" :key="c.c" class="cur-dd-item" :class="{'cur-dd-active':c.c===toCur}" @click.stop="selectTo(c.c)">
-            <span>{{ c.f }}</span><span class="cur-dd-code">{{ c.c }}</span><span class="cur-dd-name">{{ isAr?c.n:c.en }}</span>
+            <span :class="'fi fi-' + c.f" style="font-size:18px;border-radius:3px"></span><span class="cur-dd-code">{{ c.c }}</span><span class="cur-dd-name">{{ isAr?c.n:c.en }}</span>
           </div>
         </div>
       </div>
@@ -246,7 +246,7 @@ const t = computed(() => isAr.value ? {
   <p class="t2-sub tc" style="margin:-24px auto 40px">{{ t.popSub }}</p>
   <div class="pop-grid">
     <div v-for="p in popularPairs" :key="p.from+p.to" class="pop-c" @click="pickPair(p.from,p.to)">
-      <div class="pop-flags"><span>{{ p.f1 }}</span><span class="pop-ar">→</span><span>{{ p.f2 }}</span></div>
+      <div class="pop-flags"><span :class="'fi fi-' + p.f1" style="font-size:20px;border-radius:3px"></span><span class="pop-ar">→</span><span :class="'fi fi-' + p.f2" style="font-size:20px;border-radius:3px"></span></div>
       <div class="pop-pair">{{ p.from }}/{{ p.to }}</div>
       <div class="pop-rate">{{ fmtRate(pairRate(p.from,p.to)) }}</div>
     </div>
@@ -275,12 +275,12 @@ const t = computed(() => isAr.value ? {
 <style scoped>
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
 .sec{padding:80px 0}.sec-alt{background:#F5F9F3}
-.sec-sky{background:linear-gradient(135deg,#163300,#1a3d00,#9FE870);color:#fff}
+.sec-sky{background:linear-gradient(135deg,#10481A,#1a3d00,#9FE870);color:#fff}
 .t2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:32px}.t2-w{color:#fff}
 .t2-sub{font-size:15px;color:rgba(10,10,10,.35);line-height:1.8;max-width:540px}.t2-sub-w{color:rgba(255,255,255,.4)}
 
 /* ─── Hero ─── */
-.hero{padding:140px 0 40px;background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.hero{padding:140px 0 40px;background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .hero-tag{font-size:12px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.85);text-transform:uppercase;margin-bottom:20px}
 .hero-h{font-size:clamp(2rem,4.5vw,3.4rem);font-weight:900;line-height:1.1;margin-bottom:14px;color:#fff}.hero-em{color:#E8F5E0}
 .hero-p{font-size:16px;color:rgba(255,255,255,.75);max-width:520px;margin:0 auto;line-height:1.8}
@@ -297,16 +297,16 @@ const t = computed(() => isAr.value ? {
 /* Currency picker */
 .cur-picker{display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 14px;background:#fff;border:1px solid rgba(159,232,112,.12);border-radius:12px;position:relative;user-select:none;transition:all .2s;flex-shrink:0}
 .cur-picker:hover{border-color:#9FE870;box-shadow:0 2px 8px rgba(159,232,112,.1)}
-.cur-flag{font-size:24px}.cur-code{font-size:18px;font-weight:900;color:#163300}
+.cur-flag{font-size:24px;border-radius:3px}.cur-code{font-size:18px;font-weight:900;color:#10481A}
 .cur-arrow{font-size:10px;color:rgba(10,10,10,.25);transition:transform .2s}
 .cur-dd{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;background:#fff;border:1px solid rgba(159,232,112,.1);border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.12);padding:8px;z-index:100;max-height:320px;overflow-y:auto}
 .rtl .cur-dd{left:auto;right:0}
 .cur-dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .15s;font-size:14px}
 .cur-dd-item:hover{background:rgba(159,232,112,.06)}
 .cur-dd-active{background:rgba(159,232,112,.1)!important;font-weight:700}
-.cur-dd-code{font-weight:800;color:#163300;min-width:40px}.cur-dd-name{color:rgba(10,10,10,.4);font-size:13px}
+.cur-dd-code{font-weight:800;color:#10481A;min-width:40px}.cur-dd-name{color:rgba(10,10,10,.4);font-size:13px}
 
-.conv-input{flex:1;border:none;background:transparent;font-size:clamp(28px,5vw,36px);font-weight:900;color:#163300;text-align:end;outline:none;font-family:inherit;min-width:0}
+.conv-input{flex:1;border:none;background:transparent;font-size:clamp(28px,5vw,36px);font-weight:900;color:#10481A;text-align:end;outline:none;font-family:inherit;min-width:0}
 .conv-input::-webkit-inner-spin-button,.conv-input::-webkit-outer-spin-button{-webkit-appearance:none}
 .conv-input{-moz-appearance:textfield}
 .rtl .conv-input{text-align:start}
@@ -321,7 +321,7 @@ const t = computed(() => isAr.value ? {
 .conv-info{margin-top:24px;padding-top:24px;border-top:1px solid rgba(159,232,112,.08);display:flex;flex-direction:column;gap:14px}
 .info-row{display:flex;align-items:center;gap:12px}
 .info-icon{font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:#F5F9F3;border-radius:10px;flex-shrink:0}
-.info-label{font-size:12px;color:rgba(10,10,10,.35);margin-bottom:1px}.info-val{font-size:15px;font-weight:700;color:#163300}
+.info-label{font-size:12px;color:rgba(10,10,10,.35);margin-bottom:1px}.info-val{font-size:15px;font-weight:700;color:#10481A}
 .info-note{font-size:12px;color:rgba(10,10,10,.25);font-weight:400}
 .info-green{color:#059669}.info-green-bold{color:#059669;font-size:17px;font-weight:900}
 .info-strike .info-val{text-decoration:line-through;color:rgba(10,10,10,.2)}
@@ -337,7 +337,7 @@ const t = computed(() => isAr.value ? {
 .pop-c:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(159,232,112,.08);border-color:rgba(159,232,112,.15)}
 .pop-flags{font-size:24px;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px}
 .pop-ar{font-size:14px;color:rgba(159,232,112,.3)}
-.pop-pair{font-size:13px;font-weight:800;color:#163300;margin-bottom:4px}
+.pop-pair{font-size:13px;font-weight:800;color:#10481A;margin-bottom:4px}
 .pop-rate{font-size:18px;font-weight:900;color:#9FE870}
 
 /* ─── Why SDB ─── */
@@ -345,10 +345,10 @@ const t = computed(() => isAr.value ? {
 .why-c{padding:28px;background:#fff;border:1px solid rgba(159,232,112,.06);border-radius:18px;text-align:center;transition:all .3s}
 .why-c:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(159,232,112,.06)}
 .why-ic{font-size:32px;display:block;margin-bottom:12px}
-.why-t{font-size:15px;font-weight:800;color:#163300;margin-bottom:8px}
+.why-t{font-size:15px;font-weight:800;color:#10481A;margin-bottom:8px}
 .why-d{font-size:13px;color:rgba(10,10,10,.4);line-height:1.75}
 
-.cta-btn{display:inline-block;padding:16px 44px;background:#fff;color:#163300;font-size:15px;font-weight:800;border-radius:12px;text-decoration:none;transition:all .2s}.cta-btn:hover{transform:translateY(-2px)}
+.cta-btn{display:inline-block;padding:16px 44px;background:#fff;color:#10481A;font-size:15px;font-weight:800;border-radius:12px;text-decoration:none;transition:all .2s}.cta-btn:hover{transform:translateY(-2px)}
 
 @media(max-width:900px){.pop-grid{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.pop-grid,.g3{grid-template-columns:1fr}.conv-card{padding:24px 18px}.conv-input,.conv-result{font-size:24px}}

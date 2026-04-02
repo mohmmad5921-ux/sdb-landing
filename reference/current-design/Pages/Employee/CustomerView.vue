@@ -3,14 +3,18 @@ import EmployeeLayout from '@/Layouts/EmployeeLayout.vue';
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 defineOptions({ layout: EmployeeLayout });
-const p = defineProps({ customer: Object, accounts: Array, recentTransactions: Array, remittances: Array, tickets: Array, documents: Array });
+const p = defineProps({ customer: Object, accounts: Array, recentTransactions: Array, remittances: Array, tickets: Array, documents: Array, savingsGoals: Array, cryptoWallets: Array, staffNotes: Array });
 const f = (n, s='€') => s + Number(n||0).toLocaleString('en', {minimumFractionDigits:2});
 const statusLabel = s => ({active:'نشط',frozen:'مجمّد',suspended:'موقف'}[s]||s);
 const kycLabel = s => ({verified:'✅ موثّق',pending:'⏳ قيد المراجعة',rejected:'❌ مرفوض',none:'لم يقدم'}[s]||s);
-const txType = t => ({deposit:'إيداع',withdrawal:'سحب',transfer:'تحويل',fee:'رسوم',card_payment:'دفع بطاقة',exchange:'تبديل'}[t]||t);
+const txType = t => ({deposit:'إيداع',withdrawal:'سحب',transfer:'تحويل',fee:'رسوم',card_payment:'دفع بطاقة',exchange:'تبديل',savings_deposit:'إيداع ادخار',savings_withdrawal:'سحب ادخار',savings_goal_created:'إنشاء صندوق',savings_goal_closed:'إلغاء صندوق'}[t]||t);
 const remStatus = s => ({ready:'جاهزة',collected:'مسلّمة',cancelled:'ملغية'}[s]||s);
+const savingsStatus = s => ({active:'نشط',completed:'مكتمل',cancelled:'ملغي'}[s]||s);
+const goalProgress = g => g.target_amount > 0 ? Math.min(100, Math.round((g.current_amount / g.target_amount) * 100)) : 0;
 const fmtDate = d => d ? d.split(' ')[0] : '—';
 const docLabel = t => ({passport:'رقم الجواز',id_card:'رقم الهوية',national_id:'رقم الهوية الوطنية',driving_license:'رقم رخصة القيادة'}[t]||'رقم الوثيقة');
+const cryptoIcon = c => ({ETH:'⟠',BTC:'₿',USDC:'🔵',USDT:'🟢'}[c]||'🪙');
+const truncAddr = a => a ? a.slice(0,8) + '...' + a.slice(-6) : '—';
 const docType = t => ({passport:'جواز سفر',id_card:'بطاقة هوية',national_id:'هوية وطنية',driving_license:'رخصة قيادة'}[t]||t);
 const kycDocType = t => ({id_front:'الهوية - أمامي',id_back:'الهوية - خلفي',passport:'جواز السفر',selfie:'صورة شخصية',proof_of_address:'إثبات عنوان',other:'أخرى'}[t]||t);
 const kycDocStatus = s => ({approved:'✅ معتمد',pending:'⏳ قيد المراجعة',rejected:'❌ مرفوض'}[s]||s);
@@ -64,6 +68,23 @@ const toggleFreeze = (accId, action) => {
 
 // Document preview
 const showDoc = ref(null);
+
+// Staff Notes
+const showNoteForm = ref(false);
+const noteForm = useForm({ content: '', category: 'general' });
+const noteCategories = {
+  general: { label: 'عام', icon: '📝', color: '#64748b' },
+  kyc: { label: 'KYC', icon: '🪪', color: '#0284c7' },
+  support: { label: 'دعم', icon: '🎧', color: '#7c3aed' },
+  risk: { label: 'مخاطر', icon: '⚠️', color: '#dc2626' },
+  finance: { label: 'مالية', icon: '💰', color: '#059669' },
+  compliance: { label: 'امتثال', icon: '🛡️', color: '#d97706' },
+};
+const submitNote = () => {
+  noteForm.post(route('employee.customer.note', p.customer.id), {
+    onSuccess: () => { showNoteForm.value = false; noteForm.reset(); },
+  });
+};
 </script>
 <template>
 <Head :title="'عميل — ' + customer.full_name" />
@@ -204,6 +225,37 @@ const showDoc = ref(null);
     </div>
   </div>
 
+  <!-- Savings Goals -->
+  <div class="cv-sec">
+    <h2 class="cv-sec-title">🏦 صناديق الادخار</h2>
+    <div class="cv-savings-grid" v-if="savingsGoals?.length">
+      <div v-for="g in savingsGoals" :key="g.id" class="cv-savings-card">
+        <div class="cv-savings-top">
+          <span class="cv-savings-emoji">{{ g.emoji || '🎯' }}</span>
+          <div class="cv-savings-info">
+            <span class="cv-savings-name">{{ g.name }}</span>
+            <span class="cv-savings-currency">{{ g.currency_symbol || '€' }} {{ g.currency_code || 'EUR' }}</span>
+          </div>
+          <span class="cv-badge-sm" :class="'cv-sg-' + g.status">{{ savingsStatus(g.status) }}</span>
+        </div>
+        <div class="cv-savings-amounts">
+          <span>{{ f(g.current_amount, g.currency_symbol || '€') }}</span>
+          <span class="cv-savings-of">من</span>
+          <span>{{ f(g.target_amount, g.currency_symbol || '€') }}</span>
+        </div>
+        <div class="cv-savings-bar">
+          <div class="cv-savings-fill" :style="{width: goalProgress(g) + '%'}"></div>
+        </div>
+        <div class="cv-savings-bottom">
+          <span class="cv-savings-pct">{{ goalProgress(g) }}%</span>
+          <span class="cv-savings-date">{{ fmtDate(g.created_at) }}</span>
+        </div>
+      </div>
+    </div>
+    <div v-else class="cv-empty">لا توجد صناديق ادخار</div>
+    <div class="cv-readonly-note">⚠️ عرض فقط — لا يمكن تعديل الصناديق</div>
+  </div>
+
   <!-- Support Tickets -->
   <div class="cv-sec">
     <h2 class="cv-sec-title">🎫 التذاكر</h2>
@@ -214,6 +266,81 @@ const showDoc = ref(null);
       </Link>
     </div>
     <div v-else class="cv-empty">لا توجد تذاكر</div>
+  </div>
+
+  <!-- Crypto Wallets -->
+  <div class="cv-sec">
+    <h2 class="cv-sec-title">🪙 محافظ الكريبتو</h2>
+    <div class="cv-list" v-if="cryptoWallets?.length">
+      <div v-for="w in cryptoWallets" :key="w.id" class="cv-goal">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:22px">{{ cryptoIcon(w.currency) }}</span>
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:8px">
+              <strong>{{ w.currency }}</strong>
+              <span class="cv-badge-sm" style="background:#f0fdf4;color:#166534">{{ Number(w.balance).toFixed(w.currency==='ETH'?6:2) }}</span>
+            </div>
+            <div style="font-size:11px;color:#888;margin-top:2px;direction:ltr;text-align:left">
+              <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:10px">{{ truncAddr(w.address) }}</code>
+              · {{ fmtDate(w.created_at) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-else class="cv-empty">لا توجد محافظ كريبتو</div>
+  </div>
+
+  <!-- ═══ Staff Notes (shared between employees + admin) ═══ -->
+  <div class="cv-sec">
+    <div class="cv-sec-header">
+      <h2 class="cv-sec-title">📝 ملاحظات الموظفين</h2>
+      <button @click="showNoteForm = !showNoteForm" class="cv-add-note-btn">{{ showNoteForm ? '✕ إغلاق' : '+ إضافة ملاحظة' }}</button>
+    </div>
+
+    <!-- Add Note Form -->
+    <div v-if="showNoteForm" class="cv-note-form">
+      <form @submit.prevent="submitNote">
+        <div class="cv-note-cats">
+          <button v-for="(cat, key) in noteCategories" :key="key" type="button"
+            class="cv-note-cat" :class="{ 'cv-note-cat-active': noteForm.category === key }"
+            :style="noteForm.category === key ? { background: cat.color + '15', borderColor: cat.color, color: cat.color } : {}"
+            @click="noteForm.category = key">
+            {{ cat.icon }} {{ cat.label }}
+          </button>
+        </div>
+        <textarea v-model="noteForm.content" required rows="3" class="cv-note-input" placeholder="اكتب ملاحظتك هنا..."></textarea>
+        <div class="cv-note-actions">
+          <button type="submit" class="cv-m-ok" :disabled="noteForm.processing || !noteForm.content">
+            {{ noteForm.processing ? 'جاري الحفظ...' : 'حفظ الملاحظة ✅' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Notes List -->
+    <div class="cv-notes-list" v-if="staffNotes?.length">
+      <div v-for="note in staffNotes" :key="note.id" class="cv-note-item" :class="{ 'cv-note-pinned': note.is_pinned }">
+        <div class="cv-note-top">
+          <div class="cv-note-author">
+            <span class="cv-note-avatar">{{ note.admin?.full_name?.charAt(0) || 'M' }}</span>
+            <div>
+              <span class="cv-note-name">{{ note.admin?.full_name || 'موظف' }}</span>
+              <span class="cv-note-role" v-if="note.admin?.employee_role">{{ note.admin.employee_role === 'admin' ? 'مدير' : note.admin.employee_role === 'supervisor' ? 'مشرف' : 'موظف' }}</span>
+            </div>
+          </div>
+          <div class="cv-note-meta">
+            <span class="cv-note-cat-badge" :style="{ background: (noteCategories[note.category]?.color || '#64748b') + '15', color: noteCategories[note.category]?.color || '#64748b' }">
+              {{ noteCategories[note.category]?.icon || '📝' }} {{ noteCategories[note.category]?.label || note.category }}
+            </span>
+            <span v-if="note.is_pinned" class="cv-note-pin">📌</span>
+            <span class="cv-note-date">{{ fmtDate(note.created_at) }}</span>
+          </div>
+        </div>
+        <div class="cv-note-content">{{ note.content }}</div>
+      </div>
+    </div>
+    <div v-else class="cv-empty">لا توجد ملاحظات بعد — كن أول من يضيف ملاحظة</div>
   </div>
 
   <!-- Edit Info Modal (address, governorate, country only) -->
@@ -365,9 +492,52 @@ const showDoc = ref(null);
 .cv-readonly-input{background:#f8fafc !important;color:#94a3b8 !important}
 .cv-select{appearance:none;cursor:pointer}
 .cv-mactions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
-.cv-m-ok{padding:10px 24px;background:#2D6A00;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.cv-m-ok{padding:10px 24px;background:#10481A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
 .cv-m-ok:disabled{opacity:.5;cursor:not-allowed}
 .cv-m-warn{background:#d97706}
 .cv-m-cancel{padding:10px 24px;background:#f1f5f9;color:#64748b;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
-@media(max-width:900px){.cv-info-grid{grid-template-columns:repeat(2,1fr)}.cv-doc-grid{grid-template-columns:repeat(2,1fr)}}
+/* Savings Goals */
+.cv-savings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.cv-savings-card{background:#fff;border:1px solid #e8ebf0;border-radius:14px;padding:16px}
+.cv-savings-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cv-savings-emoji{font-size:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-radius:12px}
+.cv-savings-info{flex:1;display:flex;flex-direction:column}
+.cv-savings-name{font-size:14px;font-weight:800;color:#0f172a}
+.cv-savings-currency{font-size:11px;font-weight:600;color:#64748b}
+.cv-savings-amounts{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:8px}
+.cv-savings-of{font-size:11px;font-weight:500;color:#94a3b8}
+.cv-savings-bar{width:100%;height:8px;background:#f1f5f9;border-radius:4px;overflow:hidden}
+.cv-savings-fill{height:100%;background:linear-gradient(90deg,#059669,#34d399);border-radius:4px;transition:width .5s ease}
+.cv-savings-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.cv-savings-pct{font-size:12px;font-weight:800;color:#059669}
+.cv-savings-date{font-size:10px;color:#94a3b8}
+.cv-sg-active{background:#ecfdf5;color:#059669}
+.cv-sg-completed{background:#dbeafe;color:#2563eb}
+.cv-sg-cancelled{background:#fef2f2;color:#dc2626}
+@media(max-width:900px){.cv-info-grid{grid-template-columns:repeat(2,1fr)}.cv-doc-grid{grid-template-columns:repeat(2,1fr)}.cv-savings-grid{grid-template-columns:1fr}}
+/* Staff Notes */
+.cv-sec-header{display:flex;justify-content:space-between;align-items:center}
+.cv-add-note-btn{padding:6px 14px;background:#10481A;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+.cv-add-note-btn:hover{background:#0d3a15}
+.cv-note-form{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:12px}
+.cv-note-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.cv-note-cat{padding:4px 10px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;background:#fff;color:#64748b;font-family:inherit;transition:all .15s}
+.cv-note-cat:hover{border-color:#94a3b8}
+.cv-note-cat-active{font-weight:800}
+.cv-note-input{width:100%;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:13px;font-family:inherit;resize:vertical;outline:none;transition:border .2s;direction:rtl;box-sizing:border-box}
+.cv-note-input:focus{border-color:#10481A}
+.cv-note-actions{display:flex;justify-content:flex-end;margin-top:8px}
+.cv-notes-list{display:flex;flex-direction:column;gap:8px}
+.cv-note-item{background:#fff;border:1px solid #e8ebf0;border-radius:12px;padding:14px}
+.cv-note-pinned{border-color:#fbbf24;background:#fffbeb}
+.cv-note-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.cv-note-author{display:flex;align-items:center;gap:8px}
+.cv-note-avatar{width:28px;height:28px;border-radius:8px;background:#10481A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.cv-note-name{font-size:12px;font-weight:700;color:#0f172a}
+.cv-note-role{font-size:10px;color:#64748b;margin-right:6px}
+.cv-note-meta{display:flex;align-items:center;gap:6px}
+.cv-note-cat-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px}
+.cv-note-pin{font-size:12px}
+.cv-note-date{font-size:10px;color:#94a3b8}
+.cv-note-content{font-size:13px;color:#334155;line-height:1.7;white-space:pre-wrap}
 </style>

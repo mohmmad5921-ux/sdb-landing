@@ -6,26 +6,26 @@ defineOptions({ layout: SiteLayout });
 const isAr = inject('isAr', computed(() => true));
 
 const pairs = [
-  {from:'EUR',to:'USD',rate:'1.0842',f1:'🇪🇺',f2:'🇺🇸'},{from:'EUR',to:'GBP',rate:'0.8617',f1:'🇪🇺',f2:'🇬🇧'},
-  {from:'EUR',to:'CHF',rate:'0.9486',f1:'🇪🇺',f2:'🇨🇭'},{from:'EUR',to:'TRY',rate:'34.82',f1:'🇪🇺',f2:'🇹🇷'},
-  {from:'EUR',to:'AED',rate:'3.9815',f1:'🇪🇺',f2:'🇦🇪'},{from:'EUR',to:'SAR',rate:'4.0658',f1:'🇪🇺',f2:'🇸🇦'},
-  {from:'EUR',to:'JPY',rate:'162.35',f1:'🇪🇺',f2:'🇯🇵'},{from:'EUR',to:'CAD',rate:'1.4723',f1:'🇪🇺',f2:'🇨🇦'},
-  {from:'EUR',to:'NOK',rate:'11.58',f1:'🇪🇺',f2:'🇳🇴'},{from:'EUR',to:'DKK',rate:'7.4589',f1:'🇪🇺',f2:'🇩🇰'},
-  {from:'EUR',to:'SEK',rate:'11.24',f1:'🇪🇺',f2:'🇸🇪'},{from:'EUR',to:'AUD',rate:'1.6548',f1:'🇪🇺',f2:'🇦🇺'},
+  {from:'EUR',to:'USD',rate:'1.0842',f1:'eu',f2:'us'},{from:'EUR',to:'GBP',rate:'0.8617',f1:'eu',f2:'gb'},
+  {from:'EUR',to:'CHF',rate:'0.9486',f1:'eu',f2:'ch'},{from:'EUR',to:'TRY',rate:'34.82',f1:'eu',f2:'tr'},
+  {from:'EUR',to:'AED',rate:'3.9815',f1:'eu',f2:'ae'},{from:'EUR',to:'SAR',rate:'4.0658',f1:'eu',f2:'sa'},
+  {from:'EUR',to:'JPY',rate:'162.35',f1:'eu',f2:'jp'},{from:'EUR',to:'CAD',rate:'1.4723',f1:'eu',f2:'ca'},
+  {from:'EUR',to:'NOK',rate:'11.58',f1:'eu',f2:'no'},{from:'EUR',to:'DKK',rate:'7.4589',f1:'eu',f2:'dk'},
+  {from:'EUR',to:'SEK',rate:'11.24',f1:'eu',f2:'se'},{from:'EUR',to:'AUD',rate:'1.6548',f1:'eu',f2:'au'},
 ];
 const currencies = [
-  {name:'يورو',en:'Euro',code:'EUR',flag:'🇪🇺',sym:'€'},{name:'دولار',en:'US Dollar',code:'USD',flag:'🇺🇸',sym:'$'},
-  {name:'جنيه إسترليني',en:'British Pound',code:'GBP',flag:'🇬🇧',sym:'£'},{name:'فرنك سويسري',en:'Swiss Franc',code:'CHF',flag:'🇨🇭',sym:'Fr'},
-  {name:'ين ياباني',en:'Japanese Yen',code:'JPY',flag:'🇯🇵',sym:'¥'},{name:'درهم إماراتي',en:'UAE Dirham',code:'AED',flag:'🇦🇪',sym:'د.إ'},
-  {name:'ريال سعودي',en:'Saudi Riyal',code:'SAR',flag:'🇸🇦',sym:'﷼'},{name:'ليرة تركية',en:'Turkish Lira',code:'TRY',flag:'🇹🇷',sym:'₺'},
-  {name:'دولار كندي',en:'Canadian Dollar',code:'CAD',flag:'🇨🇦',sym:'C$'},{name:'دولار أسترالي',en:'Australian Dollar',code:'AUD',flag:'🇦🇺',sym:'A$'},
-  {name:'كرونة سويدية',en:'Swedish Krona',code:'SEK',flag:'🇸🇪',sym:'kr'},{name:'كرونة نرويجية',en:'Norwegian Krone',code:'NOK',flag:'🇳🇴',sym:'kr'},
-  {name:'كرونة دنماركية',en:'Danish Krone',code:'DKK',flag:'🇩🇰',sym:'kr'},{name:'زلوتي بولندي',en:'Polish Złoty',code:'PLN',flag:'🇵🇱',sym:'zł'},
-  {name:'كورونا تشيكية',en:'Czech Koruna',code:'CZK',flag:'🇨🇿',sym:'Kč'},{name:'فورنت مجري',en:'Hungarian Forint',code:'HUF',flag:'🇭🇺',sym:'Ft'},
-  {name:'لاي روماني',en:'Romanian Leu',code:'RON',flag:'🇷🇴',sym:'lei'},{name:'راند جنوب أفريقي',en:'South African Rand',code:'ZAR',flag:'🇿🇦',sym:'R'},
-  {name:'دولار سنغافوري',en:'Singapore Dollar',code:'SGD',flag:'🇸🇬',sym:'S$'},{name:'دولار هونغ كونغ',en:'Hong Kong Dollar',code:'HKD',flag:'🇭🇰',sym:'HK$'},
-  {name:'وون كوري',en:'Korean Won',code:'KRW',flag:'🇰🇷',sym:'₩'},{name:'بات تايلاندي',en:'Thai Baht',code:'THB',flag:'🇹🇭',sym:'฿'},
-  {name:'بيزو مكسيكي',en:'Mexican Peso',code:'MXN',flag:'🇲🇽',sym:'$'},{name:'روبية هندية',en:'Indian Rupee',code:'INR',flag:'🇮🇳',sym:'₹'},
+  {name:'يورو',en:'Euro',code:'EUR',flag:'eu',sym:'€'},{name:'دولار',en:'US Dollar',code:'USD',flag:'us',sym:'$'},
+  {name:'جنيه إسترليني',en:'British Pound',code:'GBP',flag:'gb',sym:'£'},{name:'فرنك سويسري',en:'Swiss Franc',code:'CHF',flag:'ch',sym:'Fr'},
+  {name:'ين ياباني',en:'Japanese Yen',code:'JPY',flag:'jp',sym:'¥'},{name:'درهم إماراتي',en:'UAE Dirham',code:'AED',flag:'ae',sym:'د.إ'},
+  {name:'ريال سعودي',en:'Saudi Riyal',code:'SAR',flag:'sa',sym:'﷼'},{name:'ليرة تركية',en:'Turkish Lira',code:'TRY',flag:'tr',sym:'₺'},
+  {name:'دولار كندي',en:'Canadian Dollar',code:'CAD',flag:'ca',sym:'C$'},{name:'دولار أسترالي',en:'Australian Dollar',code:'AUD',flag:'au',sym:'A$'},
+  {name:'كرونة سويدية',en:'Swedish Krona',code:'SEK',flag:'se',sym:'kr'},{name:'كرونة نرويجية',en:'Norwegian Krone',code:'NOK',flag:'no',sym:'kr'},
+  {name:'كرونة دنماركية',en:'Danish Krone',code:'DKK',flag:'dk',sym:'kr'},{name:'زلوتي بولندي',en:'Polish Złoty',code:'PLN',flag:'pl',sym:'zł'},
+  {name:'كورونا تشيكية',en:'Czech Koruna',code:'CZK',flag:'cz',sym:'Kč'},{name:'فورنت مجري',en:'Hungarian Forint',code:'HUF',flag:'hu',sym:'Ft'},
+  {name:'لاي روماني',en:'Romanian Leu',code:'RON',flag:'ro',sym:'lei'},{name:'راند جنوب أفريقي',en:'South African Rand',code:'ZAR',flag:'za',sym:'R'},
+  {name:'دولار سنغافوري',en:'Singapore Dollar',code:'SGD',flag:'sg',sym:'S$'},{name:'دولار هونغ كونغ',en:'Hong Kong Dollar',code:'HKD',flag:'hk',sym:'HK$'},
+  {name:'وون كوري',en:'Korean Won',code:'KRW',flag:'kr',sym:'₩'},{name:'بات تايلاندي',en:'Thai Baht',code:'THB',flag:'th',sym:'฿'},
+  {name:'بيزو مكسيكي',en:'Mexican Peso',code:'MXN',flag:'mx',sym:'$'},{name:'روبية هندية',en:'Indian Rupee',code:'INR',flag:'in',sym:'₹'},
 ];
 const t = computed(() => isAr.value ? {
   title:'العملات — SDB Wallet',tag:'أكثر من 30 عملة',
@@ -56,14 +56,14 @@ const t = computed(() => isAr.value ? {
 <template>
 <Head :title="t.title" />
 <section class="p-hero"><div class="sw"><div class="p-hero-tag">{{ t.tag }}</div><h1 class="p-hero-h">{{ t.heroH }}<br><span class="p-hero-em">{{ t.heroEm }}</span></h1><p class="p-hero-p">{{ t.heroP }}</p></div></section>
-<section class="sec"><div class="sw"><h2 class="t2">{{ t.ratesTitle }}</h2><p class="t2-sub">{{ t.ratesSub }}</p><div class="fx-grid"><div v-for="p in pairs" :key="p.to" class="fx-c"><div class="fx-pair"><span>{{ p.f1 }}</span><span class="fx-ar">→</span><span>{{ p.f2 }}</span></div><div class="fx-code">{{ p.from }}/{{ p.to }}</div><div class="fx-rate">{{ p.rate }}</div></div></div></div></section>
-<section class="sec sec-alt"><div class="sw"><h2 class="t2">{{ t.curTitle }}</h2><div class="cur-grid"><div v-for="c in currencies" :key="c.code" class="cur-c"><span class="cur-fl">{{ c.flag }}</span><div><div class="cur-code">{{ c.code }}</div><div class="cur-name">{{ isAr ? c.name : c.en }}</div></div><div class="cur-sym">{{ c.sym }}</div></div></div></div></section>
+<section class="sec"><div class="sw"><h2 class="t2">{{ t.ratesTitle }}</h2><p class="t2-sub">{{ t.ratesSub }}</p><div class="fx-grid"><div v-for="p in pairs" :key="p.to" class="fx-c"><div class="fx-pair"><span :class="'fi fi-' + p.f1" style="font-size:18px;border-radius:3px"></span><span class="fx-ar">→</span><span :class="'fi fi-' + p.f2" style="font-size:18px;border-radius:3px"></span></div><div class="fx-code">{{ p.from }}/{{ p.to }}</div><div class="fx-rate">{{ p.rate }}</div></div></div></div></section>
+<section class="sec sec-alt"><div class="sw"><h2 class="t2">{{ t.curTitle }}</h2><div class="cur-grid"><div v-for="c in currencies" :key="c.code" class="cur-c"><span :class="'fi fi-' + c.flag" class="cur-fl"></span><div><div class="cur-code">{{ c.code }}</div><div class="cur-name">{{ isAr ? c.name : c.en }}</div></div><div class="cur-sym">{{ c.sym }}</div></div></div></div></section>
 <section class="sec"><div class="sw"><h2 class="t2 tc">{{ t.whyTitle }}</h2><div class="g3"><div v-for="w in t.whyCards" :key="w.t" class="why-c"><span class="why-ic">{{ w.ic }}</span><h3 class="why-t">{{ w.t }}</h3><p class="why-d">{{ w.d }}</p></div></div></div></section>
 <section class="sec sec-dark tc"><div class="sw"><h2 class="t2 t2-w">{{ t.ctaTitle }}</h2><p class="t2-sub t2-sub-w tc" style="margin:0 auto 28px">{{ t.ctaSub }}</p><a href="/preregister" class="p-cta">{{ t.ctaBtn }}</a></div></section>
 </template>
 <style scoped>
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}
-.sec{padding:100px 0}.sec-alt{background:#fafafa}.sec-dark{background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.sec{padding:100px 0}.sec-alt{background:#fafafa}.sec-dark{background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .tc{text-align:center}
 .t2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:16px}.t2-w{color:#fff}
 .t2-sub{font-size:16px;color:rgba(10,10,10,.35);line-height:1.8;max-width:500px;margin-bottom:32px}.t2-sub-w{color:rgba(255,255,255,.3)}
@@ -81,7 +81,7 @@ const t = computed(() => isAr.value ? {
 .fx-rate{font-size:14px;font-weight:800;color:#9FE870}
 .cur-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
 .cur-c{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border:1px solid rgba(10,10,10,.06);border-radius:12px;transition:all .3s}.cur-c:hover{border-color:rgba(159,232,112,.15);transform:translateY(-1px)}
-.cur-fl{font-size:24px}
+.cur-fl{font-size:24px;border-radius:3px}
 .cur-code{font-size:14px;font-weight:800}
 .cur-name{font-size:11px;color:rgba(10,10,10,.4)}
 .cur-sym{margin-inline-start:auto;font-size:16px;font-weight:800;color:rgba(10,10,10,.15)}

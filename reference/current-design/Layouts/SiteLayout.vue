@@ -1,6 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import { ref, computed, provide, onMounted, onBeforeUnmount } from 'vue';
+import AccessibilityWidget from '@/Components/AccessibilityWidget.vue';
 
 const props = defineProps({ page: { type: String, default: '' } });
 
@@ -25,19 +26,19 @@ provide('isDark', isDark);
 
 /* ─── Global Currency System ─── */
 const allCurrencies = [
-  {code:'EUR',symbol:'€',flag:'🇪🇺'},{code:'USD',symbol:'$',flag:'🇺🇸'},
-  {code:'GBP',symbol:'£',flag:'🇬🇧'},{code:'DKK',symbol:'kr',flag:'🇩🇰'},
-  {code:'SEK',symbol:'kr',flag:'🇸🇪'},{code:'NOK',symbol:'kr',flag:'🇳🇴'},
-  {code:'CHF',symbol:'CHF',flag:'🇨🇭'},{code:'TRY',symbol:'₺',flag:'🇹🇷'},
-  {code:'AED',symbol:'AED',flag:'🇦🇪'},{code:'SAR',symbol:'SAR',flag:'🇸🇦'},
-  {code:'KWD',symbol:'KWD',flag:'🇰🇼'},{code:'QAR',symbol:'QAR',flag:'🇶🇦'},
-  {code:'JOD',symbol:'JOD',flag:'🇯🇴'},{code:'EGP',symbol:'EGP',flag:'🇪🇬'},
-  {code:'SYP',symbol:'SYP',flag:'🇸🇾'},{code:'IQD',symbol:'IQD',flag:'🇮🇶'},
-  {code:'LBP',symbol:'LBP',flag:'🇱🇧'},{code:'CAD',symbol:'CA$',flag:'🇨🇦'},
-  {code:'AUD',symbol:'A$',flag:'🇦🇺'},{code:'JPY',symbol:'¥',flag:'🇯🇵'},
+  {code:'EUR',symbol:'€',flag:'eu'},{code:'USD',symbol:'$',flag:'us'},
+  {code:'GBP',symbol:'£',flag:'gb'},{code:'DKK',symbol:'kr',flag:'dk'},
+  {code:'SEK',symbol:'kr',flag:'se'},{code:'NOK',symbol:'kr',flag:'no'},
+  {code:'CHF',symbol:'CHF',flag:'ch'},{code:'TRY',symbol:'₺',flag:'tr'},
+  {code:'AED',symbol:'AED',flag:'ae'},{code:'SAR',symbol:'SAR',flag:'sa'},
+  {code:'KWD',symbol:'KWD',flag:'kw'},{code:'QAR',symbol:'QAR',flag:'qa'},
+  {code:'JOD',symbol:'JOD',flag:'jo'},{code:'EGP',symbol:'EGP',flag:'eg'},
+  {code:'SYP',symbol:'SYP',flag:'sy'},{code:'IQD',symbol:'IQD',flag:'iq'},
+  {code:'LBP',symbol:'LBP',flag:'lb'},{code:'CAD',symbol:'CA$',flag:'ca'},
+  {code:'AUD',symbol:'A$',flag:'au'},{code:'JPY',symbol:'¥',flag:'jp'},
 ];
 const liveRates = ref({}); // rates vs EUR from API
-const userCurrency = ref({code:'EUR',symbol:'€',flag:'🇪🇺',rate:1});
+const userCurrency = ref({code:'EUR',symbol:'€',flag:'eu',rate:1});
 const showCurPicker = ref(false);
 
 function convertPrice(eurAmount) {
@@ -114,6 +115,8 @@ provide('allCurrencies', allCurrencies);
 
 /* ─── Cookie Consent ─── */
 const cookieAccepted = ref(true);
+const cookieAnalytics = ref(true);
+const cookieMarketing = ref(true);
 
 /* ─── Mobile Menu ─── */
 const mobileOpen = ref(false);
@@ -220,7 +223,30 @@ onMounted(() => {
   */
 });
 onBeforeUnmount(() => window.removeEventListener('scroll', onScroll));
-function acceptCookies() { cookieAccepted.value = true; localStorage.setItem('sdb-cookie','1'); }
+function acceptAll() {
+  cookieAnalytics.value = true;
+  cookieMarketing.value = true;
+  saveCookiePrefs();
+}
+function acceptEssentialOnly() {
+  cookieAnalytics.value = false;
+  cookieMarketing.value = false;
+  saveCookiePrefs();
+}
+function saveCookiePrefs() {
+  cookieAccepted.value = true;
+  const prefs = { essential: true, analytics: cookieAnalytics.value, marketing: cookieMarketing.value, ts: Date.now() };
+  localStorage.setItem('sdb-cookie', JSON.stringify(prefs));
+
+  // Send to server for GDPR compliance tracking
+  let vid = localStorage.getItem('sdb-vid');
+  if (!vid) { vid = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2); localStorage.setItem('sdb-vid', vid); }
+  fetch('/api/public/cookie-consent', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ visitor_id: vid, essential: true, analytics: cookieAnalytics.value, marketing: cookieMarketing.value }),
+  }).catch(() => {});
+}
 
 /* ─── Mega Nav Structure ─── */
 const megaNav = computed(() => isAr.value ? [
@@ -252,7 +278,7 @@ const megaNav = computed(() => isAr.value ? [
     { title:'خدمات مالية', links:[
       {l:'التحويلات',h:'/transfers-info',d:'محلي، SEPA، SWIFT'},
       {l:'العملات',h:'/currencies',d:'30+ عملة'},
-      {l:'الليرة السورية 🇸🇾',h:'/syrian-lira',d:'أسعار صرف حية'},
+      {l:'الليرة السورية',h:'/syrian-lira',d:'أسعار صرف حية'},
       {l:'ليرتنا 💱',h:'/lirtna',d:'محوّل الليرة السورية'},
       {l:'العملات الرقمية 🪙',h:'/crypto',d:'BTC، ETH، USDT + 9'},
       {l:'أسعار الصرف',h:'/exchange-rates',d:'حاسبة تفاعلية'},
@@ -316,7 +342,7 @@ const megaNav = computed(() => isAr.value ? [
     { title:'Financial Services', links:[
       {l:'Transfers',h:'/transfers-info',d:'Local, SEPA, SWIFT'},
       {l:'Currencies',h:'/currencies',d:'30+ currencies'},
-      {l:'Syrian Lira 🇸🇾',h:'/syrian-lira',d:'Live SYP exchange rates'},
+      {l:'Syrian Lira',h:'/syrian-lira',d:'Live SYP exchange rates'},
       {l:'Lirtna 💱',h:'/lirtna',d:'Syrian Lira converter'},
       {l:'Crypto 🪙',h:'/crypto',d:'BTC, ETH, USDT + 9'},
       {l:'Exchange Rates',h:'/exchange-rates',d:'Interactive calculator'},
@@ -398,7 +424,7 @@ const t = computed(() => isAr.value ? {
     { label: 'الدعم', href: '/support' },
   ],
   col6h: 'تواصل معنا',
-  ftDesc: 'أول محفظة إلكترونية سورية — مرخّص في أوروبا بمعايير أوروبية.\nمصمم لخدمة كل سوري بالعالم.',
+  ftDesc: 'تحكّم بأموالك، من أي مكان — مرخّص في أوروبا بمعايير أوروبية.\nمصمم لخدمة كل سوري بالعالم.',
   ftCopy: '© 2026 SDB Wallet. جميع الحقوق محفوظة.',
   ftReg: 'SDB Wallet مسجّلة في أوروبا. خاضعة لرقابة الجهات المالية الأوروبية. جميع الأموال محمية وفقاً لمعايير الاتحاد الأوروبي.',
 } : {
@@ -445,7 +471,7 @@ const t = computed(() => isAr.value ? {
     { label: 'Support', href: '/support' },
   ],
   col6h: 'Contact',
-  ftDesc: 'The first Syrian digital bank — licensed in Europe with European standards.\nDesigned to serve every Syrian worldwide.',
+  ftDesc: 'Your digital wallet — licensed in Europe with European standards.\nDesigned to serve everyone worldwide.',
   ftCopy: '© 2026 SDB Wallet. All rights reserved.',
   ftReg: 'SDB Wallet is registered in Europe. Subject to European financial regulations. All funds are protected under EU standards.',
 });
@@ -456,7 +482,8 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
 </script>
 
 <template>
-<div class="site" :class="{ rtl: isAr, dark: isDark }" :dir="isAr ? 'rtl' : 'ltr'">
+  <AccessibilityWidget />
+  <div class="site" :class="{ rtl: isAr, dark: isDark }" :dir="isAr ? 'rtl' : 'ltr'">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Scroll Progress Bar -->
@@ -475,7 +502,7 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
   <!-- Nav -->
   <nav class="sn" :class="{scrolled}">
     <div class="sw">
-      <Link href="/" class="sn-logo"><img src="/images/sdb-logo-new.png" alt="SDB Wallet" class="sn-logo-img"/></Link>
+      <Link href="/" class="sn-logo"><img :src="isBiz ? '/images/sdb-business-logo.png' : '/images/sdb-logo-new.png?v=2'" :alt="isBiz ? 'SDB Business' : 'SDB Wallet'" class="sn-logo-img"/></Link>
       <div class="sn-links">
         <div v-for="m in megaNav" :key="m.id" class="sn-dd" @mouseenter="openMenu(m.id)" @mouseleave="startClose">
           <span class="sn-link" :class="{'sn-active':activeMenu===m.id}">{{ m.label }} <span class="sn-arr">▾</span></span>
@@ -496,9 +523,9 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
       </div>
       <div class="sn-right">
         <div class="sn-cur-wrap" style="position:relative">
-          <button @click="showCurPicker=!showCurPicker" class="sn-lang" style="gap:4px">{{ userCurrency.flag }} {{ userCurrency.code }} <span style="font-size:8px;opacity:.4">▾</span></button>
+          <button @click="showCurPicker=!showCurPicker" class="sn-lang" style="gap:4px"><span :class="'fi fi-' + userCurrency.flag" style="font-size:14px;border-radius:2px"></span> {{ userCurrency.code }} <span style="font-size:8px;opacity:.4">▾</span></button>
           <div v-if="showCurPicker" class="sn-cur-dd" @click.stop>
-            <div v-for="c in allCurrencies" :key="c.code" class="sn-cur-item" :class="{'sn-cur-active':c.code===userCurrency.code}" @click="setUserCurrency(c.code)">{{ c.flag }} <span>{{ c.code }}</span></div>
+            <div v-for="c in allCurrencies" :key="c.code" class="sn-cur-item" :class="{'sn-cur-active':c.code===userCurrency.code}" @click="setUserCurrency(c.code)"><span :class="'fi fi-' + c.flag" style="font-size:16px;border-radius:2px"></span> <span>{{ c.code }}</span></div>
           </div>
         </div>
         <button @click="toggleLang" class="sn-lang">{{ isAr ? 'EN' : 'عربي' }}</button>
@@ -547,7 +574,7 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
       <Link href="/security" class="sn-mob-link" @click="mobileOpen=false">{{ isAr?'🔐 الأمان':'🔐 Security' }}</Link>
       <Link href="/about" class="sn-mob-link" @click="mobileOpen=false">{{ isAr?'🏢 عن الشركة':'🏢 About Us' }}</Link>
       <Link href="/support" class="sn-mob-link" @click="mobileOpen=false">{{ isAr?'📞 الدعم':'📞 Support' }}</Link>
-      <button @click="handleLogin(); mobileOpen=false" class="sn-mob-link" style="color:#2D6A00;font-weight:800;background:none;border:none;border-bottom:1px solid rgba(22,51,0,.06);width:100%;text-align:start;font-size:16px;cursor:pointer;font-family:inherit">{{ isAr ? 'تسجيل الدخول' : 'Log in' }}</button>
+      <button @click="handleLogin(); mobileOpen=false" class="sn-mob-link" style="color:#10481A;font-weight:800;background:none;border:none;border-bottom:1px solid rgba(22,51,0,.06);width:100%;text-align:start;font-size:16px;cursor:pointer;font-family:inherit">{{ isAr ? 'تسجيل الدخول' : 'Log in' }}</button>
       <Link href="/preregister?type=business" class="sn-cta sn-mob-cta" @click="mobileOpen=false">{{ isAr?'افتح حساب أعمال ←':'Open Business Account →' }}</Link>
     </template>
   </div>
@@ -575,7 +602,7 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
   <div v-if="showAppModal" class="app-modal-overlay" @click.self="showAppModal=false">
     <div class="app-modal-card">
       <button class="app-modal-close" @click="showAppModal=false">×</button>
-      <img src="/images/sdb-logo-new.png" alt="SDB" class="app-modal-logo"/>
+      <img :src="isBiz ? '/images/sdb-business-logo.png' : '/images/sdb-logo-new.png?v=2'" :alt="isBiz ? 'SDB Business' : 'SDB'" class="app-modal-logo"/>
       <h2 class="app-modal-title">{{ isAr ? 'حمّل تطبيق SDB Wallet' : 'Get the SDB Wallet app' }}</h2>
       <p class="app-modal-desc">{{ isAr ? 'سجّل دخولك من التطبيق. حمّله الآن من المتجر.' : 'Log in from the app. Download it now from your store.' }}</p>
       <div class="app-modal-stores">
@@ -594,13 +621,23 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
   </div>
   </Transition>
 
-  <!-- Cookie Consent -->
+  <!-- GDPR Cookie Consent (centered modal) -->
   <Transition name="cookie">
-  <div v-if="!cookieAccepted" class="cookie-bar">
-    <p class="cookie-text">{{ isAr?'نستخدم ملفات تعريف الارتباط لتحسين تجربتك. بالمتابعة أنت توافق على':'We use cookies to improve your experience. By continuing you agree to our' }} <Link :href="'/privacy'" class="cookie-link">{{ isAr?'سياسة الخصوصية':'Privacy Policy' }}</Link></p>
-    <div class="cookie-btns">
-      <button @click="acceptCookies" class="cookie-accept">{{ isAr?'موافق':'Accept' }}</button>
-      <button @click="acceptCookies" class="cookie-decline">{{ isAr?'الضروري فقط':'Essential only' }}</button>
+  <div v-if="!cookieAccepted" class="cookie-overlay">
+    <div class="cookie-modal">
+      <div class="cookie-icon">🍪</div>
+      <h3 class="cookie-title">{{ isAr?'نحترم خصوصيتك':'We respect your privacy' }}</h3>
+      <p class="cookie-text">{{ isAr?'نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل حركة الزوار. يمكنك قبول جميع الملفات أو الاكتفاء بالملفات الضرورية فقط.':'We use cookies to enhance your experience and analyze traffic. You can accept all cookies or opt for essential ones only.' }}</p>
+      <div class="cookie-types">
+        <div class="cookie-type"><span class="cookie-type-check on">✓</span><span>{{ isAr?'ضرورية':'Essential' }}</span><span class="cookie-type-tag">{{ isAr?'دائماً':'Always' }}</span></div>
+        <div class="cookie-type cookie-toggle" @click="cookieAnalytics=!cookieAnalytics"><span class="cookie-type-check" :class="{on:cookieAnalytics}">✓</span><span>{{ isAr?'تحليلية':'Analytics' }}</span></div>
+        <div class="cookie-type cookie-toggle" @click="cookieMarketing=!cookieMarketing"><span class="cookie-type-check" :class="{on:cookieMarketing}">✓</span><span>{{ isAr?'تسويقية':'Marketing' }}</span></div>
+      </div>
+      <div class="cookie-btns">
+        <button @click="acceptAll" class="cookie-accept">{{ isAr?'قبول الكل':'Accept All' }}</button>
+        <button @click="acceptEssentialOnly" class="cookie-decline">{{ isAr?'الضروري فقط':'Essential Only' }}</button>
+      </div>
+      <Link :href="'/privacy'" class="cookie-link">{{ isAr?'سياسة الخصوصية ←':'Privacy Policy →' }}</Link>
     </div>
   </div>
   </Transition>
@@ -610,12 +647,12 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
     <div class="sw">
       <div class="sf-top">
         <div class="sf-brand">
-          <a href="/" class="sn-logo sn-logo-ft"><img src="/images/logosdbw.png" alt="SDB Wallet" class="sn-logo-img sn-logo-img-ft"/></a>
+          <a href="/" class="sn-logo sn-logo-ft"><img :src="isBiz ? '/images/sdb-business-logo-white.png' : '/images/logosdbw.png?v=2'" :alt="isBiz ? 'SDB Business' : 'SDB Wallet'" class="sn-logo-img sn-logo-img-ft"/></a>
           <p class="sf-desc">{{ t.ftDesc }}</p>
           <div class="sf-social">
-            <a href="https://www.facebook.com/profile.php?id=61579485263013" target="_blank" class="sf-soc-icon">fb</a>
-            <a href="https://www.instagram.com/sdbsybank/" target="_blank" class="sf-soc-icon">ig</a>
-            <a href="https://x.com/SDBBankSy" target="_blank" class="sf-soc-icon">𝕏</a>
+            <a href="https://www.facebook.com/sdbwallet" target="_blank" class="sf-soc-icon">fb</a>
+            <a href="https://www.instagram.com/sdbwallet/" target="_blank" class="sf-soc-icon">ig</a>
+            <a href="https://x.com/SDBWallet" target="_blank" class="sf-soc-icon">𝕏</a>
           </div>
         </div>
         <div class="sf-col">
@@ -644,19 +681,19 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
         <div class="sf-col-h" style="margin-bottom:12px">{{ t.col6h }}</div>
         <div class="sf-contact-row">
           <span class="sf-contact-item">📧 info@sdbwallet.com</span>
-          <span class="sf-contact-item">📍 Europe 🇪🇺</span>
+          <span class="sf-contact-item">📍 Europe <span class="fi fi-eu" style="font-size:14px;border-radius:2px"></span></span>
         </div>
         <div class="sf-col-h" style="margin-top:20px;margin-bottom:12px">{{ isAr ? 'تابعنا' : 'Follow Us' }}</div>
         <div class="sf-follow">
-          <a href="https://www.facebook.com/profile.php?id=61579485263013" target="_blank" class="sf-follow-link">
+          <a href="https://www.facebook.com/sdbwallet" target="_blank" class="sf-follow-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             <span>Facebook</span>
           </a>
-          <a href="https://www.instagram.com/sdbsybank/" target="_blank" class="sf-follow-link">
+          <a href="https://www.instagram.com/sdbwallet/" target="_blank" class="sf-follow-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
             <span>Instagram</span>
           </a>
-          <a href="https://x.com/SDBBankSy" target="_blank" class="sf-follow-link">
+          <a href="https://x.com/SDBWallet" target="_blank" class="sf-follow-link">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             <span>X</span>
           </a>
@@ -666,14 +703,14 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
       <div class="sf-bottom">
         <div class="sf-badges">
           <span class="sf-badge">🔒 256-bit SSL</span>
-          <span class="sf-badge">🇪🇺 EU Regulated</span>
+          <span class="sf-badge"><span class="fi fi-eu" style="font-size:12px;border-radius:2px"></span> EU Regulated</span>
           <span class="sf-badge">🛡️ PCI DSS</span>
         </div>
         <div class="sf-share">
           <span class="sf-share-label">{{ isAr ? 'شارك:' : 'Share:' }}</span>
-          <a :href="'https://wa.me/?text='+encodeURIComponent(isAr?'تعرّف على SDB Wallet — أول محفظة إلكترونية سورية https://sdbwallet.com':'Check out SDB Wallet — the first Syrian digital bank https://sdbwallet.com')" target="_blank" class="sf-share-btn" title="WhatsApp">💬</a>
-          <a :href="'https://twitter.com/intent/tweet?text='+encodeURIComponent(isAr?'تعرّف على SDB Wallet — أول محفظة إلكترونية سورية https://sdbwallet.com':'Check out SDB Wallet — the first Syrian digital bank https://sdbwallet.com')" target="_blank" class="sf-share-btn" title="Twitter">𝕏</a>
-          <a :href="'https://t.me/share/url?url=https://sdbwallet.com&text='+encodeURIComponent(isAr?'SDB Wallet — أول محفظة إلكترونية سورية':'SDB Wallet — first Syrian digital bank')" target="_blank" class="sf-share-btn" title="Telegram">✈️</a>
+          <a :href="'https://wa.me/?text='+encodeURIComponent(isAr?'تعرّف على SDB Wallet — تحكّم بأموالك، من أي مكان https://sdbwallet.com':'Check out SDB Wallet — your digital financial wallet https://sdbwallet.com')" target="_blank" class="sf-share-btn" title="WhatsApp">💬</a>
+          <a :href="'https://twitter.com/intent/tweet?text='+encodeURIComponent(isAr?'تعرّف على SDB Wallet — تحكّم بأموالك، من أي مكان https://sdbwallet.com':'Check out SDB Wallet — your digital financial wallet https://sdbwallet.com')" target="_blank" class="sf-share-btn" title="Twitter">𝕏</a>
+          <a :href="'https://t.me/share/url?url=https://sdbwallet.com&text='+encodeURIComponent(isAr?'SDB Wallet — تحكّم بأموالك، من أي مكان':'SDB Wallet — your digital financial wallet')" target="_blank" class="sf-share-btn" title="Telegram">✈️</a>
         </div>
         <p class="sf-reg">{{ t.ftReg }}</p>
         <span class="sf-copy">{{ t.ftCopy }}</span>
@@ -681,17 +718,6 @@ function toggleMobileSection(id) { mobileActiveSection.value = mobileActiveSecti
     </div>
   </footer>
 
-  <!-- Floating Currency Widget -->
-  <div class="cur-widget" :class="{open:showWidget}">
-    <button class="cur-trigger" @click="showWidget=!showWidget">💱 <span v-if="!showWidget">{{ widgetRate }} SYP</span><span v-else>×</span></button>
-    <div v-if="showWidget" class="cur-body">
-      <div class="cur-row"><span class="cur-flag">🇪🇺</span><span class="cur-pair">EUR/SYP</span><span class="cur-val">{{ widgetRates.EUR.toLocaleString() }}</span></div>
-      <div class="cur-row"><span class="cur-flag">🇺🇸</span><span class="cur-pair">USD/SYP</span><span class="cur-val">{{ widgetRates.USD.toLocaleString() }}</span></div>
-      <div class="cur-row"><span class="cur-flag">🇹🇷</span><span class="cur-pair">TRY/SYP</span><span class="cur-val">{{ widgetRates.TRY.toLocaleString() }}</span></div>
-      <div class="cur-row"><span class="cur-flag">🇦🇪</span><span class="cur-pair">AED/SYP</span><span class="cur-val">{{ widgetRates.AED.toLocaleString() }}</span></div>
-      <Link href="/exchange-rates" class="cur-link" @click="showWidget=false">{{ isAr ? 'كل الأسعار →' : 'All rates →' }}</Link>
-    </div>
-  </div>
 </div>
 </template>
 
@@ -709,16 +735,16 @@ html,body{background:#fff}
 .rtl .text-center{text-align:center}
 
 /* ─── Segment Toggle Bar ─── */
-.seg-bar{position:fixed;top:0;left:0;right:0;z-index:100;height:36px;background:#163300;display:flex;align-items:center}
+.seg-bar{position:fixed;top:0;left:0;right:0;z-index:100;height:36px;background:#10481A;display:flex;align-items:center}
 .seg-bar-inner{display:flex;justify-content:flex-end;width:100%}
 .seg-toggle{display:flex;gap:0;background:rgba(255,255,255,.1);border-radius:6px;padding:3px}
 .seg-btn{padding:4px 20px;font-size:12px;font-weight:700;border:none;background:none;color:rgba(255,255,255,.6);cursor:pointer;border-radius:4px;font-family:inherit;transition:all .2s;letter-spacing:.5px}
-.seg-btn.active{background:#9FE870;color:#163300}
+.seg-btn.active{background:#9FE870;color:#10481A}
 .seg-btn:hover:not(.active){color:#fff}
 /* Mobile segment toggle inside side menu */
 .mob-seg-toggle{display:flex;gap:0;background:#f0f4ec;border-radius:10px;padding:4px;margin:0 16px 12px}
 .mob-seg-btn{flex:1;padding:10px 0;font-size:14px;font-weight:700;border:none;background:none;color:#8a9a7e;cursor:pointer;border-radius:8px;font-family:inherit;transition:all .2s;text-align:center}
-.mob-seg-btn.active{background:#2D6A00;color:#fff;box-shadow:0 2px 8px rgba(45,106,0,.2)}
+.mob-seg-btn.active{background:#10481A;color:#fff;box-shadow:0 2px 8px rgba(45,106,0,.2)}
 @media(max-width:900px){.seg-bar{display:none}.sn{top:0!important}.sn-mobile{top:68px!important}}
 
 /* ─── Nav — V0 Green ─── */
@@ -726,27 +752,27 @@ html,body{background:#fff}
 .sn.scrolled{background:rgba(255,255,255,.95);box-shadow:0 4px 20px rgba(0,0,0,.06)}
 
 /* ─── Login Button ─── */
-.sn-login{font-size:14px;font-weight:700;color:#163300;border:2px solid #163300;padding:8px 22px;border-radius:999px;text-decoration:none;transition:all .2s;white-space:nowrap}.sn-login:hover{background:#163300;color:#fff}
+.sn-login{font-size:14px;font-weight:700;color:#10481A;border:2px solid #10481A;padding:8px 22px;border-radius:999px;text-decoration:none;transition:all .2s;white-space:nowrap}.sn-login:hover{background:#10481A;color:#fff}
 .sn .sw{display:flex;align-items:center;justify-content:space-between;width:100%}
 .sn-logo{text-decoration:none;flex-shrink:0;display:inline-flex;align-items:center}
 .sn-logo-img{height:52px;width:auto}
-.sn-logo-img-ft{height:150px}
+.sn-logo-img-ft{height:80px}
 .sn-dot{color:#E0F2FE;font-size:32px;line-height:0}
 .sn-links{display:flex;gap:4px;margin:0 auto}
 .sn-dd{position:relative}
 .sn-link{font-size:15px;font-weight:600;color:#555;text-decoration:none;transition:all .2s;letter-spacing:.2px;cursor:pointer;padding:8px 14px;border-radius:8px;display:flex;align-items:center;gap:4px;user-select:none}
-.sn-link:hover,.sn-active{color:#163300!important;background:rgba(159,232,112,.1)}
+.sn-link:hover,.sn-active{color:#10481A!important;background:rgba(159,232,112,.1)}
 .sn-arr{font-size:10px;opacity:.7;transition:transform .2s}
 .sn-active .sn-arr{transform:rotate(180deg);opacity:.8}
 .sn-right{display:flex;align-items:center;gap:10px}
-.sn-lang{font-size:14px;font-weight:700;color:#163300;background:rgba(159,232,112,.1);border:1.5px solid rgba(159,232,112,.3);padding:8px 18px;border-radius:8px;cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center}.sn-lang:hover{background:rgba(159,232,112,.2);border-color:rgba(159,232,112,.5)}
+.sn-lang{font-size:14px;font-weight:700;color:#10481A;background:rgba(159,232,112,.1);border:1.5px solid rgba(159,232,112,.3);padding:8px 18px;border-radius:8px;cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center}.sn-lang:hover{background:rgba(159,232,112,.2);border-color:rgba(159,232,112,.5)}
 .sn-cur-dd{position:absolute;top:calc(100% + 6px);right:0;min-width:160px;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 12px 36px rgba(0,0,0,.12);padding:6px;z-index:200;max-height:300px;overflow-y:auto}
 .rtl .sn-cur-dd{right:auto;left:0}
-.sn-cur-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px;transition:background .15s}.sn-cur-item:hover{background:rgba(159,232,112,.08)}.sn-cur-item span{font-weight:700;font-size:13px;color:#163300}
+.sn-cur-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:14px;transition:background .15s}.sn-cur-item:hover{background:rgba(159,232,112,.08)}.sn-cur-item span{font-weight:700;font-size:13px;color:#10481A}
 .sn-cur-active{background:rgba(159,232,112,.12)!important;font-weight:800}
-.sn-cta{font-size:14px;font-weight:800;color:#fff;background:#163300;padding:10px 24px;border-radius:999px;text-decoration:none;transition:all .2s;border:none;white-space:nowrap;box-shadow:0 2px 8px rgba(22,51,0,.15)}.sn-cta:hover{background:#1e4400;transform:translateY(-1px);box-shadow:0 4px 12px rgba(22,51,0,.2)}
+.sn-cta{font-size:14px;font-weight:800;color:#fff;background:#10481A;padding:10px 24px;border-radius:999px;text-decoration:none;transition:all .2s;border:none;white-space:nowrap;box-shadow:0 2px 8px rgba(22,51,0,.15)}.sn-cta:hover{background:#0d3a14;transform:translateY(-1px);box-shadow:0 4px 12px rgba(22,51,0,.2)}
 .sn-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.sn-hamburger span{width:22px;height:2px;background:#163300;border-radius:2px;transition:all .2s}
+.sn-hamburger span{width:22px;height:2px;background:#10481A;border-radius:2px;transition:all .2s}
 
 /* ─── Mega Menu Dropdown ─── */
 .mm{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);min-width:480px;z-index:100}
@@ -757,7 +783,7 @@ html,body{background:#fff}
 .mm-col-h{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(45,106,0,.5);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(159,232,112,.1)}
 .rtl .mm-col-h{letter-spacing:0}
 .mm-item{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:all .15s}.mm-item:hover{background:rgba(159,232,112,.06)}
-.mm-item-l{font-size:13.5px;font-weight:700;color:#163300}
+.mm-item-l{font-size:13.5px;font-weight:700;color:#10481A}
 .mm-item-d{font-size:11px;color:rgba(10,10,10,.3)}
 
 /* Mega menu transition */
@@ -768,24 +794,24 @@ html,body{background:#fff}
 .sn-mobile{position:fixed;top:104px;left:0;right:0;bottom:0;background:#fff;padding:20px 24px;display:flex;flex-direction:column;gap:2px;border-top:1px solid rgba(159,232,112,.15);z-index:98;box-shadow:0 8px 24px rgba(0,0,0,.08);overflow-y:auto;-webkit-overflow-scrolling:touch}
 .mob-slide-enter-active,.mob-slide-leave-active{transition:all .3s cubic-bezier(.16,1,.3,1)}
 .mob-slide-enter-from,.mob-slide-leave-to{opacity:0;transform:translateY(-12px)}
-.sn-mob-link{font-size:16px;color:#163300;text-decoration:none;padding:14px 0;border-bottom:1px solid rgba(22,51,0,.06);font-weight:600}
+.sn-mob-link{font-size:16px;color:#10481A;text-decoration:none;padding:14px 0;border-bottom:1px solid rgba(22,51,0,.06);font-weight:600}
 .sn-mob-cta{text-align:center;margin-top:16px;display:block;font-size:16px}
 .mob-sec{border-bottom:1px solid rgba(22,51,0,.06)}
-.mob-sec-btn{width:100%;text-align:start;padding:14px 0;background:none;border:none;font-size:16px;font-weight:700;color:#163300;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center}
+.mob-sec-btn{width:100%;text-align:start;padding:14px 0;background:none;border:none;font-size:16px;font-weight:700;color:#10481A;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center}
 .rtl .mob-sec-btn{text-align:right}
-.mob-arr{font-size:14px;transition:transform .2s;color:rgba(22,51,0,.3)}.mob-arr-open{transform:rotate(90deg);color:#163300}
+.mob-arr{font-size:14px;transition:transform .2s;color:rgba(22,51,0,.3)}.mob-arr-open{transform:rotate(90deg);color:#10481A}
 .mob-sec-body{padding-bottom:12px}
 .mob-col-h{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(22,51,0,.35);padding:8px 12px 4px}
 .mob-sub{padding:10px 16px;font-size:14px;color:#555;border:none}
 
 /* ─── Mega Footer — V0 Dark Green ─── */
-.sf{background:#163300;padding:80px 0 0;color:#fff;margin-top:auto}
+.sf{background:#10481A;padding:80px 0 0;color:#fff;margin-top:auto}
 .sf-top{display:grid;grid-template-columns:1.8fr repeat(5,1fr);gap:32px;padding-bottom:48px;border-bottom:1px solid rgba(159,232,112,.1)}
 .sf-brand{display:flex;flex-direction:column;gap:12px}
 .sn-logo-ft{font-size:22px;display:inline-block;margin-bottom:4px}
 .sf-desc{font-size:15px;font-weight:400;color:rgba(255,255,255,.6);line-height:1.8;white-space:pre-line;max-width:300px}
 .sf-social{display:flex;gap:8px;margin-top:4px}
-.sf-soc-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.25);border-radius:12px;font-size:13px;font-weight:800;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;text-decoration:none}.sf-soc-icon:hover{border-color:rgba(159,232,112,.5);color:#163300;background:#9FE870}
+.sf-soc-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.25);border-radius:12px;font-size:13px;font-weight:800;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;text-decoration:none}.sf-soc-icon:hover{border-color:rgba(159,232,112,.5);color:#10481A;background:#9FE870}
 .sf-col{display:flex;flex-direction:column;gap:10px}
 .sf-col-h{font-size:14px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#fff;margin-bottom:10px}
 .rtl .sf-col-h{letter-spacing:0}
@@ -811,36 +837,49 @@ html,body{background:#fff}
 @media(max-width:600px){
   .site{overflow-x:hidden}
   .sw{padding:0 16px}
-  .sf-top{grid-template-columns:1fr}
+  .sf-top{grid-template-columns:1fr 1fr;gap:20px}
   .sf-contact-row{flex-direction:column;gap:8px}
   .sf{padding:48px 0 32px}
   .sf-btm{flex-direction:column;gap:12px;text-align:center}
-  .cookie-bar{flex-direction:column;gap:12px;padding:16px;text-align:center}
-  .cookie-text{font-size:13px}
-  .cookie-btns{width:100%;display:flex;gap:8px}
-  .cookie-accept,.cookie-decline{flex:1;padding:10px 16px;font-size:13px}
+  .cookie-modal{width:90%;max-width:400px;padding:28px}
   .toast-container{right:12px;left:12px;top:76px}
   .toast-item{min-width:auto}
   .sn{height:60px;top:0}
+  .sn-right{gap:6px}
   .sn-mobile{top:60px}
-  .sn-logo{font-size:24px}
-  .sn-cta{font-size:12px;padding:8px 16px}
-  .sn-lang{font-size:13px;padding:7px 14px;border-width:2px}
-  .sn-hamburger span{width:24px;height:3px}
-  .sn-hamburger{gap:5px;padding:6px}
+  .sn-logo{font-size:20px}
+  .sn-logo-img{height:34px}
+  .sn-cta{font-size:12px;padding:8px 12px}
+  .sn-lang{font-size:12px;padding:6px 10px;border-width:1.5px}
+  .sn-hamburger span{width:22px;height:2.5px}
+  .sn-hamburger{gap:4px;padding:4px}
+  .sf-col-h{font-size:13px;margin-bottom:8px}
+  .sf-link{font-size:13px}
 }
 
 /* ─── Dark Mode Toggle ─── */
 .sn-dark{background:none;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:14px;transition:all .2s;line-height:1}.sn-dark:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06)}
 
-/* ─── Cookie Consent ─── */
-.cookie-bar{position:fixed;bottom:0;left:0;right:0;background:#0C4A6E;color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:center;gap:16px;z-index:9999;box-shadow:0 -4px 24px rgba(0,0,0,.15);flex-wrap:wrap}
-.cookie-text{font-size:14px;color:rgba(255,255,255,.8);max-width:600px;line-height:1.6}
-.cookie-link{color:#7DD3FC;text-decoration:underline;font-weight:600}
-.cookie-btns{display:flex;gap:8px}
-.cookie-accept{padding:10px 24px;background:#0EA5E9;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}.cookie-accept:hover{background:#0284C7}
-.cookie-decline{padding:10px 24px;background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.2);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}.cookie-decline:hover{border-color:rgba(255,255,255,.5)}
-.cookie-enter-active,.cookie-leave-active{transition:all .4s ease}.cookie-enter-from,.cookie-leave-to{transform:translateY(100%);opacity:0}
+/* ─── GDPR Cookie Modal ─── */
+.cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.cookie-modal{background:#fff;border-radius:24px;padding:40px;max-width:440px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.2);text-align:center;position:relative}
+.cookie-icon{font-size:48px;margin-bottom:12px}
+.cookie-title{font-size:22px;font-weight:900;color:#0F172A;margin-bottom:10px}
+.cookie-text{font-size:14px;color:#64748B;line-height:1.7;margin-bottom:20px}
+.cookie-types{display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+.cookie-type{display:flex;align-items:center;gap:6px;padding:8px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;font-size:13px;font-weight:600;color:#475569}
+.cookie-type-check{width:20px;height:20px;border-radius:6px;background:#E2E8F0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.cookie-type-check.on{background:#10B981}
+.cookie-toggle{cursor:pointer;transition:all .2s;user-select:none}.cookie-toggle:hover{border-color:#10B981;background:rgba(16,185,129,.05)}
+.cookie-type-tag{font-size:10px;color:#10B981;font-weight:700;padding:2px 6px;background:rgba(16,185,129,.1);border-radius:4px}
+.cookie-btns{display:flex;gap:10px;margin-bottom:16px}
+.cookie-accept{flex:1;padding:14px 24px;background:linear-gradient(135deg,#10481A,#1a6b2a);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;box-shadow:0 4px 16px rgba(16,72,26,.2)}.cookie-accept:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(16,72,26,.3)}
+.cookie-decline{flex:1;padding:14px 24px;background:transparent;color:#64748B;border:1px solid #E2E8F0;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}.cookie-decline:hover{border-color:#94A3B8;color:#334155}
+.cookie-link{font-size:13px;color:#10481A;text-decoration:none;font-weight:600;transition:color .2s}.cookie-link:hover{color:#1a6b2a;text-decoration:underline}
+.cookie-enter-active,.cookie-leave-active{transition:all .5s cubic-bezier(.16,1,.3,1)}
+.cookie-enter-from,.cookie-leave-to{opacity:0}
+.cookie-enter-from .cookie-modal,.cookie-leave-to .cookie-modal{transform:scale(.9) translateY(20px);opacity:0}
+.cookie-enter-active .cookie-modal,.cookie-leave-active .cookie-modal{transition:all .5s cubic-bezier(.16,1,.3,1)}
 
 /* ─── Toast Notifications ─── */
 .toast-container{position:fixed;top:80px;right:24px;z-index:10000;display:flex;flex-direction:column;gap:8px}
@@ -900,10 +939,10 @@ html,body{background:#fff}
 .dark :deep(.link-btn){color:#38BDF8}
 
 /* ─── Scroll Progress Bar ─── */
-.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#9FE870,#2D6A00);z-index:10001;transition:width .1s linear;pointer-events:none;border-radius:0 2px 2px 0}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#9FE870,#10481A);z-index:10001;transition:width .1s linear;pointer-events:none;border-radius:0 2px 2px 0}
 
 /* ─── Back to Top ─── */
-.back-top{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:#163300;color:#fff;border:none;border-radius:50%;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 16px rgba(22,51,0,.2);z-index:9998;transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:'Inter',system-ui,sans-serif}
+.back-top{position:fixed;bottom:24px;right:24px;width:48px;height:48px;background:#10481A;color:#fff;border:none;border-radius:50%;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 16px rgba(22,51,0,.2);z-index:9998;transition:all .2s;display:flex;align-items:center;justify-content:center;font-family:'Inter',system-ui,sans-serif}
 .back-top:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(22,51,0,.3)}
 .back-top:active{transform:scale(.92)}
 .rtl .back-top{right:auto;left:24px}
@@ -1008,14 +1047,14 @@ html,body{background:#fff}
 .app-modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:28px;color:#aaa;cursor:pointer;padding:4px;line-height:1;transition:color .2s}.app-modal-close:hover{color:#333}
 .rtl .app-modal-close{right:auto;left:16px}
 .app-modal-logo{height:48px;margin-bottom:20px}
-.app-modal-title{font-size:24px;font-weight:900;color:#163300;margin-bottom:10px;letter-spacing:-.02em}
+.app-modal-title{font-size:24px;font-weight:900;color:#10481A;margin-bottom:10px;letter-spacing:-.02em}
 .app-modal-desc{font-size:15px;color:#666;line-height:1.7;margin-bottom:28px}
 .app-modal-stores{display:flex;gap:12px;justify-content:center;margin-bottom:24px}
-.app-store-btn{display:flex;align-items:center;gap:10px;padding:12px 20px;background:#163300;border-radius:12px;color:#fff;text-decoration:none;transition:all .2s}.app-store-btn:hover{background:#1e4400;transform:translateY(-2px);box-shadow:0 4px 16px rgba(22,51,0,.2)}
+.app-store-btn{display:flex;align-items:center;gap:10px;padding:12px 20px;background:#10481A;border-radius:12px;color:#fff;text-decoration:none;transition:all .2s}.app-store-btn:hover{background:#0d3a14;transform:translateY(-2px);box-shadow:0 4px 16px rgba(22,51,0,.2)}
 .app-store-btn small{display:block;font-size:9px;color:rgba(255,255,255,.6);font-weight:400}
 .app-store-btn strong{display:block;font-size:14px;font-weight:800}
 .app-modal-hint{font-size:12px;color:#999;margin-bottom:16px}
-.app-modal-biz-link{background:none;border:none;color:#2D6A00;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:color .2s;padding:0}.app-modal-biz-link:hover{color:#163300;text-decoration:underline}
+.app-modal-biz-link{background:none;border:none;color:#10481A;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:color .2s;padding:0}.app-modal-biz-link:hover{color:#10481A;text-decoration:underline}
 .dark .app-modal-card{background:#1a1a2e}.dark .app-modal-title{color:#e0e0e0}.dark .app-modal-desc{color:rgba(255,255,255,.5)}
 @media(max-width:600px){.app-modal-card{padding:36px 24px}.app-modal-stores{flex-direction:column}.app-store-btn{justify-content:center}}
 </style>

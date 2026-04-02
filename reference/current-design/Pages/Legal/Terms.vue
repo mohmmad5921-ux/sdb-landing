@@ -11,13 +11,13 @@ const t = computed(() => isAr.value ? {
   sub: 'الاتفاقية التي تحكم استخدامك لخدمات SDB Wallet',
   date: 'آخر تحديث: فبراير ٢٠٢٦',
   s1t: 'المقدمة',
-  s1p1: 'مرحباً بك في SDB Wallet ApS. باستخدامك لخدماتنا المصرفية الرقمية، فإنك توافق على الالتزام بهذه الشروط والأحكام. يرجى قراءتها بعناية قبل فتح حساب أو استخدام أي من خدماتنا.',
-  s1p2: 'SDB Wallet هي مؤسسة مالية رقمية مسجلة في أوروبا، تعمل وفقاً للقوانين واللوائح المصرفية الأوروبية المعمول بها. نخضع لرقابة الجهات التنظيمية المختصة ونحافظ على أعلى معايير الامتثال المالي.',
+  s1p1: 'مرحباً بك في SDB Wallet. باستخدامك لخدماتنا المالية الرقمية، فإنك توافق على الالتزام بهذه الشروط والأحكام. يرجى قراءتها بعناية قبل فتح حساب أو استخدام أي من خدماتنا.',
+  s1p2: 'SDB Wallet هي مؤسسة مالية رقمية مسجلة في أوروبا، تعمل وفقاً للقوانين واللوائح المالية الأوروبية المعمول بها. نخضع لرقابة الجهات التنظيمية المختصة ونحافظ على أعلى معايير الامتثال المالي.',
   s2t: 'فتح الحساب والتسجيل',
   s2p: 'لفتح حساب في SDB، يجب أن:',
   s2reqs: ['أن يكون عمرك 18 سنة على الأقل','تقديم معلومات شخصية دقيقة وصحيحة','إكمال التحقق من الهوية (KYC) بنجاح','تقديم وثائق هوية صالحة (جواز سفر، هوية وطنية)','الموافقة على هذه الشروط وسياسة الخصوصية'],
   s2note: 'يحتفظ البنك بالحق في رفض أي طلب فتح حساب دون إبداء الأسباب، وفقاً للسياسات الداخلية ومتطلبات مكافحة غسيل الأموال.',
-  s3t: 'الحسابات المصرفية',
+  s3t: 'الحسابات المالية',
   s3p: 'يقدم SDB عدة أنواع من الحسابات:',
   s3c1t: 'حساب جاري', s3c1d: 'لإدارة الأموال اليومية والمعاملات',
   s3c2t: 'حساب متعدد العملات', s3c2d: 'يدعم عملات متعددة بأسعار صرف تنافسية',
@@ -54,7 +54,7 @@ const t = computed(() => isAr.value ? {
   s10t: 'القانون الحاكم',
   s10p: 'تخضع هذه الشروط لقوانين <strong>الاتحاد الأوروبي</strong>. في حالة أي نزاع، ستتم محاولة الحل أولاً من خلال الوساطة، ثم التحكيم أمام المحاكم الأوروبية المختصة إذا لزم الأمر.',
   s11t: 'اتصل بنا',
-  s11items: ['📧 legal@sdbwallet.com','💬 الدعم داخل التطبيق: متاح 24/7','📍 أوروبا 🇪🇺'],
+  s11items: ['📧 legal@sdbwallet.com','💬 الدعم داخل التطبيق: متاح 24/7','📍 أوروبا'],
   serviceLabel: 'الخدمة', feeLabel: 'الرسوم',
 } : {
   title: 'Terms & Conditions — SDB Wallet',
@@ -63,7 +63,7 @@ const t = computed(() => isAr.value ? {
   sub: 'The agreement governing your use of SDB Wallet services',
   date: 'Last updated: February 2026',
   s1t: 'Introduction',
-  s1p1: 'Welcome to SDB Wallet ApS. By using our digital banking services, you agree to comply with these Terms and Conditions. Please read them carefully before opening an account or using any of our services.',
+  s1p1: 'Welcome to SDB Wallet. By using our digital financial services, you agree to comply with these Terms and Conditions. Please read them carefully before opening an account or using any of our services.',
   s1p2: 'SDB Wallet is a digital financial institution registered in Europe, operating in accordance with applicable European banking laws and regulations. We are subject to oversight by the relevant regulatory authorities and maintain the highest standards of financial compliance.',
   s2t: 'Account Opening & Registration',
   s2p: 'To open an account with SDB, you must:',
@@ -106,7 +106,7 @@ const t = computed(() => isAr.value ? {
   s10t: 'Governing Law',
   s10p: 'These Terms are governed by the laws of the <strong>European Union</strong>. In case of any dispute, resolution will first be attempted through mediation, then arbitration before the competent European courts if necessary.',
   s11t: 'Contact Us',
-  s11items: ['📧 legal@sdbwallet.com','💬 In-app support: Available 24/7','📍 Europe 🇪🇺'],
+  s11items: ['📧 legal@sdbwallet.com','💬 In-app support: Available 24/7','📍 Europe'],
   serviceLabel: 'Service', feeLabel: 'Fee',
 });
 </script>
@@ -180,7 +180,7 @@ const t = computed(() => isAr.value ? {
       <section class="lp-s"><div class="lp-s-num">09</div><h2>{{ t.s9t }}</h2><p>{{ t.s9p }}</p></section>
 
       <section class="lp-s"><div class="lp-s-num">10</div><h2>{{ t.s10t }}</h2>
-        <div class="lp-law"><span class="lp-law-flag">🇩🇰 🇪🇺</span><p v-html="t.s10p"></p></div>
+        <div class="lp-law"><span class="lp-law-flag"><span class="fi fi-dk" style="font-size:28px;border-radius:3px"></span> <span class="fi fi-eu" style="font-size:28px;border-radius:3px"></span></span><p v-html="t.s10p"></p></div>
       </section>
 
       <section class="lp-s lp-s-last"><div class="lp-s-num">11</div><h2>{{ t.s11t }}</h2>

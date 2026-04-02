@@ -116,7 +116,7 @@ function swap() {
 /* ─── Translations ─── */
 const t = computed(() => isAr.value ? {
   title: 'ليرتنا — محوّل العملة السورية | SDB Wallet',
-  tag: '🇸🇾 ليرتنا',
+  tag: 'ليرتنا',
   heroH: 'ليرتنا.',
   heroEm: 'حوّل بسهولة.',
   heroP: 'محوّل الليرة السورية بين القديم والجديد — سريع، دقيق، واحترافي. مع تفصيل الفئات النقدية وعرض المبلغ كتابةً.',
@@ -144,14 +144,14 @@ const t = computed(() => isAr.value ? {
     { ic: '📅', t: 'الفترة الانتقالية', d: 'العملتان القديمة والجديدة مقبولتان خلال الفترة الانتقالية التي حددها السلطة المالية.' },
     { ic: '📱', t: 'لماذا ليرتنا؟', d: 'تطبيق سريع وبسيط لتحويل المبالغ، مع عرض الفئات النقدية والمبلغ كتابةً — مثالي للتجار والأفراد.' },
     { ic: '🛡️', t: 'حماية قيمتك', d: 'لا فقدان بالقيمة — التحويل حسابي بسيط (÷100 أو ×100). محفظتك آمنة.' },
-    { ic: '🏦', t: 'SDB Wallet', d: 'أول محفظة رقمية يدعم الليرة الجديدة — حوّل، ادفع، واستلم بدون نقد مباشرة من التطبيق.' },
+    { ic: '🏦', t: 'SDB Wallet', d: 'محفظة رقمية تدعم الليرة الجديدة — حوّل، ادفع، واستلم بدون نقد مباشرة من التطبيق.' },
   ],
   ctaTitle: 'حمّل التطبيق وحوّل ليرتك رقمياً',
   ctaSub: 'افتح حسابك في SDB Wallet واستمتع بتجربة بنكية رقمية كاملة.',
   ctaBtn: 'افتح حسابك ←',
 } : {
   title: 'Lirtna — Syrian Currency Converter | SDB Wallet',
-  tag: '🇸🇾 Lirtna',
+  tag: 'Lirtna',
   heroH: 'Lirtna.',
   heroEm: 'Convert with ease.',
   heroP: 'Convert Syrian Lira between old and new denominations — fast, accurate, and professional. With banknote breakdown and amount in words.',
@@ -191,7 +191,7 @@ const t = computed(() => isAr.value ? {
 
 <!-- Hero -->
 <section class="lr-hero"><div class="sw tc">
-  <div class="lr-tag">{{ t.tag }}</div>
+  <div class="lr-tag"><span class="fi fi-sy" style="font-size:14px;border-radius:2px;margin-inline-end:6px"></span>{{ t.tag }}</div>
   <h1 class="lr-h">{{ t.heroH }}<br><span class="lr-em">{{ t.heroEm }}</span></h1>
   <p class="lr-p">{{ t.heroP }}</p>
 </div></section>

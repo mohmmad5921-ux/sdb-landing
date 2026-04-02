@@ -5,47 +5,47 @@ import SiteLayout from '@/Layouts/SiteLayout.vue';
 defineOptions({ layout: SiteLayout });
 const isAr = inject('isAr', computed(() => true));
 const t = computed(() => isAr.value ? {
-  title:'حساب Plus — SDB Wallet',tag:'Plus · الأكثر طلباً',
+  title:'حساب Plus — SDB Wallet',tag:'Plus',
   heroH:'حساب Plus.',heroEm:'عمولات أقل. مميزات أكثر.',
-  heroP:'كل مميزات Personal بعمولات أقل بكثير، كاشباك 1% على كل مشترياتك، ودعم أولوية.',
-  price:'€19.99',priceNote:'/شهر',
-  heroBtn:'احصل على Plus ←',
+  heroP:'كل مميزات Personal بعمولات أقل بكثير، كاشباك على كل مشترياتك، ودعم أولوية.',
+  price:'قريباً',priceNote:'',
+  heroBtn:'سجّل مبكراً ←',
   inclTitle:'كل شيء في Personal + أكثر',
-  incl:['5 بطاقات Mastercard (افتراضية + فعلية)','5 حسابات','عمولة تحويل 1.5% (بدل 2.5%)','عمولة إيداع 1% (بدل 2%)','صرف عملات +1.5% (بدل +3%)','تداول كريبتو 1% (بدل 2%)','كاشباك 1% على كل المشتريات','AI مساعد ذكي','تأمين ضد الاحتيال','دعم أولوية'],
+  incl:['5 بطاقات Mastercard (افتراضية + فعلية)','5 حسابات','عمولة تحويل مخفضة','عمولة إيداع مخفضة','صرف عملات بأفضل سعر','تداول كريبتو بعمولة مخفضة','كاشباك على كل المشتريات','AI مساعد ذكي','تأمين ضد الاحتيال','دعم أولوية'],
   feesTitle:'العمولات',
-  fees:[{l:'تحويل',v:'1.5%'},{l:'إيداع',v:'1%'},{l:'صرف عملات',v:'+1.5%'},{l:'كريبتو',v:'1%'}],
+  fees:[{l:'تحويل',v:'قريباً'},{l:'إيداع',v:'قريباً'},{l:'صرف عملات',v:'قريباً'},{l:'كريبتو',v:'قريباً'}],
   extraTitle:'مميزات حصرية لـ Plus',
   extras:[
-    {ic:'💰',t:'كاشباك 1%',d:'استرداد 1% على كل مشترياتك. يُضاف تلقائياً لرصيدك كل شهر. بدون حد أقصى.'},
-    {ic:'⚡',t:'عمولات مخفضة',d:'وفّر أكثر مع كل عملية — 1.5% تحويل بدل 2.5%، و1% إيداع بدل 2%.'},
+    {ic:'💰',t:'كاشباك',d:'استرداد على كل مشترياتك. يُضاف تلقائياً لرصيدك كل شهر.'},
+    {ic:'⚡',t:'عمولات مخفضة',d:'وفّر أكثر مع كل عملية — عمولات أقل بكثير من الحساب العادي.'},
     {ic:'🎧',t:'دعم أولوية',d:'أولوية في الرد على استفساراتك — وقت انتظار أقل ودعم متميز.'},
-    {ic:'🤖',t:'AI مساعد ذكي',d:'مساعد بالذكاء الاصطناعي يساعدك بكل استفساراتك البنكية.'},
+    {ic:'🤖',t:'AI مساعد ذكي',d:'مساعد بالذكاء الاصطناعي يساعدك بكل استفساراتك المالية.'},
   ],
   upgradeTitle:'لشركتك؟',upgradeFade:'اكتشف Business',
-  upgradeDesc:'حساب تجاري متكامل مع Payment Gateway، نظام محاسبة، فواتير، وNet Bank Business — بـ €49/شهر.',
+  upgradeDesc:'حساب تجاري متكامل مع Payment Gateway، نظام محاسبة، فواتير، وNet Bank Business.',
   upgradeBtn:'اكتشف Business ←',upgradeBtnAll:'قارن كل الباقات',
-  ctaTitle:'ارتقِ لـ Plus',ctaSub:'عمولات أقل + كاشباك 1% + دعم أولوية — بـ €19.99/شهر.',ctaBtn:'احصل على Plus ←',
+  ctaTitle:'ارتقِ لـ Plus',ctaSub:'عمولات أقل + كاشباك + دعم أولوية — التفاصيل قريباً.',ctaBtn:'سجّل مبكراً ←',
 } : {
-  title:'Plus Account — SDB Wallet',tag:'Plus · Most Popular',
+  title:'Plus Account — SDB Wallet',tag:'Plus',
   heroH:'Plus Account.',heroEm:'Lower fees. More features.',
-  heroP:'Everything in Personal with much lower fees, 1% cashback on all purchases, and priority support.',
-  price:'€19.99',priceNote:'/month',
-  heroBtn:'Get Plus →',
+  heroP:'Everything in Personal with much lower fees, cashback on all purchases, and priority support.',
+  price:'Coming Soon',priceNote:'',
+  heroBtn:'Register early →',
   inclTitle:'Everything in Personal + more',
-  incl:['5 Mastercard cards (virtual + physical)','5 accounts','1.5% transfer fee (vs 2.5%)','1% deposit fee (vs 2%)','+1.5% currency exchange (vs +3%)','1% crypto trading (vs 2%)','1% cashback on all purchases','AI assistant','Fraud protection','Priority support'],
+  incl:['5 Mastercard cards (virtual + physical)','5 accounts','Reduced transfer fee','Reduced deposit fee','Better currency exchange rate','Reduced crypto trading fee','Cashback on all purchases','AI assistant','Fraud protection','Priority support'],
   feesTitle:'Fees',
-  fees:[{l:'Transfer',v:'1.5%'},{l:'Deposit',v:'1%'},{l:'Currency exchange',v:'+1.5%'},{l:'Crypto',v:'1%'}],
+  fees:[{l:'Transfer',v:'Soon'},{l:'Deposit',v:'Soon'},{l:'Currency exchange',v:'Soon'},{l:'Crypto',v:'Soon'}],
   extraTitle:'Plus exclusive features',
   extras:[
-    {ic:'💰',t:'1% Cashback',d:'1% back on all purchases. Automatically credited to your balance monthly. No cap.'},
-    {ic:'⚡',t:'Lower Fees',d:'Save more on every transaction — 1.5% transfer vs 2.5%, 1% deposit vs 2%.'},
+    {ic:'💰',t:'Cashback',d:'Get back on all purchases. Automatically credited to your balance monthly.'},
+    {ic:'⚡',t:'Lower Fees',d:'Save more on every transaction — much lower fees than the standard account.'},
     {ic:'🎧',t:'Priority Support',d:'Priority response to your inquiries — shorter wait times and premium support.'},
-    {ic:'🤖',t:'AI Assistant',d:'AI-powered assistant to help with all your banking inquiries.'},
+    {ic:'🤖',t:'AI Assistant',d:'AI-powered assistant to help with all your financial inquiries.'},
   ],
   upgradeTitle:'For your business?',upgradeFade:'Discover Business',
-  upgradeDesc:'Complete business account with Payment Gateway, accounting system, invoicing, and Net Bank Business — €49/mo.',
+  upgradeDesc:'Complete business account with Payment Gateway, accounting system, invoicing, and Net Bank Business.',
   upgradeBtn:'Discover Business →',upgradeBtnAll:'Compare all plans',
-  ctaTitle:'Upgrade to Plus',ctaSub:'Lower fees + 1% cashback + priority support — €19.99/mo.',ctaBtn:'Get Plus →',
+  ctaTitle:'Upgrade to Plus',ctaSub:'Lower fees + cashback + priority support — details coming soon.',ctaBtn:'Register early →',
 });
 </script>
 <template>
@@ -59,7 +59,7 @@ const t = computed(() => isAr.value ? {
 </template>
 <style scoped>
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
-.sec{padding:80px 0}.sec-alt{background:#F5F9F3}.sec-sky{background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.sec{padding:80px 0}.sec-alt{background:#F5F9F3}.sec-sky{background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .t2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:48px}.t2-w{color:#fff}.t2-em{color:#7C3AED}
 .t2-sub{font-size:16px;color:rgba(10,10,10,.35);line-height:1.8;max-width:540px}.t2-sub-w{color:rgba(255,255,255,.4)}
 .p-hero{padding:160px 0 80px;background:linear-gradient(135deg,#4C1D95,#6D28D9,#7C3AED);color:#fff}
@@ -78,6 +78,6 @@ const t = computed(() => isAr.value ? {
 .cta-row{display:flex;gap:16px;justify-content:center}
 .link-btn-lg{font-size:15px;font-weight:700;color:#7C3AED;text-decoration:none;padding:12px 28px;border:2px solid rgba(124,58,237,.15);border-radius:12px;transition:all .2s}.link-btn-lg:hover{border-color:#7C3AED;background:rgba(124,58,237,.04)}
 .link-sec{color:rgba(10,10,10,.3);border-color:rgba(10,10,10,.08)}.link-sec:hover{color:#4C1D95;border-color:rgba(10,10,10,.15)}
-.cta-btn{display:inline-block;padding:16px 44px;background:#fff;color:#163300;font-size:15px;font-weight:800;border-radius:12px;text-decoration:none;transition:all .2s}.cta-btn:hover{transform:translateY(-2px)}
+.cta-btn{display:inline-block;padding:16px 44px;background:#fff;color:#10481A;font-size:15px;font-weight:800;border-radius:12px;text-decoration:none;transition:all .2s}.cta-btn:hover{transform:translateY(-2px)}
 @media(max-width:768px){.incl-grid{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,1fr)}}
 </style>

@@ -39,7 +39,7 @@ const converted = computed(() => (amt.value * (sypRates.value[selCur.value] || 1
 const reverseConverted = computed(() => (amt.value / (sypRates.value[selCur.value] || 1)).toFixed(2));
 
 const t = computed(() => isAr.value ? {
-  title:'الليرة السورية الجديدة — SDB Wallet',tag:'🇸🇾 الليرة السورية الجديدة',
+  title:'الليرة السورية الجديدة — SDB Wallet',tag:'الليرة السورية الجديدة',
   heroH:'الليرة السورية.',heroEm:'عصر جديد.',
   heroP:'بعد مسح الصفرين — العملة السورية الجديدة أبسط وأقوى. تابع أسعار الصرف المباشرة وحوّل من وإلى الليرة السورية فوراً.',
   redenomTitle:'مسح الصفرين',redenomSub:'ما الذي تغيّر؟',
@@ -54,18 +54,18 @@ const t = computed(() => isAr.value ? {
   calcTitle:'حاسبة الليرة السورية',calcFrom:'المبلغ بالليرة السورية',calcTo:'يعادل بـ',calcReverse:'أو أدخل',calcGet:'تحصل على',calcSyp:'ل.س',
   ratesTitle:'أسعار صرف الليرة السورية',rateNote:'أسعار إرشادية — محدّثة | السعر الفعلي بالتطبيق',
   rateCards:[
-    {flag:'🇺🇸',code:'USD',name:'دولار أمريكي',buy:'138.50',sell:'137.50'},
-    {flag:'🇪🇺',code:'EUR',name:'يورو',buy:'150.20',sell:'149.20'},
-    {flag:'🇬🇧',code:'GBP',name:'جنيه إسترليني',buy:'174.80',sell:'173.80'},
-    {flag:'🇹🇷',code:'TRY',name:'ليرة تركية',buy:'4.05',sell:'3.99'},
-    {flag:'🇦🇪',code:'AED',name:'درهم إماراتي',buy:'37.70',sell:'37.30'},
-    {flag:'🇸🇦',code:'SAR',name:'ريال سعودي',buy:'36.95',sell:'36.65'},
-    {flag:'🇯🇴',code:'JOD',name:'دينار أردني',buy:'195.50',sell:'194.50'},
-    {flag:'🇰🇼',code:'KWD',name:'دينار كويتي',buy:'450.00',sell:'448.00'},
-    {flag:'🇶🇦',code:'QAR',name:'ريال قطري',buy:'38.05',sell:'37.75'},
-    {flag:'🇧🇭',code:'BHD',name:'دينار بحريني',buy:'367.00',sell:'365.00'},
-    {flag:'🇴🇲',code:'OMR',name:'ريال عماني',buy:'359.00',sell:'357.00'},
-    {flag:'🇪🇬',code:'EGP',name:'جنيه مصري',buy:'2.85',sell:'2.81'},
+    {flag:'us',code:'USD',name:'دولار أمريكي',buy:'138.50',sell:'137.50'},
+    {flag:'eu',code:'EUR',name:'يورو',buy:'150.20',sell:'149.20'},
+    {flag:'gb',code:'GBP',name:'جنيه إسترليني',buy:'174.80',sell:'173.80'},
+    {flag:'tr',code:'TRY',name:'ليرة تركية',buy:'4.05',sell:'3.99'},
+    {flag:'ae',code:'AED',name:'درهم إماراتي',buy:'37.70',sell:'37.30'},
+    {flag:'sa',code:'SAR',name:'ريال سعودي',buy:'36.95',sell:'36.65'},
+    {flag:'jo',code:'JOD',name:'دينار أردني',buy:'195.50',sell:'194.50'},
+    {flag:'kw',code:'KWD',name:'دينار كويتي',buy:'450.00',sell:'448.00'},
+    {flag:'qa',code:'QAR',name:'ريال قطري',buy:'38.05',sell:'37.75'},
+    {flag:'bh',code:'BHD',name:'دينار بحريني',buy:'367.00',sell:'365.00'},
+    {flag:'om',code:'OMR',name:'ريال عماني',buy:'359.00',sell:'357.00'},
+    {flag:'eg',code:'EGP',name:'جنيه مصري',buy:'2.85',sell:'2.81'},
   ],
   useCasesTitle:'استخدامات الليرة الجديدة',
   useCases:[
@@ -91,11 +91,11 @@ const t = computed(() => isAr.value ? {
     {y:'1947',t:'الاستقلال',d:'عملة سورية مستقلة بالكامل مرتبطة بالذهب.'},
     {y:'2011-2020',t:'فترة النزاع',d:'تراجع كبير بقيمة العملة — من 47 للدولار لأكثر من 3,000.'},
     {y:'2025',t:'إعادة الهيكلة',d:'مسح الصفرين وإصدار عملة جديدة — بداية عصر مالي جديد.'},
-    {y:'2026',t:'الرقمنة مع SDB',d:'أول محفظة رقمية يدعم الليرة الجديدة ويربطها بالعالم.'},
+    {y:'2026',t:'الرقمنة مع SDB',d:'محفظة رقمية تدعم الليرة الجديدة وتربطها بالعالم.'},
   ],
   ctaTitle:'حوّل ليرتك رقمياً',ctaSub:'افتح حسابك واستفد من أفضل أسعار صرف الليرة السورية.',ctaBtn:'افتح حسابك ←',
 } : {
-  title:'Syrian Lira (SYP) — SDB Wallet',tag:'🇸🇾 New Syrian Lira',
+  title:'Syrian Lira (SYP) — SDB Wallet',tag:'New Syrian Lira',
   heroH:'Syrian Lira.',heroEm:'A new era.',
   heroP:'After removing two zeros — the new Syrian currency is simpler and stronger. Track live exchange rates and convert to and from Syrian Lira instantly.',
   redenomTitle:'Two Zeros Removed',redenomSub:'What changed?',
@@ -110,18 +110,18 @@ const t = computed(() => isAr.value ? {
   calcTitle:'Syrian Lira Calculator',calcFrom:'Amount in Syrian Lira',calcTo:'Equals in',calcReverse:'Or enter',calcGet:'You get',calcSyp:'SYP',
   ratesTitle:'Syrian Lira Exchange Rates',rateNote:'Indicative rates — updated | Actual rates in-app',
   rateCards:[
-    {flag:'🇺🇸',code:'USD',name:'US Dollar',buy:'138.50',sell:'137.50'},
-    {flag:'🇪🇺',code:'EUR',name:'Euro',buy:'150.20',sell:'149.20'},
-    {flag:'🇬🇧',code:'GBP',name:'British Pound',buy:'174.80',sell:'173.80'},
-    {flag:'🇹🇷',code:'TRY',name:'Turkish Lira',buy:'4.05',sell:'3.99'},
-    {flag:'🇦🇪',code:'AED',name:'UAE Dirham',buy:'37.70',sell:'37.30'},
-    {flag:'🇸🇦',code:'SAR',name:'Saudi Riyal',buy:'36.95',sell:'36.65'},
-    {flag:'🇯🇴',code:'JOD',name:'Jordanian Dinar',buy:'195.50',sell:'194.50'},
-    {flag:'🇰🇼',code:'KWD',name:'Kuwaiti Dinar',buy:'450.00',sell:'448.00'},
-    {flag:'🇶🇦',code:'QAR',name:'Qatari Riyal',buy:'38.05',sell:'37.75'},
-    {flag:'🇧🇭',code:'BHD',name:'Bahraini Dinar',buy:'367.00',sell:'365.00'},
-    {flag:'🇴🇲',code:'OMR',name:'Omani Rial',buy:'359.00',sell:'357.00'},
-    {flag:'🇪🇬',code:'EGP',name:'Egyptian Pound',buy:'2.85',sell:'2.81'},
+    {flag:'us',code:'USD',name:'US Dollar',buy:'138.50',sell:'137.50'},
+    {flag:'eu',code:'EUR',name:'Euro',buy:'150.20',sell:'149.20'},
+    {flag:'gb',code:'GBP',name:'British Pound',buy:'174.80',sell:'173.80'},
+    {flag:'tr',code:'TRY',name:'Turkish Lira',buy:'4.05',sell:'3.99'},
+    {flag:'ae',code:'AED',name:'UAE Dirham',buy:'37.70',sell:'37.30'},
+    {flag:'sa',code:'SAR',name:'Saudi Riyal',buy:'36.95',sell:'36.65'},
+    {flag:'jo',code:'JOD',name:'Jordanian Dinar',buy:'195.50',sell:'194.50'},
+    {flag:'kw',code:'KWD',name:'Kuwaiti Dinar',buy:'450.00',sell:'448.00'},
+    {flag:'qa',code:'QAR',name:'Qatari Riyal',buy:'38.05',sell:'37.75'},
+    {flag:'bh',code:'BHD',name:'Bahraini Dinar',buy:'367.00',sell:'365.00'},
+    {flag:'om',code:'OMR',name:'Omani Rial',buy:'359.00',sell:'357.00'},
+    {flag:'eg',code:'EGP',name:'Egyptian Pound',buy:'2.85',sell:'2.81'},
   ],
   useCasesTitle:'New Lira Use Cases',
   useCases:[
@@ -154,7 +154,7 @@ const t = computed(() => isAr.value ? {
 </script>
 <template>
 <Head :title="t.title" />
-<section class="p-hero"><div class="sw tc"><div class="p-hero-tag">{{ t.tag }}</div><h1 class="p-hero-h">{{ t.heroH }}<br><span class="p-hero-em">{{ t.heroEm }}</span></h1><p class="p-hero-p">{{ t.heroP }}</p></div></section>
+<section class="p-hero"><div class="sw tc"><div class="p-hero-tag"><span class="fi fi-sy" style="font-size:14px;border-radius:2px;margin-inline-end:6px"></span>{{ t.tag }}</div><h1 class="p-hero-h">{{ t.heroH }}<br><span class="p-hero-em">{{ t.heroEm }}</span></h1><p class="p-hero-p">{{ t.heroP }}</p></div></section>
 
 <!-- Redenomination -->
 <section class="sec"><div class="sw"><h2 class="t2 tc">{{ t.redenomTitle }}<br><span class="t2-em">{{ t.redenomSub }}</span></h2><div class="g3"><div v-for="(c,i) in t.redenomCards" :key="i" class="rd-c"><span class="rd-ic">{{ c.ic }}</span><h4 class="rd-t">{{ c.t }}</h4><p class="rd-d">{{ c.d }}</p></div></div></div></section>
@@ -163,7 +163,7 @@ const t = computed(() => isAr.value ? {
 <section class="sec sec-alt"><div class="sw"><h2 class="t2 tc">{{ t.calcTitle }}</h2><div class="calc-box"><div class="calc-row"><label class="calc-l">{{ t.calcFrom }}</label><div class="calc-in"><input v-model.number="amt" type="number" class="calc-input"/><span class="calc-syp">{{ t.calcSyp }}</span></div></div><div class="calc-eq">⇅</div><div class="calc-row"><label class="calc-l">{{ t.calcTo }} <select v-model="selCur" class="calc-sel"><option v-for="c in curList" :key="c" :value="c">{{ c }}</option></select></label><div class="calc-result-big">{{ converted }}</div></div></div></div></section>
 
 <!-- Live Rates Table -->
-<section class="sec"><div class="sw"><h2 class="t2 tc">{{ t.ratesTitle }}</h2><p class="t2-note tc">{{ t.rateNote }}</p><div class="rates-grid"><div v-for="r in t.rateCards" :key="r.code" class="rate-c"><div class="rate-top"><span class="rate-flag">{{ r.flag }}</span><div><div class="rate-code">{{ r.code }}</div><div class="rate-name">{{ r.name }}</div></div></div><div class="rate-prices"><div class="rate-col"><span class="rate-label">{{ isAr?'شراء':'Buy' }}</span><span class="rate-val">{{ r.buy }}</span></div><div class="rate-col"><span class="rate-label">{{ isAr?'بيع':'Sell' }}</span><span class="rate-val rate-sell">{{ r.sell }}</span></div></div></div></div></div></section>
+<section class="sec"><div class="sw"><h2 class="t2 tc">{{ t.ratesTitle }}</h2><p class="t2-note tc">{{ t.rateNote }}</p><div class="rates-grid"><div v-for="r in t.rateCards" :key="r.code" class="rate-c"><div class="rate-top"><span :class="'fi fi-' + r.flag" class="rate-flag"></span><div><div class="rate-code">{{ r.code }}</div><div class="rate-name">{{ r.name }}</div></div></div><div class="rate-prices"><div class="rate-col"><span class="rate-label">{{ isAr?'شراء':'Buy' }}</span><span class="rate-val">{{ r.buy }}</span></div><div class="rate-col"><span class="rate-label">{{ isAr?'بيع':'Sell' }}</span><span class="rate-val rate-sell">{{ r.sell }}</span></div></div></div></div></div></section>
 
 <!-- Use Cases -->
 <section class="sec sec-alt"><div class="sw"><h2 class="t2 tc">{{ t.useCasesTitle }}</h2><div class="g3"><div v-for="u in t.useCases" :key="u.t" class="uc-c"><span class="uc-ic">{{ u.ic }}</span><h4 class="uc-t">{{ u.t }}</h4><p class="uc-d">{{ u.d }}</p></div></div></div></section>
@@ -179,7 +179,7 @@ const t = computed(() => isAr.value ? {
 </template>
 <style scoped>
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
-.sec{padding:80px 0}.sec-alt{background:#F5F9F3}.sec-dark{background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}.sec-sky{background:linear-gradient(135deg,#163300,#9FE870);color:#fff}
+.sec{padding:80px 0}.sec-alt{background:#F5F9F3}.sec-dark{background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}.sec-sky{background:linear-gradient(135deg,#10481A,#9FE870);color:#fff}
 .t2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:32px}.t2-w{color:#fff}.t2-em{color:#9FE870;font-size:.7em}
 .t2-sub{font-size:16px;line-height:1.8;max-width:540px}.t2-sub-w{color:rgba(255,255,255,.4)}
 .t2-note{font-size:12px;color:rgba(10,10,10,.25);margin-top:-24px;margin-bottom:32px}
@@ -201,7 +201,7 @@ const t = computed(() => isAr.value ? {
 .rates-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .rate-c{padding:20px;background:#fff;border:1px solid rgba(16,185,129,.06);border-radius:16px;transition:all .3s}.rate-c:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.04)}
 .rate-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.rate-flag{font-size:28px}.rate-code{font-size:14px;font-weight:900;color:#065F46}.rate-name{font-size:11px;color:rgba(10,10,10,.3)}
+.rate-flag{font-size:28px;border-radius:4px}.rate-code{font-size:14px;font-weight:900;color:#065F46}.rate-name{font-size:11px;color:rgba(10,10,10,.3)}
 .rate-prices{display:flex;gap:12px}.rate-col{flex:1;text-align:center;padding:8px;background:#F0FDF4;border-radius:10px}
 .rate-label{font-size:10px;font-weight:700;color:#047857;display:block;margin-bottom:2px}
 .rate-val{font-size:16px;font-weight:900;color:#065F46}.rate-sell{color:#DC2626}

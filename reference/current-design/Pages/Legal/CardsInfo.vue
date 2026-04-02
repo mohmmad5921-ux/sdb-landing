@@ -10,14 +10,14 @@ const t = computed(() => isAr.value ? {
   heroCta:'احصل على بطاقتك',
   tierTitle:'البطاقات حسب الباقة',
   tiers:[
-    {name:'Personal',badge:'€9.99/شهر',color:'#9FE870',feats:['5 بطاقات Mastercard (افتراضية + فعلية)','5 حسابات','Apple Pay و Google Pay','عمولة تحويل 2.5%','عمولة إيداع 2%','صرف عملات +3%','تداول كريبتو 2%','AI مساعد ذكي','تأمين ضد الاحتيال']},
-    {name:'Plus',badge:'€19.99/شهر',color:'#7C3AED',feats:['5 بطاقات Mastercard (افتراضية + فعلية)','5 حسابات','عمولة تحويل 1.5%','عمولة إيداع 1%','صرف عملات +1.5%','تداول كريبتو 1%','كاشباك 1%','AI مساعد ذكي','تأمين ضد الاحتيال','دعم أولوية']},
-    {name:'Business',badge:'€49/شهر',color:'#2563EB',feats:['5 بطاقات Mastercard للموظفين','5 حسابات','عمولة تحويل 1%','عمولة إيداع 0.8%','Payment Gateway','Net Bank Business','نظام محاسبة','فواتير','API Access']},
+    {name:'Personal',badge:'قريباً',color:'#9FE870',feats:['5 بطاقات Mastercard (افتراضية + فعلية)','5 حسابات','Apple Pay و Google Pay','عمولة تحويل 2.5%','عمولة إيداع 2%','صرف عملات +3%','تداول كريبتو 2%','AI مساعد ذكي','تأمين ضد الاحتيال']},
+    {name:'Plus',badge:'قريباً',color:'#7C3AED',feats:['5 بطاقات Mastercard (افتراضية + فعلية)','5 حسابات','عمولة تحويل 1.5%','عمولة إيداع 1%','صرف عملات +1.5%','تداول كريبتو 1%','كاشباك 1%','AI مساعد ذكي','تأمين ضد الاحتيال','دعم أولوية']},
+    {name:'Business',badge:'قريباً',color:'#2563EB',feats:['5 بطاقات Mastercard للموظفين','5 حسابات','عمولة تحويل 1%','عمولة إيداع 0.8%','Payment Gateway','Net Bank Business','نظام محاسبة','فواتير','API Access']},
     {name:'Enterprise',badge:'مخصص',color:'#B45309',feats:['5 بطاقات Mastercard','5 حسابات','عمولات مخصصة','كل ميزات Business','Web Shop متكامل','ربط ERP / SAP','تطوير حسب الطلب']},
   ],
   compTitle:'مقارنة العمولات',
   compH:['الميزة','Personal','Plus','Business','Enterprise'],
-  compR:[['السعر الشهري','€9.99','€19.99','€49','مخصص'],['عمولة تحويل','2.5%','1.5%','1%','مخصص'],['عمولة إيداع','2%','1%','0.8%','مخصص'],['صرف عملات','+3%','+1.5%','+1%','مخصص'],['كريبتو','2%','1%','1%','مخصص'],['بطاقات','5','5','5','5'],['حسابات','5','5','5','5'],['AI مساعد','✓','✓','✓','✓'],['تأمين احتيال','✓','✓','✓','✓'],['كاشباك','—','1%','—','✓'],['دعم أولوية','—','✓','✓','✓'],['Payment Gateway','—','—','✓','✓'],['نظام محاسبة','—','—','✓','✓'],['Web Shop','—','—','—','✓']],
+  compR:[['السعر الشهري','قريباً','قريباً','قريباً','مخصص'],['عمولة تحويل','قريباً','قريباً','قريباً','مخصص'],['عمولة إيداع','قريباً','قريباً','قريباً','مخصص'],['صرف عملات','قريباً','قريباً','قريباً','مخصص'],['كريبتو','قريباً','قريباً','قريباً','مخصص'],['بطاقات','5','5','5','5'],['حسابات','5','5','5','5'],['AI مساعد','✓','✓','✓','✓'],['تأمين احتيال','✓','✓','✓','✓'],['كاشباك','—','قريباً','—','✓'],['دعم أولوية','—','✓','✓','✓'],['Payment Gateway','—','—','✓','✓'],['نظام محاسبة','—','—','✓','✓'],['Web Shop','—','—','—','✓']],
   featTitle:'كل مميزات البطاقة',
   feats:[
     {ic:'📱',t:'Apple Pay و Google Pay',d:'أضف بطاقتك لمحفظتك الرقمية وادفع بهاتفك أو ساعتك الذكية بأي متجر.'},
@@ -36,14 +36,14 @@ const t = computed(() => isAr.value ? {
   heroCta:'Get your card',
   tierTitle:'Cards by plan',
   tiers:[
-    {name:'Personal',badge:'€9.99/mo',color:'#9FE870',feats:['5 Mastercard cards (virtual + physical)','5 accounts','Apple Pay & Google Pay','2.5% transfer fee','2% deposit fee','+3% currency exchange','2% crypto trading','AI assistant','Fraud protection']},
-    {name:'Plus',badge:'€19.99/mo',color:'#7C3AED',feats:['5 Mastercard cards (virtual + physical)','5 accounts','1.5% transfer fee','1% deposit fee','+1.5% currency exchange','1% crypto trading','1% cashback','AI assistant','Fraud protection','Priority support']},
-    {name:'Business',badge:'€49/mo',color:'#2563EB',feats:['5 Mastercard cards for employees','5 accounts','1% transfer fee','0.8% deposit fee','Payment Gateway','Net Bank Business','Accounting system','Invoicing','API Access']},
+    {name:'Personal',badge:'Coming Soon',color:'#9FE870',feats:['5 Mastercard cards (virtual + physical)','5 accounts','Apple Pay & Google Pay','2.5% transfer fee','2% deposit fee','+3% currency exchange','2% crypto trading','AI assistant','Fraud protection']},
+    {name:'Plus',badge:'Coming Soon',color:'#7C3AED',feats:['5 Mastercard cards (virtual + physical)','5 accounts','1.5% transfer fee','1% deposit fee','+1.5% currency exchange','1% crypto trading','1% cashback','AI assistant','Fraud protection','Priority support']},
+    {name:'Business',badge:'Coming Soon',color:'#2563EB',feats:['5 Mastercard cards for employees','5 accounts','1% transfer fee','0.8% deposit fee','Payment Gateway','Net Bank Business','Accounting system','Invoicing','API Access']},
     {name:'Enterprise',badge:'Custom',color:'#B45309',feats:['5 Mastercard cards','5 accounts','Custom fees','All Business features','Full Web Shop','ERP / SAP integration','Custom development']},
   ],
   compTitle:'Fee Comparison',
   compH:['Feature','Personal','Plus','Business','Enterprise'],
-  compR:[['Monthly price','€9.99','€19.99','€49','Custom'],['Transfer fee','2.5%','1.5%','1%','Custom'],['Deposit fee','2%','1%','0.8%','Custom'],['Currency exchange','+3%','+1.5%','+1%','Custom'],['Crypto','2%','1%','1%','Custom'],['Cards','5','5','5','5'],['Accounts','5','5','5','5'],['AI assistant','✓','✓','✓','✓'],['Fraud protection','✓','✓','✓','✓'],['Cashback','—','1%','—','✓'],['Priority support','—','✓','✓','✓'],['Payment Gateway','—','—','✓','✓'],['Accounting','—','—','✓','✓'],['Web Shop','—','—','—','✓']],
+  compR:[['Monthly price','قريباً','قريباً','قريباً','Custom'],['Transfer fee','قريباً','قريباً','قريباً','Custom'],['Deposit fee','قريباً','قريباً','قريباً','Custom'],['Currency exchange','قريباً','قريباً','قريباً','Custom'],['Crypto','قريباً','قريباً','قريباً','Custom'],['Cards','5','5','5','5'],['Accounts','5','5','5','5'],['AI assistant','✓','✓','✓','✓'],['Fraud protection','✓','✓','✓','✓'],['Cashback','—','قريباً','—','✓'],['Priority support','—','✓','✓','✓'],['Payment Gateway','—','—','✓','✓'],['Accounting','—','—','✓','✓'],['Web Shop','—','—','—','✓']],
   featTitle:'All Card Features',
   feats:[
     {ic:'📱',t:'Apple Pay & Google Pay',d:'Add your card to your digital wallet and pay with your phone or smartwatch.'},
@@ -72,7 +72,7 @@ const t = computed(() => isAr.value ? {
 </template>
 <style scoped>
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}
-.sec{padding:100px 0}.sec-alt{background:#fafafa}.sec-dark{background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.sec{padding:100px 0}.sec-alt{background:#fafafa}.sec-dark{background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .tc{text-align:center}
 .t2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.1;margin-bottom:48px}.t2-w{color:#fff}
 .t2-sub{font-size:16px;color:rgba(10,10,10,.35);line-height:1.8;max-width:500px}.t2-sub-w{color:rgba(255,255,255,.3)}

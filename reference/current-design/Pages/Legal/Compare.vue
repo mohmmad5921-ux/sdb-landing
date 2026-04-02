@@ -14,7 +14,7 @@ const t = computed(() => isAr.value ? {
   rows:[
     ['فتح الحساب','مجاني — دقيقتين','مجاني — 5 دقائق','مجاني — 5 دقائق','مجاني — 10 دقائق'],
     ['بطاقة مجانية','✅ افتراضية فورية','✅ افتراضية','✅ افتراضية','✅ افتراضية'],
-    ['بطاقات Mastercard','✅ 5 بطاقات من €9.99/شهر','❌ غير متوفر','✅ من €7.99/شهر','✅ من €9.90/شهر'],
+    ['بطاقات Mastercard','✅ 5 بطاقات من قريباً','❌ غير متوفر','✅ من €7.99/شهر','✅ من €9.90/شهر'],
     ['دعم الليرة السورية','✅ SYP مدعومة','❌ غير متوفر','❌ غير متوفر','❌ غير متوفر'],
     ['تحويل لسوريا','✅ فوري — 0.5%','⚠️ محدود','❌ غير متوفر','❌ غير متوفر'],
     ['رسوم التحويل','0.3% فقط','0.4% — 1.5%','0% — 1.5%','مجاني (محدود)'],
@@ -22,7 +22,7 @@ const t = computed(() => isAr.value ? {
     ['عملات مدعومة','30+','40+','30+','أساسية فقط'],
     ['تطبيق عربي','✅ عربي + English','❌ English فقط','❌ English فقط','❌ English فقط'],
     ['دعم بالعربي','✅ 24/7','❌','❌','❌'],
-    ['ترخيص أوروبي','✅ أوروبا 🇪🇺','✅ بلجيكا','✅ ليتوانيا','✅ ألمانيا'],
+    ['ترخيص أوروبي','✅ أوروبا','✅ بلجيكا','✅ ليتوانيا','✅ ألمانيا'],
     ['عملات رقمية','✅ BTC, ETH + 10','❌','✅ 80+','❌ (مع شركاء)'],
   ],
   verdict:'SDB Wallet هو الخيار الوحيد المصمم خصيصاً للسوريين — بدعم عربي كامل، تحويلات لسوريا، ودعم الليرة السورية.',
@@ -34,7 +34,7 @@ const t = computed(() => isAr.value ? {
   rows:[
     ['Account opening','Free — 2 minutes','Free — 5 minutes','Free — 5 minutes','Free — 10 minutes'],
     ['Free card','✅ Virtual instant','✅ Virtual','✅ Virtual','✅ Virtual'],
-    ['Mastercard cards','✅ 5 cards from €9.99/mo','❌ Not available','✅ From €7.99/mo','✅ From €9.90/mo'],
+    ['Mastercard cards','✅ 5 cards from Coming Soon','❌ Not available','✅ From €7.99/mo','✅ From €9.90/mo'],
     ['Syrian Lira support','✅ SYP supported','❌ Not available','❌ Not available','❌ Not available'],
     ['Transfer to Syria','✅ Instant — 0.5%','⚠️ Limited','❌ Not available','❌ Not available'],
     ['Transfer fees','0.3% only','0.4% — 1.5%','0% — 1.5%','Free (limited)'],
@@ -42,7 +42,7 @@ const t = computed(() => isAr.value ? {
     ['Supported currencies','30+','40+','30+','Basic only'],
     ['Arabic app','✅ Arabic + English','❌ English only','❌ English only','❌ English only'],
     ['Arabic support','✅ 24/7','❌','❌','❌'],
-    ['EU license','✅ Europe 🇪🇺','✅ Belgium','✅ Lithuania','✅ Germany'],
+    ['EU license','✅ Europe','✅ Belgium','✅ Lithuania','✅ Germany'],
     ['Crypto','✅ BTC, ETH + 10','❌','✅ 80+','❌ (partners)'],
   ],
   verdict:'SDB Wallet is the only option designed specifically for Syrians — with full Arabic support, transfers to Syria, and Syrian Lira support.',
@@ -79,25 +79,25 @@ const t = computed(() => isAr.value ? {
 </div></section>
 </template>
 <style scoped>
-.hero{padding:160px 0 80px;background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.hero{padding:160px 0 80px;background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .hero-tag{font-size:12px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:24px}
-.t2{font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:16px;color:#163300}.t2-em{color:#9FE870}
+.t2{font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:16px;color:#10481A}.t2-em{color:#9FE870}
 .hero .t2{color:#fff}.hero .t2-em{color:#E8F5E0}
 .t2-sub{font-size:16px;color:rgba(10,10,10,.6);line-height:1.85}.hero .t2-sub{color:rgba(255,255,255,.7)}
 .sec{padding:80px 0}.sec-cta{padding:100px 0;background:linear-gradient(135deg,#F5F9F3,#E8F5E0)}
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
 .cmp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:20px;border:1px solid rgba(159,232,112,.08);box-shadow:0 8px 32px rgba(0,0,0,.04)}
 .cmp-table{width:100%;border-collapse:collapse;background:#fff;font-size:14px}
-.cmp-table thead{background:linear-gradient(135deg,#163300,#1a3d00)}
+.cmp-table thead{background:linear-gradient(135deg,#10481A,#1a3d00)}
 .cmp-table th{padding:16px 20px;color:#fff;font-weight:800;font-size:14px;text-align:center;white-space:nowrap}
 .cmp-table th:first-child{text-align:start}
 .cmp-sdb{background:rgba(159,232,112,.3)!important;color:#E8F5E0!important}
 .cmp-table td{padding:14px 20px;border-bottom:1px solid rgba(159,232,112,.04);text-align:center;color:rgba(10,10,10,.7)}
-.cmp-feat{font-weight:700;color:#163300;text-align:start;white-space:nowrap}
-.cmp-sdb-cell{background:rgba(159,232,112,.03);color:#2D6A00;font-weight:700}
+.cmp-feat{font-weight:700;color:#10481A;text-align:start;white-space:nowrap}
+.cmp-sdb-cell{background:rgba(159,232,112,.03);color:#10481A;font-weight:700}
 .cmp-table tbody tr:hover{background:rgba(159,232,112,.02)}
-.verdict{margin-top:32px;padding:24px;background:linear-gradient(135deg,rgba(159,232,112,.05),rgba(159,232,112,.02));border-radius:16px;font-size:15px;color:#163300;font-weight:600;line-height:1.8;text-align:center;border:1px solid rgba(159,232,112,.08)}
-.cta-btn{display:inline-block;padding:18px 48px;background:linear-gradient(135deg,#2D6A00,#9FE870);color:#fff;font-size:16px;font-weight:800;border-radius:14px;text-decoration:none;transition:all .2s;margin-top:16px}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(159,232,112,.2)}
+.verdict{margin-top:32px;padding:24px;background:linear-gradient(135deg,rgba(159,232,112,.05),rgba(159,232,112,.02));border-radius:16px;font-size:15px;color:#10481A;font-weight:600;line-height:1.8;text-align:center;border:1px solid rgba(159,232,112,.08)}
+.cta-btn{display:inline-block;padding:18px 48px;background:linear-gradient(135deg,#10481A,#9FE870);color:#fff;font-size:16px;font-weight:800;border-radius:14px;text-decoration:none;transition:all .2s;margin-top:16px}.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(159,232,112,.2)}
 .an{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.an.vi{opacity:1;transform:none}
 @media(max-width:768px){
   .hero{padding:130px 0 50px}

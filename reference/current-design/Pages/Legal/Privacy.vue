@@ -11,11 +11,11 @@ const t = computed(() => isAr.value ? {
   sub: 'كيف نجمع بياناتك الشخصية ونحميها ونستخدمها',
   date: 'آخر تحديث: فبراير ٢٠٢٦',
   s1t: 'التزامنا بالخصوصية',
-  s1p1: 'في SDB Wallet ApS، نأخذ خصوصية عملائنا على محمل الجد. توضح هذه السياسة كيف نجمع ونستخدم ونحمي ونشارك معلوماتك الشخصية عند استخدام خدماتنا المصرفية.',
+  s1p1: 'في SDB Wallet، نأخذ خصوصية عملائنا على محمل الجد. توضح هذه السياسة كيف نجمع ونستخدم ونحمي ونشارك معلوماتك الشخصية عند استخدام خدماتنا المالية.',
   s1p2: 'نحافظ على أعلى معايير حماية البيانات ونلتزم بالنظام العام لحماية البيانات (GDPR) والقوانين المحلية المعمول بها.',
   s2t: 'البيانات التي نجمعها',
   s2c1t: 'البيانات الشخصية', s2c1: ['الاسم الكامل، تاريخ الميلاد، الجنسية','البريد الإلكتروني ورقم الهاتف','عنوان السكن ومعلومات الإقامة','وثائق الهوية (جواز السفر، الهوية الوطنية)'],
-  s2c2t: 'البيانات المالية', s2c2: ['معلومات الحسابات المصرفية والأرصدة','تاريخ المعاملات والتحويلات','معلومات البطاقات','مصادر الدخل والتوظيف'],
+  s2c2t: 'البيانات المالية', s2c2: ['معلومات الحسابات المالية والأرصدة','تاريخ المعاملات والتحويلات','معلومات البطاقات','مصادر الدخل والتوظيف'],
   s2c3t: 'البيانات التقنية', s2c3: ['عنوان IP ونوع المتصفح والجهاز','سجلات تسجيل الدخول والنشاط','بيانات الموقع الجغرافي (بموافقتك)','ملفات تعريف الارتباط (Cookies)'],
   s3t: 'كيف نستخدم بياناتك',
   s3items: [
@@ -54,7 +54,7 @@ const t = computed(() => isAr.value ? {
   s9t: 'التغييرات',
   s9p: 'نحتفظ بالحق في تعديل هذه السياسة. سيتم إخطارك بأي تغييرات جوهرية عبر البريد الإلكتروني أو إشعار داخل التطبيق قبل <strong>30 يوماً</strong> على الأقل من دخولها حيز التنفيذ.',
   s10t: 'الاتصال بمسؤول حماية البيانات',
-  s10items: ['📧 dpo@sdbwallet.com','🏢 قسم حماية البيانات — SDB Wallet ApS، أوروبا','💬 الدعم داخل التطبيق: متاح 24/7'],
+  s10items: ['📧 dpo@sdbwallet.com','🏢 قسم حماية البيانات — SDB Wallet، أوروبا','💬 الدعم داخل التطبيق: متاح 24/7'],
 } : {
   title: 'Privacy Policy — SDB Wallet',
   badge: '🔒 GDPR Compliant',
@@ -62,7 +62,7 @@ const t = computed(() => isAr.value ? {
   sub: 'How we collect, protect and use your personal data',
   date: 'Last updated: February 2026',
   s1t: 'Our Commitment to Privacy',
-  s1p1: 'At SDB Wallet ApS, we take our customers\' privacy seriously. This policy explains how we collect, use, protect and share your personal information when using our banking services.',
+  s1p1: 'At SDB Wallet, we take our customers\' privacy seriously. This policy explains how we collect, use, protect and share your personal information when using our financial services.',
   s1p2: 'We maintain the highest data protection standards and comply with the General Data Protection Regulation (GDPR) and applicable local laws.',
   s2t: 'Data We Collect',
   s2c1t: 'Personal Data', s2c1: ['Full name, date of birth, nationality','Email address and phone number','Residential address and residency information','Identity documents (passport, national ID)'],
@@ -105,7 +105,7 @@ const t = computed(() => isAr.value ? {
   s9t: 'Changes',
   s9p: 'We reserve the right to amend this policy. You will be notified of any material changes via email or in-app notification at least <strong>30 days</strong> before they take effect.',
   s10t: 'Contact the Data Protection Officer',
-  s10items: ['📧 dpo@sdbwallet.com','🏢 Data Protection Dept. — SDB Wallet ApS, Europe','💬 In-app support: Available 24/7'],
+  s10items: ['📧 dpo@sdbwallet.com','🏢 Data Protection Dept. — SDB Wallet, Europe','💬 In-app support: Available 24/7'],
 });
 </script>
 

@@ -7,12 +7,12 @@ const isAr = inject('isAr', computed(() => true));
 const t = computed(() => isAr.value ? {
   title:'الامتثال والتراخيص — SDB Wallet',tag:'الامتثال',
   heroH:'شفافية كاملة.',heroEm:'ثقة مطلقة.',
-  heroP:'SDB Wallet ApS مسجّلة ومرخّصة في أوروبا، خاضعة لرقابة الجهات المالية الأوروبية. نلتزم بأعلى معايير الامتثال والحوكمة.',
+  heroP:'SDB Wallet مسجّلة ومرخّصة في أوروبا، خاضعة لرقابة الجهات المالية الأوروبية. نلتزم بأعلى معايير الامتثال والحوكمة.',
   regTitle:'التسجيل والترخيص',
   regs:[
-    {ic:'🇪🇺',t:'تسجيل في أوروبا',d:'SDB Wallet ApS شركة مسجّلة في أوروبا. تخضع للقانون الأوروبي والتنظيمات المالية الأوروبية.'},
+    {ic:'🌐',t:'تسجيل في أوروبا',d:'SDB Wallet شركة مسجّلة في أوروبا. تخضع للقانون الأوروبي والتنظيمات المالية الأوروبية.'},
     {ic:'🏛️',t:'رقابة مالية',d:'خاضعة لرقابة الجهات المالية الأوروبية المختصة. تقارير دورية وتفتيش منتظم.'},
-    {ic:'🇪🇺',t:'معايير أوروبية',d:'ملتزمون بتوجيهات الاتحاد الأوروبي للخدمات المالية PSD2 وجميع القوانين ذات الصلة.'},
+    {ic:'📜',t:'معايير أوروبية',d:'ملتزمون بتوجيهات الاتحاد الأوروبي للخدمات المالية PSD2 وجميع القوانين ذات الصلة.'},
     {ic:'🏦',t:'ماستركارد',d:'عضو معتمد في شبكة Mastercard العالمية. بطاقاتنا مقبولة بأكثر من 90 مليون متجر.'},
   ],
   compTitle:'إطار الامتثال',
@@ -35,12 +35,12 @@ const t = computed(() => isAr.value ? {
 } : {
   title:'Compliance & Licensing — SDB Wallet',tag:'Compliance',
   heroH:'Full transparency.',heroEm:'Absolute trust.',
-  heroP:'SDB Wallet ApS is registered and licensed in Europe, subject to European financial authority oversight. We adhere to the highest compliance and governance standards.',
+  heroP:'SDB Wallet is registered and licensed in Europe, subject to European financial authority oversight. We adhere to the highest compliance and governance standards.',
   regTitle:'Registration & Licensing',
   regs:[
-    {ic:'🇪🇺',t:'European Registration',d:'SDB Wallet ApS is a company registered in Europe. Subject to European financial regulations and law.'},
+    {ic:'🌐',t:'European Registration',d:'SDB Wallet is a company registered in Europe. Subject to European financial regulations and law.'},
     {ic:'🏛️',t:'Financial Oversight',d:'Subject to European financial regulatory authority oversight. Regular reporting and inspections.'},
-    {ic:'🇪🇺',t:'European Standards',d:'Compliant with EU financial services directives PSD2 and all relevant regulations.'},
+    {ic:'📜',t:'European Standards',d:'Compliant with EU financial services directives PSD2 and all relevant regulations.'},
     {ic:'🏦',t:'Mastercard',d:'Certified member of the global Mastercard network. Our cards accepted at 90+ million merchants.'},
   ],
   compTitle:'Compliance Framework',
@@ -78,24 +78,24 @@ const t = computed(() => isAr.value ? {
 </template>
 <style scoped>
 .sw{max-width:1200px;margin:0 auto;padding:0 24px}.tc{text-align:center}
-.sec{padding:80px 0}.sec-alt{background:#F5F9F3}.sec-sky{background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.sec{padding:80px 0}.sec-alt{background:#F5F9F3}.sec-sky{background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .t2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:48px}.t2-w{color:#fff}
 .t2-sub{font-size:16px;line-height:1.8;max-width:540px}.t2-sub-w{color:rgba(255,255,255,.4)}
-.p-hero{padding:160px 0 60px;background:linear-gradient(135deg,#163300 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
+.p-hero{padding:160px 0 60px;background:linear-gradient(135deg,#10481A 0%,#1a3d00 50%,#9FE870 100%);color:#fff}
 .p-hero-tag{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.6);text-transform:uppercase;margin-bottom:24px}
 .p-hero-h{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.1;margin-bottom:16px}.p-hero-em{color:#9FE870}
 .p-hero-p{font-size:17px;color:rgba(255,255,255,.5);max-width:620px;margin:0 auto;line-height:1.8}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .reg-c{padding:28px;background:#fff;border:1px solid rgba(159,232,112,.08);border-radius:18px;text-align:center}
-.reg-ic{font-size:32px;display:block;margin-bottom:10px}.reg-t{font-size:15px;font-weight:800;color:#163300;margin-bottom:6px}.reg-d{font-size:12.5px;color:rgba(10,10,10,.4);line-height:1.75}
+.reg-ic{font-size:32px;display:block;margin-bottom:10px}.reg-t{font-size:15px;font-weight:800;color:#10481A;margin-bottom:6px}.reg-d{font-size:12.5px;color:rgba(10,10,10,.4);line-height:1.75}
 .comp-c{padding:28px;background:#fff;border:1px solid rgba(159,232,112,.08);border-radius:18px}
 .comp-ct{font-size:15px;font-weight:800;color:#9FE870;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid rgba(159,232,112,.1)}
 .comp-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}.comp-list li{font-size:12.5px;color:rgba(10,10,10,.5);line-height:1.5;padding-left:16px;position:relative}.comp-list li::before{content:'✓';position:absolute;left:0;color:#9FE870;font-weight:700}
 .rtl .comp-list li{padding-left:0;padding-right:16px}.rtl .comp-list li::before{left:auto;right:0}
-.partners{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}.partner-i{font-size:15px;font-weight:800;color:#163300;padding:16px 28px;background:#fff;border:1px solid rgba(159,232,112,.08);border-radius:14px}
+.partners{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}.partner-i{font-size:15px;font-weight:800;color:#10481A;padding:16px 28px;background:#fff;border:1px solid rgba(159,232,112,.08);border-radius:14px}
 .rep-c{padding:24px;background:#fff;border:1px solid rgba(159,232,112,.08);border-radius:16px;text-decoration:none;color:inherit;display:block;transition:all .3s}.rep-c:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(159,232,112,.06)}
-.rep-t{font-size:14px;font-weight:800;color:#163300;margin-bottom:6px}.rep-d{font-size:12px;color:rgba(10,10,10,.4);line-height:1.7}
-.cta-btn{display:inline-block;padding:16px 44px;background:#fff;color:#163300;font-size:15px;font-weight:800;border-radius:12px;text-decoration:none;transition:all .2s}.cta-btn:hover{transform:translateY(-2px)}
+.rep-t{font-size:14px;font-weight:800;color:#10481A;margin-bottom:6px}.rep-d{font-size:12px;color:rgba(10,10,10,.4);line-height:1.7}
+.cta-btn{display:inline-block;padding:16px 44px;background:#fff;color:#10481A;font-size:15px;font-weight:800;border-radius:12px;text-decoration:none;transition:all .2s}.cta-btn:hover{transform:translateY(-2px)}
 @media(max-width:768px){.g4,.g2{grid-template-columns:1fr}}
 </style>

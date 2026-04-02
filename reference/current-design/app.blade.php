@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="_t" content="{{ csrf_token() }}">
     <meta name="description"
-        content="SDB Wallet — أول محفظة إلكترونية سورية. حسابات متعددة العملات، بطاقات ماستركارد، تحويلات دولية، عملات رقمية. مرخّص في أوروبا.">
+        content="SDB Wallet — تحكّم بأموالك، من أي مكان. حسابات متعددة العملات، بطاقات ماستركارد، تحويلات دولية، عملات رقمية. مرخّص في أوروبا.">
     <meta name="theme-color" content="#1B5E20">
     <meta name="facebook-domain-verification" content="cg981rikj24zq0gdiwjuggu7x6i6ei" />
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
@@ -21,7 +21,7 @@
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sdbwallet.com/">
-    <meta property="og:title" content="SDB Wallet — أول محفظة إلكترونية سورية">
+    <meta property="og:title" content="SDB Wallet — تحكّم بأموالك، من أي مكان">
     <meta property="og:description"
         content="حوّل، ادفع، ووفّر بدون رسوم مخفية. حسابات متعددة العملات، بطاقات ماستركارد فورية، تحويلات لـ 150+ دولة.">
     <meta property="og:image" content="https://sdbwallet.com/images/og-cover.png">
@@ -29,17 +29,23 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SDB Wallet — أول محفظة إلكترونية سورية">
+    <meta name="twitter:title" content="SDB Wallet — تحكّم بأموالك، من أي مكان">
     <meta name="twitter:description" content="حوّل، ادفع، ووفّر بدون رسوم مخفية. مرخّص في أوروبا 🇪🇺">
     <meta name="twitter:image" content="https://sdbwallet.com/images/og-cover.png">
 
-    <title inertia>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'SDB Wallet') }}</title>
 
     <!-- Fonts (preload for performance) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Flag Icons (SVG flags — works on all platforms including Windows) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <style>
+        /* Custom override for Syrian flag to use Revolution flag (3 red stars) */
+        .fi-sy { background-image: url('/sy-rev.svg') !important; }
+    </style>
 
     <!-- Multi-language SEO -->
     <link rel="alternate" hreflang="ar" href="https://sdbwallet.com/">
@@ -50,12 +56,17 @@
     <link rel="canonical" href="https://sdbwallet.com/">
 
     <!-- Scripts -->
-    @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
+
+    <!-- Facebook Pixel Code -->
+    <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1616129832942859');fbq('track','PageView');</script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1616129832942859&ev=PageView&noscript=1"/></noscript>
+    <!-- End Facebook Pixel Code -->
 </head>
 
 <body class="font-sans antialiased">
+    @routes
     @inertia
 
     <!-- Service Worker Registration -->
@@ -65,6 +76,10 @@
 
     <!-- Analytics (Plausible — privacy-friendly, no cookies) -->
     <script defer data-domain="sdbwallet.com" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-91LSFX8LZ6"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-91LSFX8LZ6');</script>
 </body>
 
 </html>

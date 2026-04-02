@@ -19,7 +19,7 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
 
   <div class="el-center">
     <div class="el-logo-area">
-      <img src="/images/sdb-staff-logo.png" alt="SDB Wallet" class="el-logo-img" />
+      <img src="/images/sdb-logo.png" alt="SDB Wallet" class="el-logo-img" />
     </div>
 
     <div class="el-card">
@@ -57,7 +57,7 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
       </div>
     </div>
 
-    <p class="el-copy">© 2026 SDB Wallet — Syria Digital Bank</p>
+    <p class="el-copy">© 2026 SDB Wallet — Syria Digital Wallet</p>
   </div>
 </div>
 </template>

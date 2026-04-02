@@ -26,10 +26,8 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
         </div>
         <div class="lg-left-center">
           <div class="lg-brand-logo">
-            <span class="lg-brand-text">SDB</span>
-            <span class="sdb-flag"></span>
+            <img src="/images/sdb-logo-white.png" alt="SDB Wallet" class="lg-brand-logo-img" />
           </div>
-          <p class="lg-brand-tagline">SYRIA DIGITAL BANK</p>
           <h2 class="lg-brand-headline">مصرفك الرقمي<br/>لعصر جديد</h2>
           <div class="lg-brand-features">
             <div class="lg-bf"><span class="lg-bf-dot"></span>حسابات متعددة العملات</div>
@@ -40,7 +38,7 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
         <div class="lg-left-bottom">
           <div class="lg-trust-badges">
             <span>🔒 تشفير 256-bit</span>
-            <span>🇩🇰 مرخص أوروبياً</span>
+            <span>🌐 مرخص أوروبياً</span>
           </div>
         </div>
       </div>
@@ -51,8 +49,7 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
       <div class="lg-card">
         <div class="lg-card-header">
           <div class="lg-card-logo">
-            <span class="lg-card-logo-text">SDB</span>
-            <span class="sdb-flag sm"></span>
+            <img src="/images/sdb-logo.png" alt="SDB Wallet" class="lg-card-logo-img" />
           </div>
           <h1 class="lg-title">مرحباً بك</h1>
           <p class="lg-subtitle">سجّل دخولك للوصول إلى حسابك</p>
@@ -136,8 +133,8 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
 
 .lg-left-center{flex:1;display:flex;flex-direction:column;justify-content:center}
 
-.lg-brand-logo{display:flex;align-items:center;gap:4px;direction:ltr;margin-bottom:4px}
-.lg-brand-text{font-family:'Inter',sans-serif;font-size:48px;font-weight:900;color:#fff;letter-spacing:-2px;line-height:1}
+.lg-brand-logo{display:flex;align-items:center;direction:ltr;margin-bottom:16px}
+.lg-brand-logo-img{height:60px;width:auto}
 
 /* Syrian Flag */
 .sdb-flag{
@@ -158,7 +155,7 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
 
 .lg-brand-features{display:flex;flex-direction:column;gap:14px}
 .lg-bf{display:flex;align-items:center;gap:12px;font-size:15px;color:rgba(255,255,255,.5);font-weight:600}
-.lg-bf-dot{width:6px;height:6px;border-radius:50%;background:#007a3d;flex-shrink:0}
+.lg-bf-dot{width:6px;height:6px;border-radius:50%;background:#106F24;flex-shrink:0}
 
 .lg-left-bottom{padding-top:20px}
 .lg-trust-badges{display:flex;gap:24px;font-size:12px;color:rgba(255,255,255,.2);font-weight:500}
@@ -180,8 +177,8 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
 }
 
 .lg-card-header{text-align:center;margin-bottom:32px}
-.lg-card-logo{display:flex;align-items:center;justify-content:center;gap:3px;margin-bottom:16px;direction:ltr}
-.lg-card-logo-text{font-family:'Inter',sans-serif;font-size:32px;font-weight:900;color:#0a0a0a;letter-spacing:-1.5px}
+.lg-card-logo{display:flex;align-items:center;justify-content:center;margin-bottom:16px;direction:ltr}
+.lg-card-logo-img{height:48px;width:auto}
 
 .lg-title{font-size:24px;font-weight:900;color:#0a0a0a;letter-spacing:-.02em}
 .lg-subtitle{font-size:14px;color:#6b7280;margin-top:6px;font-weight:500}
@@ -205,7 +202,7 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
   font-family:inherit;
 }
 .lg-input:focus{
-  border-color:#007a3d;
+  border-color:#106F24;
   background:#fff;
   box-shadow:0 0 0 3px rgba(0,122,61,.08);
 }
@@ -214,8 +211,8 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
 
 .lg-options{display:flex;justify-content:space-between;align-items:center}
 .lg-check{display:flex;align-items:center;gap:8px;font-size:13px;color:#6b7280;cursor:pointer;font-weight:500}
-.lg-check input{width:16px;height:16px;accent-color:#007a3d;border-radius:4px}
-.lg-forgot{font-size:13px;color:#007a3d;text-decoration:none;font-weight:700}
+.lg-check input{width:16px;height:16px;accent-color:#106F24;border-radius:4px}
+.lg-forgot{font-size:13px;color:#106F24;text-decoration:none;font-weight:700}
 .lg-forgot:hover{text-decoration:underline}
 
 .lg-btn{
@@ -238,7 +235,7 @@ const submit = () => form.post(route('login'), { onFinish: () => form.reset('pas
 .lg-divider span{background:#fff;padding:0 12px;font-size:12px;color:#9ca3af;position:relative}
 
 .lg-footer{text-align:center;font-size:14px;color:#6b7280;font-weight:500}
-.lg-footer-link{color:#007a3d;font-weight:800;text-decoration:none;margin-right:6px}
+.lg-footer-link{color:#106F24;font-weight:800;text-decoration:none;margin-right:6px}
 .lg-footer-link:hover{text-decoration:underline}
 
 /* ═══════════════════ Responsive ═══════════════════ */

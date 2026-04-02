@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./index.css";
 
 /* SDB Syrian Independence Flag — SVG-based for crisp rendering */
 :has(> .sdb-flag) {

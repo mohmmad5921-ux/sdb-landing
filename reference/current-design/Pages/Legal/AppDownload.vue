@@ -14,8 +14,8 @@ function handleBadgeClick(e) {
 
 const t = computed(() => isAr.value ? {
   title: 'تطبيق SDB Wallet', tag: 'التطبيق الرسمي',
-  heroH: 'كل خدماتك البنكية', heroEm: 'في جيبك.',
-  heroP: 'تطبيق SDB Wallet — أول محفظة رقمية سورية بمعايير أوروبية. واجهة عربية كاملة، تجربة سلسة، وأمان بمستوى عالمي.',
+  heroH: 'كل خدماتك المالية', heroEm: 'في جيبك.',
+  heroP: 'تطبيق SDB Wallet — محفظتك الرقمية بمعايير أوروبية. واجهة عربية كاملة، تجربة سلسة، وأمان بمستوى عالمي.',
   heroBtn: 'حمّل مجاناً',
   features: [
     { icon: '🏦', title: 'لوحة تحكم ذكية', desc: 'نظرة شاملة على أرصدتك وعملياتك الأخيرة وإحصائيات مصاريفك — كلها بنظرة واحدة.' },
@@ -52,8 +52,8 @@ const t = computed(() => isAr.value ? {
   ctaH: 'جاهز تبدأ؟', ctaP: 'حمّل التطبيق مجاناً وافتح حسابك خلال دقائق.',
 } : {
   title: 'SDB Wallet App', tag: 'Official App',
-  heroH: 'All your banking', heroEm: 'in your pocket.',
-  heroP: 'SDB Wallet app — the first Syrian digital bank with European standards. Full Arabic interface, seamless experience, and world-class security.',
+  heroH: 'All your finances', heroEm: 'in your pocket.',
+  heroP: 'SDB Wallet app — your digital wallet with European standards. Full Arabic interface, seamless experience, and world-class security.',
   heroBtn: 'Download Free',
   features: [
     { icon: '🏦', title: 'Smart Dashboard', desc: 'Complete overview of your balances, recent transactions, and spending analytics — all at a glance.' },
@@ -243,7 +243,7 @@ const t = computed(() => isAr.value ? {
 .ip-action-ic { display: block; font-size: 18px; color: #9FE870; margin-bottom: 4px; }
 .ip-action-l { font-size: 9px; font-weight: 700; color: rgba(255,255,255,.5); }
 /* Virtual Card */
-.ip-vcard { background: linear-gradient(135deg, #163300, #1e4400, #163300); border-radius: 14px; padding: 14px 16px 12px; margin-bottom: 10px; position: relative; overflow: hidden; border: 1px solid rgba(159,232,112,.1); }
+.ip-vcard { background: linear-gradient(135deg, #10481A, #0d3a14, #10481A); border-radius: 14px; padding: 14px 16px 12px; margin-bottom: 10px; position: relative; overflow: hidden; border: 1px solid rgba(159,232,112,.1); }
 .ip-vcard::after { content: ''; position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(159,232,112,.08), transparent); }
 .ip-vcard-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .ip-vcard-logo { font-size: 16px; font-weight: 900; color: #9FE870; letter-spacing: 2px; }
@@ -273,7 +273,7 @@ const t = computed(() => isAr.value ? {
 .ap-stats-section { padding: 0; margin-top: -40px; position: relative; z-index: 2; }
 .ap-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; background: #fff; border-radius: 20px; padding: 32px; box-shadow: 0 16px 48px rgba(0,0,0,.06); border: 1px solid rgba(0,0,0,.04); }
 .ap-stat { text-align: center; }
-.ap-stat-val { font-size: 28px; font-weight: 900; color: #163300; margin-bottom: 4px; }
+.ap-stat-val { font-size: 28px; font-weight: 900; color: #10481A; margin-bottom: 4px; }
 .ap-stat-label { font-size: 13px; color: rgba(0,0,0,.4); font-weight: 600; }
 
 /* Features */
@@ -285,17 +285,17 @@ const t = computed(() => isAr.value ? {
 .ap-feat-card { padding: 28px 24px; background: #fff; border: 1px solid rgba(0,0,0,.04); border-radius: 20px; transition: all .3s; }
 .ap-feat-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(159,232,112,.08); border-color: rgba(159,232,112,.2); }
 .ap-feat-icon { font-size: 32px; margin-bottom: 14px; }
-.ap-feat-title { font-size: 15px; font-weight: 800; color: #163300; margin-bottom: 8px; }
+.ap-feat-title { font-size: 15px; font-weight: 800; color: #10481A; margin-bottom: 8px; }
 .ap-feat-desc { font-size: 13px; color: rgba(0,0,0,.4); line-height: 1.8; }
 
 /* Highlights Pills */
 .ap-highlights { padding: 60px 0 80px; background: #f8faf5; }
 .ap-pill-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 800px; margin: 32px auto 0; }
-.ap-pill { font-size: 13px; font-weight: 600; color: #163300; background: #fff; padding: 10px 20px; border-radius: 12px; border: 1px solid rgba(159,232,112,.12); transition: all .2s; }
+.ap-pill { font-size: 13px; font-weight: 600; color: #10481A; background: #fff; padding: 10px 20px; border-radius: 12px; border: 1px solid rgba(159,232,112,.12); transition: all .2s; }
 .ap-pill:hover { background: rgba(159,232,112,.06); border-color: rgba(159,232,112,.3); transform: translateY(-1px); }
 
 /* Specs */
-.ap-specs { padding: 80px 0; background: linear-gradient(135deg, #0a1a00, #163300); }
+.ap-specs { padding: 80px 0; background: linear-gradient(135deg, #0a1a00, #10481A); }
 .ap-spec-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
 .ap-spec-card { text-align: center; padding: 24px 16px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; transition: all .3s; }
 .ap-spec-card:hover { background: rgba(255,255,255,.08); border-color: rgba(159,232,112,.2); }
@@ -306,7 +306,7 @@ const t = computed(() => isAr.value ? {
 
 /* CTA */
 .ap-cta { padding: 80px 0; background: #f8faf5; }
-.ap-cta-h { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #163300; margin-bottom: 12px; }
+.ap-cta-h { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #10481A; margin-bottom: 12px; }
 .ap-cta-p { font-size: 17px; color: rgba(0,0,0,.4); max-width: 460px; margin: 0 auto 32px; line-height: 1.8; }
 
 /* Responsive */

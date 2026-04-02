@@ -153,7 +153,7 @@ onMounted(() => { updateTimer(); setInterval(updateTimer, 60000); });
     <!-- Footer -->
     <div class="rn-footer">
       <div class="rn-footer-logo">SDB Wallet</div>
-      <div class="rn-footer-text">Syria's First Digital Bank · أول محفظة إلكترونية سورية</div>
+      <div class="rn-footer-text">Syria's First Digital Bank · تحكّم بأموالك، من أي مكان</div>
       <div class="rn-footer-text">sdbwallet.com</div>
     </div>
   </div>

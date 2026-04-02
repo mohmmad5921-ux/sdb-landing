@@ -77,35 +77,35 @@ const defaultReg = {ar:'رقم تسجيل الشركة *',en:'Company Registrati
 const regLabel = computed(() => { const r = regLabels[bizForm.country] || defaultReg; return { label: isAr.value ? r.ar : r.en, ph: r.ph }; });
 
 const countries = [
-  {code:'SY',ar:'سوريا 🇸🇾',en:'Syria 🇸🇾'},{code:'PS',ar:'فلسطين 🇵🇸',en:'Palestine 🇵🇸'},
-  {code:'JO',ar:'الأردن 🇯🇴',en:'Jordan 🇯🇴'},{code:'LB',ar:'لبنان 🇱🇧',en:'Lebanon 🇱🇧'},
-  {code:'IQ',ar:'العراق 🇮🇶',en:'Iraq 🇮🇶'},{code:'SA',ar:'السعودية 🇸🇦',en:'Saudi Arabia 🇸🇦'},
-  {code:'AE',ar:'الإمارات 🇦🇪',en:'UAE 🇦🇪'},{code:'QA',ar:'قطر 🇶🇦',en:'Qatar 🇶🇦'},
-  {code:'KW',ar:'الكويت 🇰🇼',en:'Kuwait 🇰🇼'},{code:'BH',ar:'البحرين 🇧🇭',en:'Bahrain 🇧🇭'},
-  {code:'OM',ar:'عُمان 🇴🇲',en:'Oman 🇴🇲'},{code:'YE',ar:'اليمن 🇾🇪',en:'Yemen 🇾🇪'},
-  {code:'EG',ar:'مصر 🇪🇬',en:'Egypt 🇪🇬'},{code:'SD',ar:'السودان 🇸🇩',en:'Sudan 🇸🇩'},
-  {code:'LY',ar:'ليبيا 🇱🇾',en:'Libya 🇱🇾'},{code:'TN',ar:'تونس 🇹🇳',en:'Tunisia 🇹🇳'},
-  {code:'DZ',ar:'الجزائر 🇩🇿',en:'Algeria 🇩🇿'},{code:'MA',ar:'المغرب 🇲🇦',en:'Morocco 🇲🇦'},
-  {code:'MR',ar:'موريتانيا 🇲🇷',en:'Mauritania 🇲🇷'},{code:'SO',ar:'الصومال 🇸🇴',en:'Somalia 🇸🇴'},
-  {code:'DJ',ar:'جيبوتي 🇩🇯',en:'Djibouti 🇩🇯'},{code:'KM',ar:'جزر القمر 🇰🇲',en:'Comoros 🇰🇲'},
-  {code:'DK',ar:'الدنمارك 🇩🇰',en:'Denmark 🇩🇰'},{code:'DE',ar:'ألمانيا 🇩🇪',en:'Germany 🇩🇪'},
-  {code:'FR',ar:'فرنسا 🇫🇷',en:'France 🇫🇷'},{code:'NL',ar:'هولندا 🇳🇱',en:'Netherlands 🇳🇱'},
-  {code:'BE',ar:'بلجيكا 🇧🇪',en:'Belgium 🇧🇪'},{code:'LU',ar:'لوكسمبورغ 🇱🇺',en:'Luxembourg 🇱🇺'},
-  {code:'IT',ar:'إيطاليا 🇮🇹',en:'Italy 🇮🇹'},{code:'ES',ar:'إسبانيا 🇪🇸',en:'Spain 🇪🇸'},
-  {code:'PT',ar:'البرتغال 🇵🇹',en:'Portugal 🇵🇹'},{code:'AT',ar:'النمسا 🇦🇹',en:'Austria 🇦🇹'},
-  {code:'SE',ar:'السويد 🇸🇪',en:'Sweden 🇸🇪'},{code:'FI',ar:'فنلندا 🇫🇮',en:'Finland 🇫🇮'},
-  {code:'IE',ar:'أيرلندا 🇮🇪',en:'Ireland 🇮🇪'},{code:'GR',ar:'اليونان 🇬🇷',en:'Greece 🇬🇷'},
-  {code:'PL',ar:'بولندا 🇵🇱',en:'Poland 🇵🇱'},{code:'CZ',ar:'التشيك 🇨🇿',en:'Czech Republic 🇨🇿'},
-  {code:'RO',ar:'رومانيا 🇷🇴',en:'Romania 🇷🇴'},{code:'BG',ar:'بلغاريا 🇧🇬',en:'Bulgaria 🇧🇬'},
-  {code:'HR',ar:'كرواتيا 🇭🇷',en:'Croatia 🇭🇷'},{code:'HU',ar:'المجر 🇭🇺',en:'Hungary 🇭🇺'},
-  {code:'SK',ar:'سلوفاكيا 🇸🇰',en:'Slovakia 🇸🇰'},{code:'SI',ar:'سلوفينيا 🇸🇮',en:'Slovenia 🇸🇮'},
-  {code:'LT',ar:'ليتوانيا 🇱🇹',en:'Lithuania 🇱🇹'},{code:'LV',ar:'لاتفيا 🇱🇻',en:'Latvia 🇱🇻'},
-  {code:'EE',ar:'إستونيا 🇪🇪',en:'Estonia 🇪🇪'},{code:'CY',ar:'قبرص 🇨🇾',en:'Cyprus 🇨🇾'},
-  {code:'MT',ar:'مالطا 🇲🇹',en:'Malta 🇲🇹'},
-  {code:'GB',ar:'بريطانيا 🇬🇧',en:'United Kingdom 🇬🇧'},{code:'NO',ar:'النرويج 🇳🇴',en:'Norway 🇳🇴'},
-  {code:'CH',ar:'سويسرا 🇨🇭',en:'Switzerland 🇨🇭'},{code:'TR',ar:'تركيا 🇹🇷',en:'Turkey 🇹🇷'},
-  {code:'US',ar:'أمريكا 🇺🇸',en:'United States 🇺🇸'},{code:'CA',ar:'كندا 🇨🇦',en:'Canada 🇨🇦'},
-  {code:'AU',ar:'أستراليا 🇦🇺',en:'Australia 🇦🇺'},{code:'OTHER',ar:'دولة أخرى 🌍',en:'Other country 🌍'},
+  {code:'SY',ar:'سوريا',en:'Syria'},{code:'PS',ar:'فلسطين',en:'Palestine'},
+  {code:'JO',ar:'الأردن',en:'Jordan'},{code:'LB',ar:'لبنان',en:'Lebanon'},
+  {code:'IQ',ar:'العراق',en:'Iraq'},{code:'SA',ar:'السعودية',en:'Saudi Arabia'},
+  {code:'AE',ar:'الإمارات',en:'UAE'},{code:'QA',ar:'قطر',en:'Qatar'},
+  {code:'KW',ar:'الكويت',en:'Kuwait'},{code:'BH',ar:'البحرين',en:'Bahrain'},
+  {code:'OM',ar:'عُمان',en:'Oman'},{code:'YE',ar:'اليمن',en:'Yemen'},
+  {code:'EG',ar:'مصر',en:'Egypt'},{code:'SD',ar:'السودان',en:'Sudan'},
+  {code:'LY',ar:'ليبيا',en:'Libya'},{code:'TN',ar:'تونس',en:'Tunisia'},
+  {code:'DZ',ar:'الجزائر',en:'Algeria'},{code:'MA',ar:'المغرب',en:'Morocco'},
+  {code:'MR',ar:'موريتانيا',en:'Mauritania'},{code:'SO',ar:'الصومال',en:'Somalia'},
+  {code:'DJ',ar:'جيبوتي',en:'Djibouti'},{code:'KM',ar:'جزر القمر',en:'Comoros'},
+  {code:'DK',ar:'الدنمارك',en:'Denmark'},{code:'DE',ar:'ألمانيا',en:'Germany'},
+  {code:'FR',ar:'فرنسا',en:'France'},{code:'NL',ar:'هولندا',en:'Netherlands'},
+  {code:'BE',ar:'بلجيكا',en:'Belgium'},{code:'LU',ar:'لوكسمبورغ',en:'Luxembourg'},
+  {code:'IT',ar:'إيطاليا',en:'Italy'},{code:'ES',ar:'إسبانيا',en:'Spain'},
+  {code:'PT',ar:'البرتغال',en:'Portugal'},{code:'AT',ar:'النمسا',en:'Austria'},
+  {code:'SE',ar:'السويد',en:'Sweden'},{code:'FI',ar:'فنلندا',en:'Finland'},
+  {code:'IE',ar:'أيرلندا',en:'Ireland'},{code:'GR',ar:'اليونان',en:'Greece'},
+  {code:'PL',ar:'بولندا',en:'Poland'},{code:'CZ',ar:'التشيك',en:'Czech Republic'},
+  {code:'RO',ar:'رومانيا',en:'Romania'},{code:'BG',ar:'بلغاريا',en:'Bulgaria'},
+  {code:'HR',ar:'كرواتيا',en:'Croatia'},{code:'HU',ar:'المجر',en:'Hungary'},
+  {code:'SK',ar:'سلوفاكيا',en:'Slovakia'},{code:'SI',ar:'سلوفينيا',en:'Slovenia'},
+  {code:'LT',ar:'ليتوانيا',en:'Lithuania'},{code:'LV',ar:'لاتفيا',en:'Latvia'},
+  {code:'EE',ar:'إستونيا',en:'Estonia'},{code:'CY',ar:'قبرص',en:'Cyprus'},
+  {code:'MT',ar:'مالطا',en:'Malta'},
+  {code:'GB',ar:'بريطانيا',en:'United Kingdom'},{code:'NO',ar:'النرويج',en:'Norway'},
+  {code:'CH',ar:'سويسرا',en:'Switzerland'},{code:'TR',ar:'تركيا',en:'Turkey'},
+  {code:'US',ar:'أمريكا',en:'United States'},{code:'CA',ar:'كندا',en:'Canada'},
+  {code:'AU',ar:'أستراليا',en:'Australia'},{code:'OTHER',ar:'دولة أخرى',en:'Other country'},
 ];
 const governorates = [
   {ar:'دمشق',en:'Damascus'},{ar:'ريف دمشق',en:'Rif Dimashq'},{ar:'حلب',en:'Aleppo'},
@@ -118,7 +118,7 @@ watch(() => form.country, v => { if(v !== 'SY') form.governorate = ''; });
 
 const t = computed(() => isAr.value ? {
   title:'التسجيل المسبق — SDB Wallet',h1:'كن من الأوائل.',
-  sub:'سجّل الآن وكن من أوائل المستخدمين لأول محفظة إلكترونية سورية. سنبلغك فور الإطلاق.',
+  sub:'سجّل الآن وكن من أوائل المستخدمين لتحكّم بأموالك، من أي مكان. سنبلغك فور الإطلاق.',
   feats:['💳 بطاقات ماستركارد فورية','💱 أكثر من 30 عملة','⚡ تحويلات لـ 150+ دولة','💰 استلام المعاشات','🛡️ أمان بمعايير أوروبية','🧾 دفع الفواتير (قريباً)'],
   step1:'المعلومات الشخصية',step2:'الموقع',step3:'التفاصيل',
   cardT:'سجّل مكانك',cardS:'بدون التزام — سنبلغك عند الإطلاق.',
@@ -132,7 +132,7 @@ const t = computed(() => isAr.value ? {
   trusted:'موثوق من قبل 50,000+ سوري حول العالم',
 } : {
   title:'Early Access — SDB Wallet',h1:'Be among the first.',
-  sub:'Sign up now and be among the first users of the first Syrian digital bank. We\'ll notify you at launch.',
+  sub:'Sign up now and be among the first users. We\'ll notify you at launch.',
   feats:['💳 Instant Mastercard','💱 30+ Currencies','⚡ 150+ Countries','💰 Salary Deposits','🛡️ European Security','🧾 Bill Payments (Soon)'],
   step1:'Personal Info',step2:'Location',step3:'Details',
   cardT:'Reserve your spot',cardS:'No commitment — we\'ll notify you at launch.',
@@ -276,16 +276,16 @@ const tx = computed(() => isBiz.value ? tb.value : t.value);
 .pr-wrap{display:flex;gap:60px;max-width:1000px;width:100%;align-items:flex-start}
 .pr-left{flex:1;padding-top:40px}
 .pr-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px}
-.pr-mark{font-size:28px;font-weight:900;color:#163300;text-decoration:none;letter-spacing:-1.5px}
-.pr-lang{font-size:13px;font-weight:600;color:#163300;background:rgba(255,255,255,.5);border:1.5px solid rgba(22,51,0,.15);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s;backdrop-filter:blur(4px)}.pr-lang:hover{border-color:#9FE870;color:#9FE870}
-.pr-h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:900;line-height:1.08;letter-spacing:-.04em;color:#163300;margin-bottom:20px}
+.pr-mark{font-size:28px;font-weight:900;color:#10481A;text-decoration:none;letter-spacing:-1.5px}
+.pr-lang{font-size:13px;font-weight:600;color:#10481A;background:rgba(255,255,255,.5);border:1.5px solid rgba(22,51,0,.15);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit;transition:all .2s;backdrop-filter:blur(4px)}.pr-lang:hover{border-color:#9FE870;color:#9FE870}
+.pr-h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:900;line-height:1.08;letter-spacing:-.04em;color:#10481A;margin-bottom:20px}
 .pr-sub{font-size:16px;color:rgba(22,51,0,.55);line-height:1.8;margin-bottom:40px;max-width:380px}
 .pr-features{display:flex;flex-direction:column;gap:8px;margin-bottom:32px}
 .pr-feat{font-size:14px;font-weight:600;color:rgba(22,51,0,.6);padding:10px 0;border-bottom:1px solid rgba(159,232,112,.08)}
 .pr-trusted{font-size:13px;font-weight:700;color:#059669;padding:12px 16px;background:rgba(45,106,0,.06);border-radius:10px;display:inline-block}
 .pr-right{flex:1;max-width:450px}
 .pr-card{padding:36px;background:#fff;border:1px solid rgba(159,232,112,.08);border-radius:24px;box-shadow:0 16px 48px rgba(0,0,0,.06)}
-.pr-card-t{font-size:24px;font-weight:900;color:#163300;margin-bottom:4px;letter-spacing:-.03em}
+.pr-card-t{font-size:24px;font-weight:900;color:#10481A;margin-bottom:4px;letter-spacing:-.03em}
 .pr-card-s{font-size:13px;color:rgba(22,51,0,.4);margin-bottom:24px}
 .pr-steps{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:8px}
 .pr-step-dot{width:10px;height:10px;border-radius:50%;background:#E8F5E0;transition:all .3s}
@@ -297,12 +297,12 @@ const tx = computed(() => isBiz.value ? tb.value : t.value);
 .pr-field{display:flex;flex-direction:column;gap:5px}
 .pr-label{font-size:12px;font-weight:700;color:rgba(22,51,0,.55);letter-spacing:.3px}
 .pr-opt{font-weight:400;opacity:.6}
-.pr-input{padding:13px 16px;border:1.5px solid rgba(159,232,112,.1);border-radius:12px;font-size:14px;font-family:inherit;outline:none;color:#163300;transition:all .2s;background:#F8FAFC}.pr-input:focus{border-color:#9FE870;background:#fff;box-shadow:0 0 0 3px rgba(159,232,112,.08)}.pr-input::placeholder{color:#E8F5E0}
+.pr-input{padding:13px 16px;border:1.5px solid rgba(159,232,112,.1);border-radius:12px;font-size:14px;font-family:inherit;outline:none;color:#10481A;transition:all .2s;background:#F8FAFC}.pr-input:focus{border-color:#9FE870;background:#fff;box-shadow:0 0 0 3px rgba(159,232,112,.08)}.pr-input::placeholder{color:#E8F5E0}
 .pr-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%230EA5E9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;background-size:12px}
 .rtl .pr-select{background-position:left 16px center}
 .pr-err{font-size:12px;color:#ef4444;font-weight:600}
-.pr-btn{padding:16px;background:linear-gradient(135deg,#2D6A00,#9FE870);color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:4px}.pr-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(159,232,112,.25)}.pr-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.pr-btn-biz{background:linear-gradient(135deg,#163300,#2D6A00)}
+.pr-btn{padding:16px;background:linear-gradient(135deg,#10481A,#9FE870);color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:4px}.pr-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(159,232,112,.25)}.pr-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.pr-btn-biz{background:linear-gradient(135deg,#10481A,#10481A)}
 .pr-note{font-size:11px;color:rgba(22,51,0,.3);text-align:center;line-height:1.5}.pr-note a{color:#9FE870;text-decoration:underline;font-weight:600}
 .slide-enter-active,.slide-leave-active{transition:all .3s ease;overflow:hidden}
 .slide-enter-from,.slide-leave-to{opacity:0;max-height:0;margin:0}.slide-enter-to,.slide-leave-from{opacity:1;max-height:80px}

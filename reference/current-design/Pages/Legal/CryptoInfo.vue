@@ -33,7 +33,7 @@ const t = computed(() => isAr.value ? {
   featTitle:'مميزات التداول مع SDB',
   feats:[
     {ic:'🏦',t:'من حسابك البنكي',d:'لا حاجة لمنصة خارجية — اشترِ وبِع مباشرة من حساب SDB.'},
-    {ic:'💱',t:'شراء بالليرة السورية',d:'أول بنك يتيح شراء العملات الرقمية بالليرة السورية الجديدة.'},
+    {ic:'💱',t:'شراء بالليرة السورية',d:'اشترِ العملات الرقمية بالليرة السورية الجديدة مباشرة.'},
     {ic:'📊',t:'رسوم بيانية حية',d:'تتبع الأسعار لحظياً مع رسوم بيانية متقدمة ومؤشرات فنية.'},
     {ic:'🔔',t:'تنبيهات الأسعار',d:'حدد سعرك المستهدف وسنبلّغك فوراً لاقتناص الفرصة.'},
     {ic:'🔒',t:'تخزين آمن',d:'محفظة حراسة (custodial) مؤمنة بتشفير مالي ومصادقة بيومترية.'},
@@ -53,7 +53,7 @@ const t = computed(() => isAr.value ? {
     {t:'NFT',d:'رمز غير قابل للاستبدال — أصل رقمي فريد يمثل ملكية رقمية.'},
     {t:'Mining (تعدين)',d:'عملية التحقق من المعاملات وتأمين الشبكة مقابل مكافآت بالعملة.'},
   ],
-  ctaTitle:'ابدأ رحلتك الرقمية',ctaSub:'اشترِ أول عملة رقمية بالليرة السورية — من حسابك البنكي مباشرة.',ctaBtn:'افتح حسابك ←',
+  ctaTitle:'ابدأ رحلتك الرقمية',ctaSub:'اشترِ عملتك الرقمية بالليرة السورية — من حسابك مباشرة.',ctaBtn:'افتح حسابك ←',
 } : {
   title:'Crypto Currencies — SDB Wallet',tag:'🪙 Crypto Currencies',
   heroH:'Enter the world of',heroEm:'digital currencies.',
@@ -83,7 +83,7 @@ const t = computed(() => isAr.value ? {
   featTitle:'SDB Trading Features',
   feats:[
     {ic:'🏦',t:'From your bank account',d:'No need for external platforms — buy and sell directly from your SDB account.'},
-    {ic:'💱',t:'Buy with Syrian Lira',d:'First bank enabling crypto purchases with the new Syrian Lira.'},
+    {ic:'💱',t:'Buy with Syrian Lira',d:'Buy crypto with the new Syrian Lira directly from your account.'},
     {ic:'📊',t:'Live charts',d:'Track prices in real-time with advanced charts and technical indicators.'},
     {ic:'🔔',t:'Price alerts',d:'Set your target price and we\'ll notify you instantly to seize the opportunity.'},
     {ic:'🔒',t:'Secure storage',d:'Custodial wallet secured with bank encryption and biometric authentication.'},
@@ -103,7 +103,7 @@ const t = computed(() => isAr.value ? {
     {t:'NFT',d:'Non-Fungible Token — a unique digital asset representing digital ownership.'},
     {t:'Mining',d:'The process of verifying transactions and securing the network in exchange for currency rewards.'},
   ],
-  ctaTitle:'Start your crypto journey',ctaSub:'Buy your first cryptocurrency with Syrian Lira — directly from your bank account.',ctaBtn:'Open your account →',
+  ctaTitle:'Start your crypto journey',ctaSub:'Buy your first cryptocurrency with Syrian Lira — directly from your account.',ctaBtn:'Open your account →',
 });
 </script>
 <template>

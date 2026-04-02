@@ -18,7 +18,7 @@ const submitCode = () => {
 <Head title="إعداد الحساب" />
 <div class="su">
   <div class="su-card">
-    <img src="/images/sdb-staff-logo.png" alt="SDB Wallet" class="su-logo" />
+    <img src="/images/sdb-logo.png" alt="SDB Wallet" class="su-logo" />
     <h1 class="su-title">🔐 إعداد حسابك</h1>
     <p class="su-subtitle">مرحباً {{ name }}، يجب إكمال الخطوات التالية قبل البدء</p>
 
@@ -123,7 +123,7 @@ const submitCode = () => {
 .su-btn{padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s}
 .su-btn:hover{background:#1d4ed8}
 .su-btn:disabled{opacity:.5;cursor:not-allowed}
-.su-btn-green{background:#2D6A00}.su-btn-green:hover{background:#245800}
+.su-btn-green{background:#10481A}.su-btn-green:hover{background:#245800}
 /* QR */
 .su-qr-area{text-align:center;margin-bottom:20px;padding:20px;background:#f8fafc;border-radius:16px;border:1px solid #e2e8f0}
 .su-qr{width:200px;height:200px;border-radius:12px;margin-bottom:12px}
